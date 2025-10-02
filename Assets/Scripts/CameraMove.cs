@@ -34,7 +34,7 @@ public class CameraMove : MonoBehaviour
         minBounds = canvasRect.TransformPoint(minBounds);
         maxBounds = canvasRect.TransformPoint(maxBounds);
 
-        // Раскомментировать на случай, если смещение по Y будет ненулевым
+        // Р Р°СЃРєРѕРјРјРµРЅС‚РёСЂРѕРІР°С‚СЊ РЅР° СЃР»СѓС‡Р°Р№, РµСЃР»Рё СЃРјРµС‰РµРЅРёРµ РїРѕ Y Р±СѓРґРµС‚ РЅРµРЅСѓР»РµРІС‹Рј
         //if (transform.position.y - minBounds.y > offset.y)
         //{
         //    offset.y = 0;
@@ -47,10 +47,10 @@ public class CameraMove : MonoBehaviour
             return;
         }
 
-        var newPos = Vector3.Lerp(transform.position, targetPos, velocity * Time.fixedDeltaTime); // интерполяция
+        var newPos = Vector3.Lerp(transform.position, targetPos, velocity * Time.fixedDeltaTime); // РёРЅС‚РµСЂРїРѕР»СЏС†РёСЏ
         newPos.z = transform.position.z;
-        
-        // Можно удалить эту тупую проверку
+
+        // РњРѕР¶РЅРѕ СѓРґР°Р»РёС‚СЊ СЌС‚Сѓ С‚СѓРїСѓСЋ РїСЂРѕРІРµСЂРєСѓ
         if (maxBounds.y - minBounds.y < cameraHeight * 2)
         {
             newPos.y = Mathf.Clamp(newPos.y, minBounds.y + cameraHeight, float.PositiveInfinity);
@@ -60,14 +60,14 @@ public class CameraMove : MonoBehaviour
             newPos.y = Mathf.Clamp(newPos.y, minBounds.y + cameraHeight, maxBounds.y - cameraHeight);
         }
 
-        // Дёргается при отходе камеры от края сцены
+        // Р”С‘СЂРіР°РµС‚СЃСЏ РїСЂРё РѕС‚С…РѕРґРµ РєР°РјРµСЂС‹ РѕС‚ РєСЂР°СЏ СЃС†РµРЅС‹
         //if (IsOutsideBounds(newPos, minBounds, maxBounds))
         //{
         //    newPos.x = transform.position.x;
         //    Debug.Log("+");
         //}
 
-        // Нет дёрганья (любая оптимизация этой конструкции приведёт к обратному)
+        // РќРµС‚ РґС‘СЂРіР°РЅСЊСЏ (Р»СЋР±Р°СЏ РѕРїС‚РёРјРёР·Р°С†РёСЏ СЌС‚РѕР№ РєРѕРЅСЃС‚СЂСѓРєС†РёРё РїСЂРёРІРµРґС‘С‚ Рє РѕР±СЂР°С‚РЅРѕРјСѓ)
         float tmpX = newPos.x;
         float smoothingCoeff = 10f;
 
