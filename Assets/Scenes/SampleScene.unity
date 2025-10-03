@@ -1291,7 +1291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 319128612}
   offset: {x: 0, y: 0, z: 0}
-  velocity: 1.2
+  velocity: 3
   minDistance: 1
   canvasRect: {fileID: 426956301}
 --- !u!1 &525833842

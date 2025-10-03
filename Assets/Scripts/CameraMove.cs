@@ -47,42 +47,11 @@ public class CameraMove : MonoBehaviour
             return;
         }
 
-        var newPos = Vector3.Lerp(transform.position, targetPos, velocity * Time.fixedDeltaTime); // интерполяция
+        var newPos = Vector3.Lerp(transform.position, targetPos, velocity * Time.deltaTime);
         newPos.z = transform.position.z;
-
-        // Можно удалить эту тупую проверку
-        if (maxBounds.y - minBounds.y < cameraHeight * 2)
-        {
-            newPos.y = Mathf.Clamp(newPos.y, minBounds.y + cameraHeight, float.PositiveInfinity);
-        }
-        else
-        {
-            newPos.y = Mathf.Clamp(newPos.y, minBounds.y + cameraHeight, maxBounds.y - cameraHeight);
-        }
-
-        // Дёргается при отходе камеры от края сцены
-        //if (IsOutsideBounds(newPos, minBounds, maxBounds))
-        //{
-        //    newPos.x = transform.position.x;
-        //    Debug.Log("+");
-        //}
-
-        // Нет дёрганья (любая оптимизация этой конструкции приведёт к обратному)
-        float tmpX = newPos.x;
-        float smoothingCoeff = 10f;
-
-        if (IsOutsideBounds(newPos, minBounds, maxBounds))
-        {
-            tmpX = Mathf.Lerp(transform.position.x, Mathf.Clamp(newPos.x, minBounds.x + cameraWidth + offset.x, maxBounds.x - cameraWidth - offset.x), smoothingCoeff * Time.deltaTime);
-        }
-
-        newPos.x = tmpX;
+        newPos.y = Mathf.Clamp(newPos.y, minBounds.y + cameraHeight, maxBounds.y - cameraHeight);
+        newPos.x = Mathf.Clamp(newPos.x, minBounds.x + cameraWidth, maxBounds.x - cameraWidth);
 
         transform.Translate(transform.InverseTransformPoint(newPos));
-    }
-
-    bool IsOutsideBounds(Vector3 pos, Vector3 minBounds, Vector3 maxBounds)
-    {
-        return minBounds.x + cameraWidth + offset.x > pos.x || maxBounds.x - cameraWidth - offset.x < pos.x;
     }
 }
