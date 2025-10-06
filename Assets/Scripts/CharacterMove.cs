@@ -9,6 +9,7 @@ public class CharacterMove : MonoBehaviour
 
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
+    private Vector3 inputDirection;
 
     // Start is called before the first frame update
     void Start()
@@ -19,17 +20,24 @@ public class CharacterMove : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Vector3 newVelocity = inputDirection * speed;
+        newVelocity.y = rb.velocity.y;
+        rb.velocity = newVelocity;
+
         CheckJump();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("Horizontal"))
-        {
-            Run();
-        }
+        float moveHorizontal = Input.GetAxisRaw("Horizontal");
+        float moveVertical = Input.GetAxisRaw("Vertical");
+        inputDirection = new Vector3(moveHorizontal, 0.0f, moveVertical).normalized;
 
+        if (inputDirection.x != 0)
+        {
+            sprite.flipX = inputDirection.x < 0;
+        }
         if (!isJump && Input.GetButtonDown("Jump"))
         {
             Jump();
@@ -38,13 +46,6 @@ public class CharacterMove : MonoBehaviour
         {
             Application.Quit();
         }
-    }
-
-    private void Run()
-    {
-        Vector3 dir = transform.right * Input.GetAxis("Horizontal");
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + dir, speed * Time.deltaTime);
-        sprite.flipX = dir.x < 0.0f;
     }
 
     private void Jump()
