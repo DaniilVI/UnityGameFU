@@ -18,26 +18,16 @@ public class CharacterMove : MonoBehaviour
         sprite = GetComponentInChildren<SpriteRenderer>();
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
-        Vector3 newVelocity = inputDirection * speed;
-        newVelocity.y = rb.velocity.y;
-        rb.velocity = newVelocity;
-
+        Run();
         CheckJump();
     }
 
     // Update is called once per frame
     void Update()
     {
-        float moveHorizontal = Input.GetAxisRaw("Horizontal");
-        float moveVertical = Input.GetAxisRaw("Vertical");
-        inputDirection = new Vector3(moveHorizontal, 0.0f, moveVertical).normalized;
-
-        if (inputDirection.x != 0)
-        {
-            sprite.flipX = inputDirection.x < 0;
-        }
+        CheckRun();
         if (!isJump && Input.GetButtonDown("Jump"))
         {
             Jump();
@@ -45,6 +35,24 @@ public class CharacterMove : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
+        }
+    }
+
+    private void Run()
+    {
+        Vector3 newVelocity = inputDirection * speed;
+        newVelocity.y = rb.velocity.y;
+        rb.velocity = newVelocity;
+    }
+
+    private void CheckRun()
+    {
+        float moveHorizontal = Input.GetAxisRaw("Horizontal");
+        inputDirection = new Vector3(moveHorizontal, 0.0f, 0.0f).normalized;
+
+        if (inputDirection.x != 0)
+        {
+            sprite.flipX = inputDirection.x < 0;
         }
     }
 
