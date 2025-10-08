@@ -4,48 +4,74 @@ using System.Collections;
 public class CharacterMove : MonoBehaviour
 {
     [Header("Движение")]
+    [SerializeField] private GameObject spriteObject;
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jumpForce = 13f;
 
     [Header("Рывок (Dash)")]
-    [SerializeField] private float dashForce = 10f;
+    [SerializeField] private float dashForce = 20f;
     [SerializeField] private float dashDuration = 0.2f;
     [SerializeField] private float dashCooldown = 1f;
     private bool isDashing = false;
     private bool canDash = true;
 
     [Header("Удар")]
-    [SerializeField] private GameObject attackPrefab;
-    [SerializeField] private Transform attackSpawnPoint;
+    [SerializeField] private GameObject boxGloveObject;
     [SerializeField] private float attackDuration = 0.5f;
     [SerializeField] private float attackCooldown = 0.5f;
     private bool canAttack = true;
     private bool isJump = false;
     private bool isSmall = false;
+    private bool isFrozen = false;
 
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
+    private SpriteRenderer boxGloveSprite;
     private Vector3 inputDirection;
 
     // Start is called before the first frame update
     void Start()
     {
+        if (spriteObject == null)
+        {
+            Debug.LogError("Sprite object is not assigned!");
+            return;
+        }
+        if (boxGloveObject == null)
+        {
+            Debug.LogError("Box Glove object is not assigned!");
+            return;
+        }
+
         rb = GetComponent<Rigidbody2D>();
-        sprite = GetComponentInChildren<SpriteRenderer>();
+        sprite = spriteObject.GetComponent<SpriteRenderer>();
+        boxGloveSprite = boxGloveObject.GetComponentInChildren<SpriteRenderer>();
+        boxGloveObject.SetActive(false);
     }
 
     void FixedUpdate()
     {
-        Run();
-        CheckJump();
+        if (!isFrozen)
+        {
+            if (!isDashing)
+                Run();
+            CheckJump();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         if (isDashing) return;
+        if (isFrozen) return;
+
         CheckRun();
-        if (!isJump && Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && !isJump)
         {
             Jump();
         }
@@ -55,7 +81,7 @@ public class CharacterMove : MonoBehaviour
             StartCoroutine(Dash());
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && !isJump)
         {
             ToggleSize();
         }
@@ -63,11 +89,6 @@ public class CharacterMove : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             StartCoroutine(Attack());
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
         }
     }
 
@@ -86,6 +107,18 @@ public class CharacterMove : MonoBehaviour
         if (inputDirection.x != 0)
         {
             sprite.flipX = inputDirection.x < 0;
+            boxGloveSprite.flipX = inputDirection.x < 0;
+
+            Vector3 localPos = boxGloveObject.transform.localPosition;
+            if (boxGloveSprite.flipX)
+            {
+                localPos.x = -Mathf.Abs(localPos.x);
+            }
+            else
+            {
+                localPos.x = Mathf.Abs(localPos.x);
+            }
+            boxGloveObject.transform.localPosition = localPos;
         }
     }
 
@@ -102,20 +135,32 @@ public class CharacterMove : MonoBehaviour
 
     private IEnumerator Dash()
     {
+        if (!canDash) yield break;
+
         canDash = false;
         isDashing = true;
 
-        float originalGravity = rb.gravityScale;
+        float origGravity = rb.gravityScale;
+        float origDrag = rb.drag;
+
+        float direction;
+        if (Mathf.Abs(inputDirection.x) > 0.01f)
+            direction = Mathf.Sign(inputDirection.x);
+        else
+            direction = sprite.flipX ? -1f : 1f;
+
         rb.gravityScale = 0f;
+        rb.velocity = new Vector2(direction * dashForce, 0f);
 
-        float direction = sprite.flipX ? -1f : 1f;
-
-        rb.velocity = Vector2.zero;
-        rb.AddForce(new Vector2(direction * dashForce, 0f), ForceMode2D.Impulse);
+        rb.drag = 8f;
 
         yield return new WaitForSeconds(dashDuration);
 
-        rb.gravityScale = originalGravity;
+        rb.velocity = new Vector2(0f, rb.velocity.y);
+
+        rb.drag = origDrag;
+        rb.gravityScale = origGravity;
+
         isDashing = false;
 
         yield return new WaitForSeconds(dashCooldown);
@@ -138,38 +183,22 @@ public class CharacterMove : MonoBehaviour
 
     private IEnumerator Attack()
     {
-        if (!canAttack) yield break;
+        if (!canAttack)
+            yield break;
         canAttack = false;
 
-        if (attackPrefab == null || attackSpawnPoint == null)
-        {
-            Debug.LogWarning("attackPrefab или attackSpawnPoint не назначены!");
-            yield break;
-        }
+        isFrozen = true;
+        rb.velocity = Vector3.zero;
+        rb.isKinematic = true;
 
-        bool lookingLeft = sprite.flipX;
-        float dir = lookingLeft ? -1f : 1f;
-
-        Vector3 spawnLocal = attackSpawnPoint.localPosition;
-        spawnLocal.x = Mathf.Abs(spawnLocal.x) * dir;
-
-        Vector3 spawnWorld = transform.position + new Vector3(
-            spawnLocal.x * transform.lossyScale.x,
-            spawnLocal.y * transform.lossyScale.y,
-            0f
-        );
-
-        GameObject attack = Instantiate(attackPrefab, spawnWorld, Quaternion.identity, transform);
-
-        Vector3 prefabBaseScale = attackPrefab.transform.localScale;
-        attack.transform.localScale = Vector3.Scale(prefabBaseScale, transform.localScale);
-
-        Vector3 s = attack.transform.localScale;
-        s.x = Mathf.Abs(s.x) * dir;
-        attack.transform.localScale = s;
+        boxGloveObject.SetActive(true);
 
         yield return new WaitForSeconds(attackDuration);
-        Destroy(attack);
+
+        boxGloveObject.SetActive(false);
+
+        rb.isKinematic = false;
+        isFrozen = false;
 
         yield return new WaitForSeconds(attackCooldown);
         canAttack = true;
