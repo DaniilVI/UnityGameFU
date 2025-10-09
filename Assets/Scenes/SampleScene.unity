@@ -852,7 +852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b660c620582c9a542bdb73d77dc272bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPositions: {x: -7.29, y: -4.429}
+  spawnPositions: {x: -7.29, y: -4.429, z: 0}
 --- !u!1 &347033029
 GameObject:
   m_ObjectHideFlags: 0

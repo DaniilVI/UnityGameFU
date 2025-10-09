@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class CharacterHealth : MonoBehaviour
 {
-    [SerializeField] private Vector2 spawnPositions;
+    [SerializeField] private Vector3 spawnPositions;
     private int health = 3;
 
     private void OnCollisionEnter2D(Collision2D collision)
