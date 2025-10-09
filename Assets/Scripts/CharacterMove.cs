@@ -9,7 +9,7 @@ public class CharacterMove : MonoBehaviour
     [SerializeField] private float jumpForce = 13f;
 
     [Header("Рывок (Dash)")]
-    [SerializeField] private float dashForce = 20f;
+    [SerializeField] private float dashForce = 60f;
     [SerializeField] private float dashDuration = 0.2f;
     [SerializeField] private float dashCooldown = 1f;
     private bool isDashing = false;
@@ -51,12 +51,11 @@ public class CharacterMove : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!isFrozen)
+        if (!isFrozen && !isDashing)
         {
-            if (!isDashing)
-                Run();
-            CheckJump();
+            Run();
         }
+        CheckJump();
     }
 
     // Update is called once per frame
@@ -143,20 +142,16 @@ public class CharacterMove : MonoBehaviour
         float origGravity = rb.gravityScale;
         float origDrag = rb.drag;
 
-        float direction;
-        if (Mathf.Abs(inputDirection.x) > 0.01f)
-            direction = Mathf.Sign(inputDirection.x);
-        else
-            direction = sprite.flipX ? -1f : 1f;
+        float direction = sprite.flipX ? -1f : 1f;;
 
         rb.gravityScale = 0f;
-        rb.velocity = new Vector2(direction * dashForce, 0f);
+        rb.velocity = new Vector3(direction * dashForce, 0f, 0f);
 
         rb.drag = 8f;
 
         yield return new WaitForSeconds(dashDuration);
 
-        rb.velocity = new Vector2(0f, rb.velocity.y);
+        rb.velocity = Vector3.zero;
 
         rb.drag = origDrag;
         rb.gravityScale = origGravity;

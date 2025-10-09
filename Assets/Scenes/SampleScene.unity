@@ -744,7 +744,7 @@ MonoBehaviour:
   spriteObject: {fileID: 474526201}
   speed: 5
   jumpForce: 13
-  dashForce: 20
+  dashForce: 60
   dashDuration: 0.2
   dashCooldown: 1
   boxGloveObject: {fileID: 1612709887}
