@@ -23,11 +23,14 @@ public class CharacterMove : MonoBehaviour
     private bool isJump = false;
     private bool isSmall = false;
     private bool isFrozen = false;
+    private bool direction;
 
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
     private SpriteRenderer boxGloveSprite;
     private Vector3 inputDirection;
+    private PolygonCollider2D polyCollider;
+    private BoxCollider2D boxCollider;
 
     // Start is called before the first frame update
     void Start()
@@ -44,9 +47,14 @@ public class CharacterMove : MonoBehaviour
         }
 
         rb = GetComponent<Rigidbody2D>();
+        polyCollider = GetComponent<PolygonCollider2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
         sprite = spriteObject.GetComponent<SpriteRenderer>();
         boxGloveSprite = boxGloveObject.GetComponentInChildren<SpriteRenderer>();
         boxGloveObject.SetActive(false);
+        direction = sprite.flipX;
+        boxCollider.enabled = false;
+        polyCollider.enabled = true;
     }
 
     void FixedUpdate()
@@ -108,6 +116,11 @@ public class CharacterMove : MonoBehaviour
             sprite.flipX = inputDirection.x < 0;
             boxGloveSprite.flipX = inputDirection.x < 0;
 
+            boxCollider.enabled = true;
+            polyCollider.enabled = false;
+            FlipBoxCollider();
+            FlipPolygonCollider();
+
             Vector3 localPos = boxGloveObject.transform.localPosition;
             if (boxGloveSprite.flipX)
             {
@@ -119,6 +132,12 @@ public class CharacterMove : MonoBehaviour
             }
             boxGloveObject.transform.localPosition = localPos;
         }
+        else
+        {
+            boxCollider.enabled = false;
+            polyCollider.enabled = true;
+        }
+        direction = sprite.flipX;
     }
 
     private void Jump()
@@ -128,7 +147,7 @@ public class CharacterMove : MonoBehaviour
 
     private void CheckJump()
     {
-        Collider2D[] collider = Physics2D.OverlapCircleAll(transform.position, 0.3f);
+        Collider2D[] collider = Physics2D.OverlapCircleAll(transform.position, 0.1f);
         isJump = collider.Length <= 1;
     }
 
@@ -145,12 +164,17 @@ public class CharacterMove : MonoBehaviour
         float direction = sprite.flipX ? -1f : 1f;;
 
         rb.gravityScale = 0f;
+        rb.drag = 8f;
         rb.velocity = new Vector3(direction * dashForce, 0f, 0f);
 
-        rb.drag = 8f;
+        boxCollider.enabled = true;
+        polyCollider.enabled = false;
 
         yield return new WaitForSeconds(dashDuration);
 
+        boxCollider.enabled = false;
+        polyCollider.enabled = true;
+        
         rb.velocity = Vector3.zero;
 
         rb.drag = origDrag;
@@ -186,10 +210,14 @@ public class CharacterMove : MonoBehaviour
         rb.velocity = Vector3.zero;
         rb.isKinematic = true;
 
+        boxCollider.enabled = true;
+        polyCollider.enabled = false;
         boxGloveObject.SetActive(true);
 
         yield return new WaitForSeconds(attackDuration);
 
+        boxCollider.enabled = false;
+        polyCollider.enabled = true;
         boxGloveObject.SetActive(false);
 
         rb.isKinematic = false;
@@ -197,5 +225,25 @@ public class CharacterMove : MonoBehaviour
 
         yield return new WaitForSeconds(attackCooldown);
         canAttack = true;
+    }
+
+    private void FlipPolygonCollider()
+    {
+        if (direction != sprite.flipX)
+        {
+            Vector2[] points = polyCollider.points;
+            for (int i = 0; i < points.Length; i++)
+            {
+                points[i] = new Vector2(-points[i].x, points[i].y);
+            }
+            polyCollider.points = points;
+        }
+    }
+    
+    private void FlipBoxCollider()
+    {
+        Vector2 offset = boxCollider.offset;
+        offset.x = sprite.flipX ? -Mathf.Abs(offset.x) : Mathf.Abs(offset.x);
+        boxCollider.offset = offset;
     }
 }
