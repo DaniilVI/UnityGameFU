@@ -246,4 +246,20 @@ public class CharacterMove : MonoBehaviour
         offset.x = sprite.flipX ? -Mathf.Abs(offset.x) : Mathf.Abs(offset.x);
         boxCollider.offset = offset;
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Platform"))
+        {
+            transform.parent = collision.transform;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Platform"))
+        {
+            transform.parent = null;
+        }
+    }
 }
