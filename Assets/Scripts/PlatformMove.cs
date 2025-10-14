@@ -14,11 +14,10 @@ public class PlatformMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //transform.position = startPoint;
+        transform.position = startPoint;
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Move();
     }
@@ -48,6 +47,22 @@ public class PlatformMove : MonoBehaviour
             waitTimer = waitingTime;
             elapsedTime = 0f;
             movingToFinish = !movingToFinish;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && gameObject.activeInHierarchy)
+        {
+            collision.transform.parent = transform;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && gameObject.activeInHierarchy)
+        {
+            collision.transform.parent = null;
         }
     }
 }
