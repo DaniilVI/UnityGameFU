@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections;
+using System.Linq;
+using UnityEngine;
 
 public class CharacterMove : MonoBehaviour
 {
@@ -147,7 +148,7 @@ public class CharacterMove : MonoBehaviour
 
     private void CheckJump()
     {
-        Collider2D[] collider = Physics2D.OverlapCircleAll(transform.position, 0.1f);
+        Collider2D[] collider = Physics2D.OverlapCircleAll(transform.position, 0.1f).Where(c => !c.isTrigger).ToArray();
         isJump = collider.Length <= 1;
     }
 
