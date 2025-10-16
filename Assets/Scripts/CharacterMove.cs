@@ -23,6 +23,7 @@ public class CharacterMove : MonoBehaviour
     private bool isJump = false;
     private bool isSmall = false;
     private bool isFrozen = false;
+    private bool canGrow = true;
     private bool direction;
 
     private Rigidbody2D rb;
@@ -31,6 +32,7 @@ public class CharacterMove : MonoBehaviour
     private Vector3 inputDirection;
     private PolygonCollider2D polyCollider;
     private BoxCollider2D boxCollider;
+    private PlayerAbilities playerAbilities;
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +57,12 @@ public class CharacterMove : MonoBehaviour
         direction = sprite.flipX;
         boxCollider.enabled = false;
         polyCollider.enabled = true;
+
+        playerAbilities = GetComponent<PlayerAbilities>();
+        if (playerAbilities == null)
+        {
+            Debug.LogWarning("PlayerAbilities component not found. All abilities will be disabled.");
+        }
     }
 
     void FixedUpdate()
@@ -83,20 +91,26 @@ public class CharacterMove : MonoBehaviour
             Jump();
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && HasAbility(PlayerAbilities.Ability.Dash))
         {
             StartCoroutine(Dash());
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && !isJump)
+        if (Input.GetKeyDown(KeyCode.Q) && !isJump && HasAbility(PlayerAbilities.Ability.Shrink))
         {
             ToggleSize();
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && HasAbility(PlayerAbilities.Ability.Attack))
         {
             StartCoroutine(Attack());
         }
+    }
+
+    private bool HasAbility(PlayerAbilities.Ability ability)
+    {
+        if (playerAbilities == null) return false;
+        return playerAbilities.HasAbility((int)ability);
     }
 
     private void Run()
@@ -190,6 +204,12 @@ public class CharacterMove : MonoBehaviour
     {
         if (isSmall)
         {
+            if (!canGrow)
+            {
+                Debug.Log("❌ Увеличение запрещено в этой зоне!");
+                return;
+            }
+
             transform.localScale *= 2f;
             isSmall = false;
         }
@@ -197,6 +217,22 @@ public class CharacterMove : MonoBehaviour
         {
             transform.localScale *= 0.5f;
             isSmall = true;
+        }
+    }
+
+    public void SetCanGrow(bool value)
+    {
+        canGrow = value;
+        Debug.Log($"canGrow = {canGrow}");
+    }
+
+    public void GrowToNormal()
+    {
+        if (isSmall)
+        {
+            transform.localScale *= 2f;
+            isSmall = false;
+            Debug.Log("↔ Персонаж автоматически вернулся к нормальному размеру.");
         }
     }
 
