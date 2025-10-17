@@ -5,24 +5,19 @@ using System.Collections;
 public class ButtonPress : MonoBehaviour
 {
     [SerializeField] private string playerTag = "Player";
-    [SerializeField] private Sprite spritePressed;
-    [SerializeField] private Sprite spriteUnpressed;
     [SerializeField] private float releaseDelay = 0.1f; // задержка до "сброса"
-    [SerializeField] private GateMover[] gatesToToggle;
+    [SerializeField] private GameObject gates;
     [SerializeField] private AudioClip pressSound;
 
-    private SpriteRenderer srFallback;
     private Transform buttonUp;
     private Transform buttonDown;
 
-    private GameObject currentPlayer;
-    private Coroutine releaseRoutine;
+    private Coroutine releaseRoutine = null;
+    private bool canClick = true;
 
     private void Awake()
     {
-        // заставляем коллайдер быть триггером (если он есть)
-        var col = GetComponent<Collider2D>();
-        if (col != null) col.isTrigger = true;
+        GetComponent<Collider2D>().isTrigger = true;
 
         // ищем дочерние объекты ButtonUp / ButtonDown (если такие есть)
         buttonUp = transform.Find("ButtonUp");
@@ -42,30 +37,28 @@ public class ButtonPress : MonoBehaviour
     {
         if (!other.CompareTag(playerTag)) return;
 
-        if (currentPlayer == null) // впервые вошёл
-        {
-            currentPlayer = other.gameObject;
-            Press();
-        }
+        Press();
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         if (!other.CompareTag(playerTag)) return;
 
-        if (other.gameObject == currentPlayer)
-        {
-            currentPlayer = null;
-            if (releaseRoutine != null) StopCoroutine(releaseRoutine);
-            releaseRoutine = StartCoroutine(ReleaseAfterDelay());
-        }
+        if (releaseRoutine != null) StopCoroutine(releaseRoutine);
+        releaseRoutine = StartCoroutine(ReleaseAfterDelay());
     }
 
     private void Press()
     {
-        if (releaseRoutine != null) { StopCoroutine(releaseRoutine); releaseRoutine = null; }
+        if (releaseRoutine != null)
+        {
+            StopCoroutine(releaseRoutine);
+            releaseRoutine = null;
+        }
+        
+        if (!canClick) return;
+        canClick = false;
 
-        // Вариант 1: переключаем дочерние объекты
         if (buttonUp != null && buttonDown != null)
         {
             buttonUp.gameObject.SetActive(false);
@@ -75,10 +68,13 @@ public class ButtonPress : MonoBehaviour
         if (pressSound) AudioSource.PlayClipAtPoint(pressSound, transform.position);
 
         // Запускаем движение для всех привязанных ворот
-        foreach (var g in gatesToToggle)
+        foreach (Transform gate in gates.transform)
         {
-            if (g != null)
-                g.ToggleMove();
+            GateMove script = gate.GetComponent<GateMove>();
+            if (script != null)
+            {
+                script.Move();
+            }  
         }
     }
 
@@ -93,6 +89,7 @@ public class ButtonPress : MonoBehaviour
             buttonDown.gameObject.SetActive(false);
         }
 
+        canClick = true;
         releaseRoutine = null;
     }
 }

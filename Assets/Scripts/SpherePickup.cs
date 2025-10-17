@@ -8,17 +8,9 @@ public class SpherePickup : MonoBehaviour
     [SerializeField] private string playerTag = "Player";
     [SerializeField] private AudioClip pickupSound;
 
-    // Сохраняем начальное состояние, чтобы можно было восстановить объект
-    private Vector3 initialPosition;
-    private Quaternion initialRotation;
-    private Vector3 initialScale;
-
     private void Awake()
     {
         GetComponent<Collider2D>().isTrigger = true;
-        initialPosition = transform.position;
-        initialRotation = transform.rotation;
-        initialScale = transform.localScale;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -38,9 +30,6 @@ public class SpherePickup : MonoBehaviour
     // Вызывать извне (Beam) чтобы снова сделать сферу доступной
     public void Respawn()
     {
-        transform.position = initialPosition;
-        transform.rotation = initialRotation;
-        transform.localScale = initialScale;
         gameObject.SetActive(true);
     }
 }

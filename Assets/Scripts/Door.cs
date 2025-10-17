@@ -5,8 +5,7 @@ using UnityEngine.SceneManagement;
 public class Door : MonoBehaviour
 {
     [SerializeField] private string playerTag = "Player";
-    [Tooltip("Если true — загрузит следующий уровень по индексу. Если нет — перезагрузит текущий.")]
-    [SerializeField] private bool loadNextScene = false;
+    [SerializeField] private string sceneName = "LevelTest";
     [SerializeField] private AudioClip openSound;
 
     private void Awake()
@@ -23,19 +22,15 @@ public class Door : MonoBehaviour
 
         if (pa.hasKey)
         {
+            Scene scene = SceneManager.GetSceneByName(sceneName);
             if (openSound) AudioSource.PlayClipAtPoint(openSound, transform.position);
-            if (loadNextScene)
+            if (scene.IsValid())
             {
-                int next = SceneManager.GetActiveScene().buildIndex + 1;
-                if (next < SceneManager.sceneCountInBuildSettings)
-                    SceneManager.LoadScene(next);
-                else
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // fallback
+                SceneManager.LoadScene(sceneName);
             }
             else
             {
-                // временно — перезагрузим текущую сцену (или можно использовать тот же индекс)
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                Debug.Log("Scene not found.");
             }
         }
         else

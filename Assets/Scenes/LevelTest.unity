@@ -418,11 +418,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTag: Player
-  spritePressed: {fileID: 21300000, guid: aabaa2b4a9381424081a785a6a112eba, type: 3}
-  spriteUnpressed: {fileID: 21300000, guid: 15d3b38ffa4f87d408907417e4de81c3, type: 3}
   releaseDelay: 0.1
-  gatesToToggle:
-  - {fileID: 1672396981}
+  gates: {fileID: 583257106}
   pressSound: {fileID: 0}
 --- !u!1001 &68954021
 PrefabInstance:
@@ -1225,7 +1222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTag: Player
-  loadNextScene: 0
+  sceneName: LevelTest
   openSound: {fileID: 0}
 --- !u!4 &369404734 stripped
 Transform:
@@ -2029,6 +2026,38 @@ MonoBehaviour:
   velocity: 3
   minDistance: 1
   canvasRect: {fileID: 426956301}
+--- !u!1 &583257106
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 583257107}
+  m_Layer: 0
+  m_Name: Gates
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &583257107
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583257106}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.75, y: -3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1672396980}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &631298468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3411,7 +3440,7 @@ GameObject:
   - component: {fileID: 919760487}
   - component: {fileID: 919760490}
   m_Layer: 0
-  m_Name: Ray
+  m_Name: Beam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3541,9 +3570,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 338b0853a4c523c4fb3a8c492569fd5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityType: 1
+  abilityType: 2
   playerTag: Player
-  targetSphereToRespawn: {fileID: 1808165058}
+  targetSphereToRespawn: {fileID: 55495919}
   deactivateSound: {fileID: 0}
 --- !u!1001 &962856477
 PrefabInstance:
@@ -5465,7 +5494,7 @@ GameObject:
   - component: {fileID: 1672396978}
   - component: {fileID: 1672396981}
   m_Layer: 0
-  m_Name: Gates
+  m_Name: Gate1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5556,7 +5585,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -5
   m_Sprite: {fileID: 21300000, guid: e053c828dafeee94b9d2346a99c0bc51, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5576,12 +5605,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1672396977}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.75, y: -3, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 583257107}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1672396981
 MonoBehaviour:
@@ -5595,33 +5624,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25464819fa622ef4884d86621369bf6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPoint: {fileID: 1672396980}
-  endPoint: {fileID: 3838108623636992884}
-  moveTime: 1
-  moveCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  startPoint: {x: 1.75, y: -3, z: 0}
+  finishPoint: {x: -3, y: -3, z: 0}
+  transitTime: 1
 --- !u!1001 &1675978882
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7249,10 +7254,10 @@ SceneRoots:
   - {fileID: 786270578}
   - {fileID: 1970539896}
   - {fileID: 1113548992}
-  - {fileID: 1672396980}
   - {fileID: 919760489}
   - {fileID: 64537921}
   - {fileID: 1808165061}
   - {fileID: 692911689}
   - {fileID: 1734348816}
   - {fileID: 822607480}
+  - {fileID: 583257107}
