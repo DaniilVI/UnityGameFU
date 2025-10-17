@@ -23,7 +23,7 @@ public class CharacterHealth : MonoBehaviour
 
             if (rb != null)
             {
-                rb.velocity = Vector2.zero;
+                rb.velocity = Vector3.zero;
             }
 
             health--;
@@ -33,7 +33,8 @@ public class CharacterHealth : MonoBehaviour
                 float x = lastCheckpoint.x;
                 float y;
 
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
+                Physics2D.queriesHitTriggers = false;
+                RaycastHit2D hit = Physics2D.Raycast(lastCheckpoint, Vector2.down);
                 
                 if (hit.collider != null)
                 {
@@ -44,7 +45,7 @@ public class CharacterHealth : MonoBehaviour
                     y = transform.position.y;
                 }
 
-                transform.position = new Vector3(x, y, transform.position.z);
+                transform.position = new Vector3(x, y, 0);
             }
             else
             {
