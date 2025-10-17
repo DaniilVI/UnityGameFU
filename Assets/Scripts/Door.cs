@@ -7,7 +7,6 @@ public class Door : MonoBehaviour
     [SerializeField] private string playerTag = "Player";
     [SerializeField] private string sceneName = "LevelTest";
     [SerializeField] private AudioClip openSound;
-
     private void Awake()
     {
         GetComponent<Collider2D>().isTrigger = true;

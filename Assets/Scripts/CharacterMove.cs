@@ -207,7 +207,6 @@ public class CharacterMove : MonoBehaviour
         {
             if (!canGrow)
             {
-                Debug.Log("❌ Увеличение запрещено в этой зоне!");
                 return;
             }
 
@@ -224,7 +223,6 @@ public class CharacterMove : MonoBehaviour
     public void SetCanGrow(bool value)
     {
         canGrow = value;
-        Debug.Log($"canGrow = {canGrow}");
     }
 
     public void GrowToNormal()
@@ -233,7 +231,6 @@ public class CharacterMove : MonoBehaviour
         {
             transform.localScale *= 2f;
             isSmall = false;
-            Debug.Log("↔ Персонаж автоматически вернулся к нормальному размеру.");
         }
     }
 

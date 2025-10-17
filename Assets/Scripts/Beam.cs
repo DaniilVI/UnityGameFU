@@ -22,6 +22,7 @@ public class Beam : MonoBehaviour
         if (!other.CompareTag(playerTag)) return;
         PlayerAbilities pa = other.GetComponent<PlayerAbilities>();
         if (pa == null) return;
+        if (!pa.HasAbility(abilityType)) return;
 
         CharacterMove cm = other.GetComponent<CharacterMove>();
         if (cm == null) return;
