@@ -211,7 +211,7 @@ public class CharacterMove : MonoBehaviour
         float origGravity = rb.gravityScale;
         float origDrag = rb.drag;
 
-        float direction = sprite.flipX ? -1f : 1f; ;
+        float direction = sprite.flipX ? -1f : 1f;
 
         rb.gravityScale = 0f;
         rb.drag = 8f;
