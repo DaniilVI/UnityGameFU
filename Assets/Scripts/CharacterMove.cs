@@ -8,6 +8,7 @@ public class CharacterMove : MonoBehaviour
     [SerializeField] private GameObject spriteObject;
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jumpForce = 13f;
+    private bool isMoving = false;
 
     [Header("Рывок (Dash)")]
     [SerializeField] private float dashForce = 60f;
@@ -29,11 +30,19 @@ public class CharacterMove : MonoBehaviour
 
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
+    private Sprite inputSprite;
     private SpriteRenderer boxGloveSprite;
     private Vector3 inputDirection;
     private PolygonCollider2D polyCollider;
     private BoxCollider2D boxCollider;
     private PlayerAbilities playerAbilities;
+    private Animator anim;
+
+    private States State
+    {
+        get { return (States)anim.GetInteger("state"); }
+        set { anim.SetInteger("state", (int)value); }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -50,9 +59,11 @@ public class CharacterMove : MonoBehaviour
         }
 
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         polyCollider = GetComponent<PolygonCollider2D>();
         boxCollider = GetComponent<BoxCollider2D>();
         sprite = spriteObject.GetComponent<SpriteRenderer>();
+        inputSprite = sprite.sprite;
         boxGloveSprite = boxGloveObject.GetComponentInChildren<SpriteRenderer>();
         boxGloveObject.SetActive(false);
         direction = sprite.flipX;
@@ -68,10 +79,11 @@ public class CharacterMove : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!isFrozen && !isDashing)
+        if (isFrozen || isDashing)
         {
-            Run();
+            return;
         }
+        Run();
         CheckJump();
     }
 
@@ -85,6 +97,7 @@ public class CharacterMove : MonoBehaviour
 
         if (isDashing) return;
         if (isFrozen) return;
+        if (!isJump && !isFrozen) State = States.idle;
 
         CheckRun();
         if (Input.GetButtonDown("Jump") && !isJump)
@@ -92,7 +105,7 @@ public class CharacterMove : MonoBehaviour
             Jump();
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && HasAbility(PlayerAbilities.Ability.Dash))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && isMoving && HasAbility(PlayerAbilities.Ability.Dash))
         {
             StartCoroutine(Dash());
         }
@@ -102,9 +115,27 @@ public class CharacterMove : MonoBehaviour
             ToggleSize();
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && HasAbility(PlayerAbilities.Ability.Attack))
+        if (Input.GetKeyDown(KeyCode.E) && isMoving && HasAbility(PlayerAbilities.Ability.Attack))
         {
             StartCoroutine(Attack());
+        }
+
+        if (isJump && !isMoving)
+        {
+            if (anim.enabled)
+            {
+                anim.enabled = false;
+                anim.Rebind();
+                anim.Update(0f);
+                sprite.sprite = inputSprite;
+            }
+        }
+        else
+        {
+            if (!anim.enabled)
+            {
+                anim.enabled = true;
+            }
         }
     }
 
@@ -125,9 +156,11 @@ public class CharacterMove : MonoBehaviour
     {
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
         inputDirection = new Vector3(moveHorizontal, 0.0f, 0.0f).normalized;
+        isMoving = Mathf.Abs(inputDirection.x) > 0.01f;
 
-        if (inputDirection.x != 0)
+        if (isMoving)
         {
+            if (!isJump) State = States.run;
             sprite.flipX = inputDirection.x < 0;
             boxGloveSprite.flipX = inputDirection.x < 0;
 
@@ -164,6 +197,8 @@ public class CharacterMove : MonoBehaviour
     {
         Collider2D[] collider = Physics2D.OverlapCircleAll(transform.position, 0.1f).Where(c => !c.isTrigger).ToArray();
         isJump = collider.Length <= 1;
+
+        if (isJump && !isFrozen) State = States.jump;
     }
 
     private IEnumerator Dash()
@@ -176,7 +211,7 @@ public class CharacterMove : MonoBehaviour
         float origGravity = rb.gravityScale;
         float origDrag = rb.drag;
 
-        float direction = sprite.flipX ? -1f : 1f;;
+        float direction = sprite.flipX ? -1f : 1f;
 
         rb.gravityScale = 0f;
         rb.drag = 8f;
@@ -189,7 +224,7 @@ public class CharacterMove : MonoBehaviour
 
         boxCollider.enabled = false;
         polyCollider.enabled = true;
-        
+
         rb.velocity = Vector3.zero;
 
         rb.drag = origDrag;
@@ -239,6 +274,7 @@ public class CharacterMove : MonoBehaviour
         if (!canAttack)
             yield break;
         canAttack = false;
+        State = States.punch;
 
         isFrozen = true;
         rb.velocity = Vector3.zero;
@@ -273,11 +309,19 @@ public class CharacterMove : MonoBehaviour
             polyCollider.points = points;
         }
     }
-    
+
     private void FlipBoxCollider()
     {
         Vector2 offset = boxCollider.offset;
         offset.x = sprite.flipX ? -Mathf.Abs(offset.x) : Mathf.Abs(offset.x);
         boxCollider.offset = offset;
     }
+}
+
+public enum States
+{
+    idle,
+    run,
+    jump,
+    punch
 }
