@@ -36,7 +36,7 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f; // Возобновляем игру
+        Time.timeScale = 1f;
         if (playerMove != null) playerMove.enabled = true;
         isPaused = false;
     }
@@ -44,7 +44,7 @@ public class PauseMenu : MonoBehaviour
     public void Pause()
     {
         pauseMenuUI.SetActive(true);
-        Time.timeScale = 0f; // Останавливаем время
+        Time.timeScale = 0f;
         if (playerMove != null) playerMove.enabled = false;
         isPaused = true;
     }
@@ -52,12 +52,11 @@ public class PauseMenu : MonoBehaviour
     public void SaveGame()
     {
         Debug.Log("Сохранение прогресса (реализуется позже)");
-        // Тут позже добавишь сохранение в БД
     }
 
     public void ExitToMainMenu()
     {
-        Time.timeScale = 1f; // Восстанавливаем время перед сменой сцены
+        Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
     }
 }

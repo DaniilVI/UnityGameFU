@@ -11,14 +11,12 @@ public class MainMenuUI : MonoBehaviour
 
     private void Start()
     {
-        ShowMainMenu(); // При запуске — главное меню
+        ShowMainMenu();
     }
 
-    // ====== Основное меню ======
     public void OnPlayButton()
     {
-        // Пока просто загрузим меню выбора уровня
-        SceneManager.LoadScene("LevelSelect"); // Создашь потом сцену LevelSelect
+        SceneManager.LoadScene("LevelSelect");
     }
 
     public void OnSettingsButton()
@@ -31,20 +29,15 @@ public class MainMenuUI : MonoBehaviour
         ShowExitConfirm();
     }
 
-    // ====== Настройки ======
     public void OnBackFromSettings()
     {
         ShowMainMenu();
     }
 
-    // ====== Окно выхода ======
     public void OnConfirmExitYes()
     {
         Debug.Log("Выход из игры...");
         Application.Quit();
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false; // для редактора
-#endif
     }
 
     public void OnConfirmExitNo()
@@ -52,7 +45,6 @@ public class MainMenuUI : MonoBehaviour
         ShowMainMenu();
     }
 
-    // ====== Вспомогательные методы ======
     private void ShowMainMenu()
     {
         panelMainMenu.SetActive(true);

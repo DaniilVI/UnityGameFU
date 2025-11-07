@@ -9,7 +9,6 @@ public class LevelSelectMenu : MonoBehaviour
 
     private void Start()
     {
-        // Находим объекты внутри Canvas
         Transform panelBackground = transform.Find("LevelMenu");
         if (panelBackground == null)
         {
@@ -17,7 +16,6 @@ public class LevelSelectMenu : MonoBehaviour
             return;
         }
 
-        // Ищем кнопку "Назад" и контейнер с уровнями
         backButton = panelBackground.Find("Back")?.GetComponent<Button>();
         gridLevels = panelBackground.Find("Levels");
 
@@ -27,13 +25,10 @@ public class LevelSelectMenu : MonoBehaviour
             return;
         }
 
-        // Подписываем кнопку "Назад"
         backButton.onClick.AddListener(() => SceneManager.LoadScene("MainMenu"));
 
-        // Получаем все кнопки уровней внутри Grid_Levels
         Button[] levelButtons = gridLevels.GetComponentsInChildren<Button>();
 
-        // Назначаем каждой кнопке загрузку соответствующего уровня
         for (int i = 0; i < levelButtons.Length; i++)
         {
             int levelIndex = i + 1;
