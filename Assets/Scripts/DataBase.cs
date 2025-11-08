@@ -1,5 +1,3 @@
-//using System.Data.SQLite;
-//using SQLite;
 using Mono.Data.Sqlite;
 using System;
 using System.Collections;
@@ -15,8 +13,8 @@ public static class DataBase
 {
     static Dictionary<int, string> statusLevel = new Dictionary<int, string>
     {
-        { 0, "не пройден" },
-        { 1, "в процессе" }
+        { 0, "РЅРµ РїСЂРѕР№РґРµРЅ" },
+        { 1, "РІ РїСЂРѕС†РµСЃСЃРµ" }
     };
     static Dictionary<int, bool> translator = new Dictionary<int, bool>
     {
@@ -39,7 +37,6 @@ public static class DataBase
             Debug.Log(ex.Message);
         }
 
-        Debug.Log("Живой");
         sqliteConn = conn;
     }
 
@@ -58,7 +55,7 @@ public static class DataBase
         try
         {
             sqlite_datareader = sqlite_cmd.ExecuteReader();
-            Debug.Log("Содержимое:");
+            Debug.Log("РЎРѕРґРµСЂР¶РёРјРѕРµ:");
             while (sqlite_datareader.Read())
             {
                 for (int i = 0; i < sqlite_datareader.FieldCount; i++)
@@ -73,7 +70,7 @@ public static class DataBase
         }
     }
 
-    // Получить статус и сцену уровня по ID игрока
+    // РџРѕР»СѓС‡РёС‚СЊ СЃС‚Р°С‚СѓСЃ Рё СЃС†РµРЅСѓ СѓСЂРѕРІРЅСЏ РїРѕ ID РёРіСЂРѕРєР°
     public static (string, string) GetInfoLevel(int characterId)
     {
         int status = 0;
@@ -89,7 +86,7 @@ public static class DataBase
 
             if (sqlite_datareader.Read())
             {
-                status = Convert.ToInt32(sqlite_datareader["status"]); //TODO а если не 0 и не 1?
+                status = Convert.ToInt32(sqlite_datareader["status"]);
                 title = sqlite_datareader["title"].ToString();
             }
         }
@@ -101,7 +98,7 @@ public static class DataBase
         return (statusLevel[status], title);
     }
 
-    // Получить статус уровня по ID игрока
+    // РџРѕР»СѓС‡РёС‚СЊ СЃС‚Р°С‚СѓСЃ СѓСЂРѕРІРЅСЏ РїРѕ ID РёРіСЂРѕРєР°
     public static string GetStatusLevel(int characterId)
     {
         int status = 0;
@@ -127,13 +124,13 @@ public static class DataBase
         return statusLevel[status];
     }
 
-    // Получить номера уровней для всех существующих игроков
+    // РџРѕР»СѓС‡РёС‚СЊ РЅРѕРјРµСЂР° СѓСЂРѕРІРЅРµР№ РґР»СЏ РІСЃРµС… РёРіСЂРѕРєРѕРІ
     public static Dictionary<int, int> GetNumberLevelForPlayers()
     {
         Dictionary<int, int> result = new Dictionary<int, int>();
         SqliteDataReader sqlite_datareader;
         SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
-        sqlite_cmd.CommandText = "SELECT number, CHARACTER_id FROM LEVEL WHERE CHARACTER_id IN (SELECT id FROM CHARACTER)";
+        sqlite_cmd.CommandText = "SELECT number, CHARACTER_id FROM LEVEL";
 
         try
         {
@@ -155,7 +152,7 @@ public static class DataBase
         return result;
     }
 
-    // Получить позицию персонажа по ID
+    // РџРѕР»СѓС‡РёС‚СЊ РїРѕР·РёС†РёСЋ РїРµСЂСЃРѕРЅР°Р¶Р° РїРѕ ID
     public static (float, float) GetCharacterPosition(int characterId)
     {
         float x = 0f;
@@ -183,7 +180,7 @@ public static class DataBase
         return (x, y);
     }
 
-    // Получить здоровье персонажа по ID
+    // РџРѕР»СѓС‡РёС‚СЊ Р·РґРѕСЂРѕРІСЊРµ РїРµСЂСЃРѕРЅР°Р¶Р° РїРѕ ID
     public static int GetCharacterHealth(int characterId)
     {
         int health = 3;
@@ -209,7 +206,6 @@ public static class DataBase
         return health;
     }
 
-    // Получить весь инвентарь персонажа по ID
     public static Dictionary<string, int> GetInventory(int characterId)
     {
         Dictionary<string, int> result = new Dictionary<string, int>();
@@ -238,18 +234,28 @@ public static class DataBase
         return result;
     }
 
-    // Добавить предмет в инвентарь
+    // Р”РѕР±Р°РІРёС‚СЊ РїСЂРµРґРјРµС‚ РІ РёРЅРІРµРЅС‚Р°СЂСЊ
     public static void AddItemInventory(int characterId, string item, int count)
     {
+        int lastId = characterId * 1000;
         SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
-        sqlite_cmd.CommandText = "INSERT INTO INVENTORY (object_name, count, CHARACTER_id) VALUES(@objectName, @count, @characterId)";
-        sqlite_cmd.Parameters.AddWithValue("@objectName", item);
-        sqlite_cmd.Parameters.AddWithValue("@count", count);
+        sqlite_cmd.CommandText = "SELECT MAX(id) AS id FROM INVENTORY WHERE CHARACTER_id = @characterId";
         sqlite_cmd.Parameters.AddWithValue("@characterId", characterId);
 
         try
         {
-            sqlite_cmd.ExecuteNonQuery();
+            object max = sqlite_cmd.ExecuteScalar();
+            if (max != DBNull.Value)
+            {
+                lastId = Convert.ToInt32(max) + 1;
+            }
+            sqlite_cmd.Parameters.Clear();
+
+            sqlite_cmd.CommandText = "INSERT INTO INVENTORY (id, object_name, count, CHARACTER_id) VALUES(@id, @objectName, @count, @characterId)";
+            sqlite_cmd.Parameters.AddWithValue("@id", lastId);
+            sqlite_cmd.Parameters.AddWithValue("@objectName", item);
+            sqlite_cmd.Parameters.AddWithValue("@count", count);
+            sqlite_cmd.Parameters.AddWithValue("@characterId", characterId);
         }
         catch (Exception ex)
         {
@@ -257,7 +263,7 @@ public static class DataBase
         }
     }
 
-    // Удалить предмет из инвентаря
+    // РЈРґР°Р»РёС‚СЊ РїСЂРµРґРјРµС‚ РёР· РёРЅРІРµРЅС‚Р°СЂСЏ
     public static void RemoveItemInventory(int characterId, string item)
     {
         SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
@@ -275,7 +281,7 @@ public static class DataBase
         }
     }
 
-    // Получить количество определённого предмета в инвентаре персонажа по ID и названию предмета
+    // РџРѕР»СѓС‡РёС‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ РѕРїСЂРµРґРµР»С‘РЅРЅРѕРіРѕ РїСЂРµРґРјРµС‚Р° РІ РёРЅРІРµРЅС‚Р°СЂРµ РїРµСЂСЃРѕРЅР°Р¶Р° РїРѕ ID Рё РЅР°Р·РІР°РЅРёСЋ РїСЂРµРґРјРµС‚Р°
     public static int GetInventoryByItemName(int characterId, string item)
     {
         int count = 0;
@@ -307,7 +313,7 @@ public static class DataBase
         Dictionary<int, bool> result = new Dictionary<int, bool>();
         SqliteDataReader sqlite_datareader;
         SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
-        sqlite_cmd.CommandText = $"SELECT * FROM {table} WHERE CHARACTER_id = @characterId";
+        sqlite_cmd.CommandText = $"SELECT * FROM {table} WHERE CHARACTER_id = @characterId ORDER BY id";
         sqlite_cmd.Parameters.AddWithValue("@characterId", characterId);
 
         try
@@ -365,14 +371,17 @@ public static class DataBase
         {
             sqlite_cmd.ExecuteNonQuery();
             sqlite_cmd.Parameters.Clear();
+            int id = characterId * 1000;
 
             foreach (var value in values)
             {
-                sqlite_cmd.CommandText = $"INSERT INTO {table} ({column}, CHARACTER_id) VALUES(@value, @characterId)";
+                sqlite_cmd.CommandText = $"INSERT INTO {table} (id, {column}, CHARACTER_id) VALUES(@id, @value, @characterId)";
+                sqlite_cmd.Parameters.AddWithValue("@id", id);
                 sqlite_cmd.Parameters.AddWithValue("@value", value ? 1 : 0);
                 sqlite_cmd.Parameters.AddWithValue("@characterId", characterId);
                 sqlite_cmd.ExecuteNonQuery();
                 sqlite_cmd.Parameters.Clear();
+                id++;
             }
         }
         catch (Exception ex)
@@ -424,7 +433,7 @@ public static class DataBase
 
     private static void ClearInventory(int characterId)
     {
-        IDelete(characterId, "GATES");
+        IDelete(characterId, "INVENTORY");
     }
 
     private static void ClearGates(int characterId)
@@ -468,21 +477,19 @@ public static class DataBase
         }
     }
 
-    //TODO ПРОПИСАТЬ СТАРТОВУЮ СЦЕНУ!!!
-    public static void CreateCharacter()
+    public static void CreateCharacter(int characterId)
     {
-        int characterId;
         SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
-        sqlite_cmd.CommandText = "INSERT INTO CHARACTER (position_x, position_y, health) VALUES(0, 0, 3)";
+        sqlite_cmd.CommandText = "INSERT INTO CHARACTER (id, position_x, position_y, health) VALUES(@characterId, 0, 0, 3)";
+        sqlite_cmd.Parameters.AddWithValue("@characterId", characterId);
 
         try
         {
             sqlite_cmd.ExecuteNonQuery();
+            sqlite_cmd.Parameters.Clear();
 
-            sqlite_cmd.CommandText = "SELECT last_insert_rowid()";
-            characterId = (int)sqlite_cmd.ExecuteScalar();
-
-            sqlite_cmd.CommandText = "INSERT INTO LEVEL (number, status, title, CHARACTER_id) VALUES(1, 0, Level1, @characterId)";
+            sqlite_cmd.CommandText = "INSERT INTO LEVEL (id, number, status, title, CHARACTER_id) VALUES(@id, 1, 0, Level1, @characterId)";
+            sqlite_cmd.Parameters.AddWithValue("@id", characterId);
             sqlite_cmd.Parameters.AddWithValue("@characterId", characterId);
             sqlite_cmd.ExecuteNonQuery();
         }
@@ -492,7 +499,7 @@ public static class DataBase
         }
     }
 
-    public static void SaveData(int characterId, int number, bool status, string title, (float, float) position, int health = 3, Dictionary<string, List<bool>> data = null, Dictionary<string, int> inventory = null)
+    public static void SaveData(int characterId, int number, bool status, string title, (float, float) position, int health, Dictionary<string, List<bool>> data = null, Dictionary<string, int> inventory = null)
     {
         SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
         sqlite_cmd.CommandText = $"UPDATE CHARACTER SET position_x = @positionX, position_y = @positionY, health = @health WHERE id = @characterId";
@@ -515,7 +522,7 @@ public static class DataBase
 
             ClearInventory(characterId);
 
-            if (status && data != null) // если уровень в процессе
+            if (status && data != null) // РµСЃР»Рё СѓСЂРѕРІРµРЅСЊ РІ РїСЂРѕС†РµСЃСЃРµ
             {
                 WriteGates(characterId, data["gate"]);
                 WriteGlass(characterId, data["glass"]);
