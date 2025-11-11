@@ -1,0 +1,714 @@
+using Mono.Data.Sqlite;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using System.Reflection;
+using UnityEngine;
+using UnityEngine.TextCore.Text;
+
+
+public static class DataBaseManager
+{
+    static Dictionary<int, string> statusLevel = new Dictionary<int, string>
+    {
+        { 0, "не пройден" },
+        { 1, "в процессе" }
+    };
+    static Dictionary<int, bool> translator = new Dictionary<int, bool>
+    {
+        { 0, false },
+        { 1, true }
+    };
+    private static string connectionString = "URI=file:" + Application.dataPath + "/StreamingAssets/DataBase.sqlite";
+    private static SqliteConnection sqliteConn;
+    private static int selectedCharacterId;
+
+    /// <summary>
+    /// Создать и открыть соединение с БД.
+    /// </summary>
+    public static void CreateConnection()
+    {
+        SqliteConnection conn = new SqliteConnection(connectionString);
+
+        try
+        {
+            conn.Open();
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+        }
+
+        sqliteConn = conn;
+    }
+
+    /// <summary>
+    /// Закрыть текущее соединение с БД.
+    /// </summary>
+    public static void CloseConnection()
+    {
+        sqliteConn.Close();
+    }
+
+    /// <summary>
+    /// Установить ID текущего игрока/персонажа.
+    /// </summary>
+    /// <param name="characterId">ID персонажа.</param>
+    public static void setCharacterId(int characterId)
+    {
+        selectedCharacterId = characterId;
+    }
+
+    /// <summary>
+    /// Получить статус и название сцены уровня для текущего игрока/персонажа.
+    /// </summary>
+    /// <returns>
+    /// Двумерный кортеж строк: первый элемент — статус уровня; второй элемент — название уровня.
+    /// </returns>
+    public static (string, string) GetInfoLevel()
+    {
+        int status = 0;
+        string title = string.Empty;
+        SqliteDataReader sqlite_datareader;
+        SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
+        sqlite_cmd.CommandText = "SELECT status, title FROM LEVEL WHERE CHARACTER_id = @characterId";
+        sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
+
+        try
+        {
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+
+            if (sqlite_datareader.Read())
+            {
+                status = Convert.ToInt32(sqlite_datareader["status"]);
+                title = sqlite_datareader["title"].ToString();
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+        }
+
+        return (statusLevel[status], title);
+    }
+
+    /// <summary>
+    /// Получить статус уровня для текущего игрока/персонажа.
+    /// </summary>
+    /// <returns>
+    /// Статус уровня в виде строки.
+    /// </returns>
+    public static string GetStatusLevel()
+    {
+        int status = 0;
+        SqliteDataReader sqlite_datareader;
+        SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
+        sqlite_cmd.CommandText = "SELECT status FROM LEVEL WHERE CHARACTER_id = @characterId";
+        sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
+
+        try
+        {
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+
+            if (sqlite_datareader.Read())
+            {
+                status = Convert.ToInt32(sqlite_datareader["status"]);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+        }
+
+        return statusLevel[status];
+    }
+
+    /// <summary>
+    /// Получить номера уровней для всех игроков.
+    /// </summary>
+    /// <returns>
+    /// Словарь, где ключом является ID игрока/персонажа, а значением — номер уровня.
+    /// </returns>
+    public static Dictionary<int, int> GetNumberLevelForPlayers()
+    {
+        Dictionary<int, int> result = new Dictionary<int, int>();
+        SqliteDataReader sqlite_datareader;
+        SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
+        sqlite_cmd.CommandText = "SELECT number, CHARACTER_id FROM LEVEL";
+
+        try
+        {
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+
+            while (sqlite_datareader.Read())
+            {
+                int number = Convert.ToInt32(sqlite_datareader["number"]);
+                int characterId = Convert.ToInt32(sqlite_datareader["CHARACTER_id"]);
+
+                result[characterId] = number;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Получить позицию текущего персонажа.
+    /// </summary>
+    /// <returns>
+    /// Двумерный кортеж 32-разрядных числовых типов данных с плавающей точкой: первый элемент — координата Ox; второй элемент — координата Oy.
+    /// </returns>
+    public static (float, float) GetCharacterPosition()
+    {
+        float x = 0f;
+        float y = 0f;
+        SqliteDataReader sqlite_datareader;
+        SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
+        sqlite_cmd.CommandText = "SELECT position_x, position_y FROM CHARACTER WHERE id = @characterId";
+        sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
+
+        try
+        {
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+
+            if (sqlite_datareader.Read())
+            {
+                x = Convert.ToSingle(sqlite_datareader["position_x"]);
+                y = Convert.ToSingle(sqlite_datareader["position_y"]);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+        }
+
+        return (x, y);
+    }
+
+    /// <summary>
+    /// Получить здоровье текущего персонажа.
+    /// </summary>
+    /// <returns>
+    /// Целое число в диапазоне от 0 до 3 включительно.
+    /// </returns>
+    public static int GetCharacterHealth()
+    {
+        int health = 3;
+        SqliteDataReader sqlite_datareader;
+        SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
+        sqlite_cmd.CommandText = "SELECT health FROM CHARACTER WHERE id = @characterId";
+        sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
+
+        try
+        {
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+
+            if (sqlite_datareader.Read())
+            {
+                health = Convert.ToInt32(sqlite_datareader["health"]);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+        }
+
+        return health;
+    }
+
+    /// <summary>
+    /// Получить инвентарь текущего персонажа.
+    /// </summary>
+    /// <returns>
+    /// Словарь, где ключом является название предмета, а значением — количество данного предмета.
+    /// </returns>
+    public static Dictionary<string, int> GetInventory()
+    {
+        Dictionary<string, int> result = new Dictionary<string, int>();
+        SqliteDataReader sqlite_datareader;
+        SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
+        sqlite_cmd.CommandText = "SELECT object_name, count FROM INVENTORY WHERE CHARACTER_id = @characterId";
+        sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
+
+        try
+        {
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+
+            while (sqlite_datareader.Read())
+            {
+                string item = sqlite_datareader["object_name"].ToString();
+                int count = Convert.ToInt32(sqlite_datareader["count"]);
+
+                result[item] = count;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Добавить предмет в инвентарь текущего персонажа.
+    /// </summary>
+    /// <param name="item">Название предмета.</param>
+    /// <param name="count">Количество предметов.</param>
+    public static void AddItemInventory(string item, int count)
+    {
+        int lastId = selectedCharacterId * 1000;
+        SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
+        sqlite_cmd.CommandText = "SELECT MAX(id) AS id FROM INVENTORY WHERE CHARACTER_id = @characterId";
+        sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
+
+        try
+        {
+            object max = sqlite_cmd.ExecuteScalar();
+            if (max != DBNull.Value)
+            {
+                lastId = Convert.ToInt32(max) + 1;
+            }
+            sqlite_cmd.Parameters.Clear();
+
+            sqlite_cmd.CommandText = "INSERT INTO INVENTORY (id, object_name, count, CHARACTER_id) VALUES(@id, @objectName, @count, @characterId)";
+            sqlite_cmd.Parameters.AddWithValue("@id", lastId);
+            sqlite_cmd.Parameters.AddWithValue("@objectName", item);
+            sqlite_cmd.Parameters.AddWithValue("@count", count);
+            sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// Удалить предмет из инвентаря текущего персонажа.
+    /// </summary>
+    /// <param name="item">Название предмета.</param>
+    public static void RemoveItemInventory(string item)
+    {
+        SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
+        sqlite_cmd.CommandText = "DELETE FROM INVENTORY WHERE CHARACTER_id = @characterId AND object_name = @objectName";
+        sqlite_cmd.Parameters.AddWithValue("@objectName", item);
+        sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
+
+        try
+        {
+            sqlite_cmd.ExecuteNonQuery();
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// Получить количество определённого предмета в инвентаре текущего персонажа по названию предмета.
+    /// </summary>
+    /// <param name="item">Название предмета.</param>
+    public static int GetInventoryByItemName(string item)
+    {
+        int count = 0;
+        SqliteDataReader sqlite_datareader;
+        SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
+        sqlite_cmd.CommandText = "SELECT count FROM INVENTORY WHERE CHARACTER_id = @characterId AND object_name = @objectName";
+        sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
+        sqlite_cmd.Parameters.AddWithValue("@objectName", item);
+
+        try
+        {
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+
+            if (sqlite_datareader.Read())
+            {
+                count = Convert.ToInt32(sqlite_datareader["count"]);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+        }
+
+        return count;
+    }
+
+    /// <summary>
+    /// Шаблон метода чтения из однотипных таблиц для текущего игрока/персонажа.
+    /// </summary>
+    /// <param name="table">Таблица в БД.</param>
+    /// <param name="item">Столбец из указанной таблицы в БД.</param>
+    /// <returns>
+    /// Словарь, где ключом является порядковый номер/ID объекта, а значением — состояние объекта.
+    /// </returns>
+    private static Dictionary<int, bool> IRead(string table, string column)
+    {
+        Dictionary<int, bool> result = new Dictionary<int, bool>();
+        SqliteDataReader sqlite_datareader;
+        SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
+        sqlite_cmd.CommandText = $"SELECT id, {column} FROM {table} WHERE CHARACTER_id = @characterId ORDER BY id";
+        sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
+
+        try
+        {
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+
+            while (sqlite_datareader.Read())
+            {
+                int id = Convert.ToInt32(sqlite_datareader["id"]);
+                int raised = Convert.ToInt32(sqlite_datareader[column]);
+
+                result[id] = translator[raised];
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Чтение таблицы ворот.
+    /// </summary>
+    /// <returns>
+    /// Словарь, где ключом является порядковый номер/ID врат, а значением — состояние врат.
+    /// </returns>
+    public static Dictionary<int, bool> ReadGates()
+    {
+        return IRead("GATES", "raised");
+    }
+
+    /// <summary>
+    /// Чтение таблицы стёкол.
+    /// </summary>
+    /// <returns>
+    /// Словарь, где ключом является порядковый номер/ID стекла, а значением — состояние стекла.
+    /// </returns>
+    public static Dictionary<int, bool> ReadGlass()
+    {
+        return IRead("GLASS", "broken");
+    }
+
+    /// <summary>
+    /// Чтение таблицы затопления.
+    /// </summary>
+    /// <returns>
+    /// Словарь, где ключом является порядковый номер/ID затопления, а значением — высота затопления.
+    /// </returns>
+    public static Dictionary<int, bool> ReadFloods()
+    {
+        return IRead("FLOOD", "height");
+    }
+
+    /// <summary>
+    /// Чтение таблицы падающих объектов.
+    /// </summary>
+    /// <returns>
+    /// Словарь, где ключом является порядковый номер/ID падающего объекта, а значением — состояние падающего объекта.
+    /// </returns>
+    public static Dictionary<int, bool> ReadFallingObjects()
+    {
+        return IRead("FALLING_OBJECT", "fell");
+    }
+
+    /// <summary>
+    /// Чтение таблицы дополнительной жизни.
+    /// </summary>
+    /// <returns>
+    /// Словарь, где ключом является порядковый номер/ID дополнительной жизни, а значением — состояние дополнительной жизни.
+    /// </returns>
+    public static Dictionary<int, bool> ReadExtraHealth()
+    {
+        return IRead("EXTRA_HEALTH", "used");
+    }
+
+    /// <summary>
+    /// Шаблон метода записи в однотипные таблицы для текущего игрока/персонажа.
+    /// </summary>
+    /// <param name="values">Список булевских состояний в строго упорядоченном виде.</param>
+    /// <param name="table">Таблица в БД.</param>
+    /// <param name="item">Столбец из указанной таблицы в БД.</param>
+    private static void IWrite(List<bool> values, string table, string column)
+    {
+        int id = selectedCharacterId * 1000;
+        SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
+        IDelete(table);
+
+        try
+        {
+            foreach (var value in values)
+            {
+                sqlite_cmd.CommandText = $"INSERT INTO {table} (id, {column}, CHARACTER_id) VALUES(@id, @value, @characterId)";
+                sqlite_cmd.Parameters.AddWithValue("@id", id);
+                sqlite_cmd.Parameters.AddWithValue("@value", value ? 1 : 0);
+                sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
+                sqlite_cmd.ExecuteNonQuery();
+                sqlite_cmd.Parameters.Clear();
+                id++;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// Запись в таблицу врат.
+    /// </summary>
+    /// <param name="values">Список булевский состояний в строго упорядоченном виде.</param>
+    private static void WriteGates(List<bool> values)
+    {
+        IWrite(values, "GATES", "raised");
+    }
+
+    /// <summary>
+    /// Запись в таблицу стёкол.
+    /// </summary>
+    /// <param name="values">Список булевский состояний в строго упорядоченном виде.</param>
+    private static void WriteGlass(List<bool> values)
+    {
+        IWrite(values, "GLASS", "broken");
+    }
+
+    /// <summary>
+    /// Запись в таблицу затопления.
+    /// </summary>
+    /// <param name="values">Список высот затопления в строго упорядоченном виде.</param>
+    private static void WriteFloods(List<int> values)
+    {
+        int id = selectedCharacterId * 1000;
+        SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
+        IDelete("FLOOD");
+
+        try
+        {
+            foreach (var value in values)
+            {
+                sqlite_cmd.CommandText = $"INSERT INTO FLOOD (id, height, CHARACTER_id) VALUES(@id, @value, @characterId)";
+                sqlite_cmd.Parameters.AddWithValue("@id", id);
+                sqlite_cmd.Parameters.AddWithValue("@value", value);
+                sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
+                sqlite_cmd.ExecuteNonQuery();
+                sqlite_cmd.Parameters.Clear();
+                id++;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// Запись в таблицу падающих объектов.
+    /// </summary>
+    /// <param name="values">Список булевский состояний в строго упорядоченном виде.</param>
+    private static void WriteFallingObjects(List<bool> values)
+    {
+        IWrite(values, "FALLING_OBJECT", "fell");
+    }
+
+    /// <summary>
+    /// Запись в таблицу дополнительной жизни.
+    /// </summary>
+    /// <param name="values">Список булевский состояний в строго упорядоченном виде.</param>
+    private static void WriteExtraHealth(List<bool> values)
+    {
+        IWrite(values, "EXTRA_HEALTH", "used");
+    }
+
+    /// <summary>
+    /// Шаблон метода удаления из таблиц для текущего игрока/персонажа.
+    /// </summary>
+    /// <param name="table">Таблица в БД.</param>
+    private static void IDelete(string table)
+    {
+        SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
+        sqlite_cmd.CommandText = $"DELETE FROM {table} WHERE CHARACTER_id = @characterId";
+        sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
+
+        try
+        {
+            sqlite_cmd.ExecuteNonQuery();
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// Удаление инвентаря.
+    /// </summary>
+    private static void ClearInventory()
+    {
+        IDelete("INVENTORY");
+    }
+
+    /// <summary>
+    /// Удаление врат.
+    /// </summary>
+    private static void ClearGates()
+    {
+        IDelete("GATES");
+    }
+
+    /// <summary>
+    /// Удаление стёкол.
+    /// </summary>
+    private static void ClearGlass()
+    {
+        IDelete("GLASS");
+    }
+
+    /// <summary>
+    /// Удаление затопления.
+    /// </summary>
+    private static void ClearFloods()
+    {
+        IDelete("FLOOD");
+    }
+
+    /// <summary>
+    /// Удаление падающих объектов.
+    /// </summary>
+    private static void ClearFallingObjects()
+    {
+        IDelete("FALLING_OBJECT");
+    }
+
+    /// <summary>
+    /// Удаление дополнительной жизни.
+    /// </summary>
+    private static void ClearExtraHealth()
+    {
+        IDelete("EXTRA_HEALTH");
+    }
+
+    /// <summary>
+    /// Удалить текущего игрока/персонажа.
+    /// </summary>
+    public static void DeleteCharacter()
+    {
+        SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
+        sqlite_cmd.CommandText = "DELETE FROM CHARACTER WHERE id = @characterId";
+        sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
+
+        try
+        {
+            sqlite_cmd.ExecuteNonQuery();
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// Создать нового игрока/персонажа.
+    /// </summary>
+    /// <param name="characterId">ID игрока/персонажа.</param>
+    public static void CreateCharacter(int characterId)
+    {
+        SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
+        sqlite_cmd.CommandText = "INSERT INTO CHARACTER (id, position_x, position_y, health) VALUES(@characterId, 0, 0, 3)";
+        sqlite_cmd.Parameters.AddWithValue("@characterId", characterId);
+
+        try
+        {
+            sqlite_cmd.ExecuteNonQuery();
+            sqlite_cmd.Parameters.Clear();
+
+            sqlite_cmd.CommandText = "INSERT INTO LEVEL (id, number, status, title, CHARACTER_id) VALUES(@id, 1, 0, @title, @characterId)";
+            sqlite_cmd.Parameters.AddWithValue("@id", characterId);
+            sqlite_cmd.Parameters.AddWithValue("@title", "Level1");
+            sqlite_cmd.Parameters.AddWithValue("@characterId", characterId);
+            sqlite_cmd.ExecuteNonQuery();
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+        }
+    }
+
+    /// <summary>
+    /// Сохранить данные в БД.
+    /// </summary>
+    /// <param name="number">Номер уровня.</param>
+    /// <param name="status">Статус уровня (булевский).</param>
+    /// <param name="position">Двумерный кортеж 32-разрядных числовых типов данных с плавающей точкой: первый элемент — координата Ox; второй элемент — координата Oy.</param>
+    /// <param name="health">Здоровье в диапазоне от 0 до 3 включительно.</param>
+    /// <param name="data">Словарь, где ключом является название объекта из перечисления: gate, glass, falling_object, extra_health, а значением — список булевских состояний объектов в строго упорядоченном виде.</param>
+    /// <param name="flood">Список высот затоплений в строго упорядоченном виде.</param>
+    /// <param name="inventory">Словарь, где ключом является название предмета в инвентаре, а значением — количество данного предмета в инвентаре.</param>
+    public static void SaveData(int number, bool status, string title, (float, float) position, int health, Dictionary<string, List<bool>> data = null, List<int> flood = null, Dictionary<string, int> inventory = null)
+    {
+        SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
+        sqlite_cmd.CommandText = $"UPDATE CHARACTER SET position_x = @positionX, position_y = @positionY, health = @health WHERE id = @characterId";
+        sqlite_cmd.Parameters.AddWithValue("@positionX", position.Item1);
+        sqlite_cmd.Parameters.AddWithValue("@positionY", position.Item2);
+        sqlite_cmd.Parameters.AddWithValue("@health", health);
+        sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
+
+        try
+        {
+            sqlite_cmd.ExecuteNonQuery();
+            sqlite_cmd.Parameters.Clear();
+
+            sqlite_cmd.CommandText = "UPDATE LEVEL SET number = @number, status = @status, title = @title WHERE CHARACTER_id = @characterId";
+            sqlite_cmd.Parameters.AddWithValue("@number", number);
+            sqlite_cmd.Parameters.AddWithValue("@status", status ? 1 : 0);
+            sqlite_cmd.Parameters.AddWithValue("@title", title);
+            sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
+            sqlite_cmd.ExecuteNonQuery();
+
+            ClearInventory();
+
+            if (status)
+            {
+                if (data != null)
+                {
+                    WriteGates(data["gate"]);
+                    WriteGlass(data["glass"]);
+                    WriteFallingObjects(data["falling_object"]);
+                    WriteExtraHealth(data["extra_health"]);
+                }
+
+                if (flood != null)
+                {
+                    WriteFloods(flood);
+                }
+
+                if (inventory != null)
+                {
+                    foreach (var item in inventory)
+                    {
+                        AddItemInventory(item.Key, item.Value);
+                    }
+                }
+            }
+            else
+            {
+                ClearGates();
+                ClearGlass();
+                ClearFloods();
+                ClearFallingObjects();
+                ClearExtraHealth();
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+        }
+    }
+}
