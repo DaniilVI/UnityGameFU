@@ -11,12 +11,12 @@ using UnityEngine.TextCore.Text;
 
 public static class DataBaseManager
 {
-    static Dictionary<int, string> statusLevel = new Dictionary<int, string>
+    private static Dictionary<int, string> statusLevel = new Dictionary<int, string>
     {
         { 0, "не пройден" },
         { 1, "в процессе" }
     };
-    static Dictionary<int, bool> translator = new Dictionary<int, bool>
+    private static Dictionary<int, bool> translator = new Dictionary<int, bool>
     {
         { 0, false },
         { 1, true }
@@ -404,9 +404,32 @@ public static class DataBaseManager
     /// <returns>
     /// Словарь, где ключом является порядковый номер/ID затопления, а значением — высота затопления.
     /// </returns>
-    public static Dictionary<int, bool> ReadFloods()
+    public static Dictionary<int, float> ReadFloods()
     {
-        return IRead("FLOOD", "height");
+        Dictionary<int, float> result = new Dictionary<int, float>();
+        SqliteDataReader sqlite_datareader;
+        SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
+        sqlite_cmd.CommandText = $"SELECT id, height FROM FLOOD WHERE CHARACTER_id = @characterId ORDER BY id";
+        sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
+
+        try
+        {
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+
+            while (sqlite_datareader.Read())
+            {
+                int id = Convert.ToInt32(sqlite_datareader["id"]);
+                float raised = Convert.ToSingle(sqlite_datareader["height"]);
+
+                result[id] = raised;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+        }
+
+        return result;
     }
 
     /// <summary>
@@ -484,7 +507,7 @@ public static class DataBaseManager
     /// Запись в таблицу затопления.
     /// </summary>
     /// <param name="values">Список высот затопления в строго упорядоченном виде.</param>
-    private static void WriteFloods(List<int> values)
+    private static void WriteFloods(List<float> values)
     {
         int id = selectedCharacterId * 1000;
         SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
@@ -651,7 +674,7 @@ public static class DataBaseManager
     /// <param name="data">Словарь, где ключом является название объекта из перечисления: gate, glass, falling_object, extra_health, а значением — список булевских состояний объектов в строго упорядоченном виде.</param>
     /// <param name="flood">Список высот затоплений в строго упорядоченном виде.</param>
     /// <param name="inventory">Словарь, где ключом является название предмета в инвентаре, а значением — количество данного предмета в инвентаре.</param>
-    public static void SaveData(int number, bool status, string title, (float, float) position, int health, Dictionary<string, List<bool>> data = null, List<int> flood = null, Dictionary<string, int> inventory = null)
+    public static void SaveData(int number, bool status, string title, (float, float) position, int health, Dictionary<string, List<bool>> data = null, List<float> flood = null, Dictionary<string, int> inventory = null)
     {
         SqliteCommand sqlite_cmd = sqliteConn.CreateCommand();
         sqlite_cmd.CommandText = $"UPDATE CHARACTER SET position_x = @positionX, position_y = @positionY, health = @health WHERE id = @characterId";
