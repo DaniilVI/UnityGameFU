@@ -24,12 +24,12 @@ public class SpherePickup : MonoBehaviour
         if (pickupSound) AudioSource.PlayClipAtPoint(pickupSound, transform.position);
 
         // Деактивируем сферу (вместо Destroy) — потом Beam может вызвать Respawn
-        gameObject.SetActive(false);
+        gameObject.transform.parent.gameObject.SetActive(false);
     }
 
     // Вызывать извне (Beam) чтобы снова сделать сферу доступной
     public void Respawn()
     {
-        gameObject.SetActive(true);
+        gameObject.transform.parent.gameObject.SetActive(true);
     }
 }
