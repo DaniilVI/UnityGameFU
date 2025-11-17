@@ -14,6 +14,7 @@ public class SpecialPlatformMove : MonoBehaviour
     private float elapsed = 0f;
     private bool moving = false;
     private bool finished = false;
+    private bool justStopped = false;
 
     private Vector3 prevPos;
 
@@ -31,11 +32,18 @@ public class SpecialPlatformMove : MonoBehaviour
         if (moving && !finished)
             MovePlatform();
 
-        // перенос игрока
         if (playerRb != null)
         {
             Vector3 delta = transform.position - prevPos;
-            playerRb.position += (Vector2)delta;
+            playerRb.position += new Vector2(delta.x, 0f);
+
+            if (justStopped)
+            {
+                Vector3 v = playerRb.velocity;
+                v.y = 0f;
+                playerRb.velocity = v;
+                justStopped = false;
+            }
         }
 
         prevPos = transform.position;
@@ -53,6 +61,7 @@ public class SpecialPlatformMove : MonoBehaviour
         {
             finished = true;
             moving = false;
+            justStopped = true;
         }
     }
 
@@ -78,6 +87,7 @@ public class SpecialPlatformMove : MonoBehaviour
         elapsed = 0f;
         moving = false;
         finished = false;
+        justStopped = false;
         prevPos = startPoint;
     }
 }

@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockEarth (17)
       objectReference: {fileID: 0}
+    - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7427184204100603400, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 27
@@ -600,6 +604,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockEarth (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7427184204100603400, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11
@@ -662,6 +670,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockPlatform
       objectReference: {fileID: 0}
+    - target: {fileID: 2510445240578813036, guid: 37bfd90892e4c1d48af0a7c12bc1a3e4, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9040006139629664515, guid: 37bfd90892e4c1d48af0a7c12bc1a3e4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -718,6 +730,10 @@ PrefabInstance:
     - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_Name
       value: BlockEarth (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7427184204100603400, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -780,6 +796,10 @@ PrefabInstance:
     - target: {fileID: 3993195620918315950, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
       propertyPath: m_Name
       value: BlockWater (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3993195620918315950, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7595617859123812155, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1051,6 +1071,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockWater (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 3993195620918315950, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7595617859123812155, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19
@@ -1112,6 +1136,10 @@ PrefabInstance:
     - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_Name
       value: BlockEarth (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7427184204100603400, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1245,6 +1273,10 @@ PrefabInstance:
     - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_Name
       value: BlockEarth (19)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7427184204100603400, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1410,6 +1442,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockEarth (16)
       objectReference: {fileID: 0}
+    - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7427184204100603400, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 26
@@ -1542,6 +1578,10 @@ PrefabInstance:
     - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_Name
       value: BlockEarth (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7427184204100603400, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2100,6 +2140,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockWater (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 3993195620918315950, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7595617859123812155, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
       propertyPath: m_LocalPosition.x
       value: 24
@@ -2301,6 +2345,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockEarth (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7427184204100603400, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5
@@ -2362,6 +2410,10 @@ PrefabInstance:
     - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_Name
       value: BlockEarth (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7427184204100603400, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2910,6 +2962,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockPlatform (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 2510445240578813036, guid: 37bfd90892e4c1d48af0a7c12bc1a3e4, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9040006139629664515, guid: 37bfd90892e4c1d48af0a7c12bc1a3e4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2966,6 +3022,10 @@ PrefabInstance:
     - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_Name
       value: BlockEarth (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7427184204100603400, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3095,6 +3155,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockPlatform (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2510445240578813036, guid: 37bfd90892e4c1d48af0a7c12bc1a3e4, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9040006139629664515, guid: 37bfd90892e4c1d48af0a7c12bc1a3e4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1
@@ -3217,6 +3281,10 @@ PrefabInstance:
     - target: {fileID: 2510445240578813036, guid: 37bfd90892e4c1d48af0a7c12bc1a3e4, type: 3}
       propertyPath: m_Name
       value: BlockPlatform (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2510445240578813036, guid: 37bfd90892e4c1d48af0a7c12bc1a3e4, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9040006139629664515, guid: 37bfd90892e4c1d48af0a7c12bc1a3e4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3358,6 +3426,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockEarth (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7427184204100603400, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 12
@@ -3419,6 +3491,10 @@ PrefabInstance:
     - target: {fileID: 3993195620918315950, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
       propertyPath: m_Name
       value: BlockWater (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3993195620918315950, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7595617859123812155, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4004,6 +4080,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockWater (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 3993195620918315950, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7595617859123812155, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
       propertyPath: m_LocalPosition.x
       value: 23
@@ -4249,6 +4329,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockEarth (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7427184204100603400, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2
@@ -4311,6 +4395,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockPlatform (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2510445240578813036, guid: 37bfd90892e4c1d48af0a7c12bc1a3e4, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9040006139629664515, guid: 37bfd90892e4c1d48af0a7c12bc1a3e4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1
@@ -4367,6 +4455,10 @@ PrefabInstance:
     - target: {fileID: 3993195620918315950, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
       propertyPath: m_Name
       value: BlockWater (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3993195620918315950, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7595617859123812155, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4592,7 +4684,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTag: Player
   startPoint: {x: 5, y: -3.75, z: 0}
-  finishPoint: {x: 8, y: -3.75, z: 0}
+  finishPoint: {x: 8, y: -2.75, z: 0}
   transitTime: 1
 --- !u!61 &1454807095
 BoxCollider2D:
@@ -4891,6 +4983,10 @@ PrefabInstance:
     - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_Name
       value: BlockEarth (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7427184204100603400, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5191,6 +5287,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockEarth (20)
       objectReference: {fileID: 0}
+    - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7427184204100603400, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 30
@@ -5319,6 +5419,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockEarth (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7427184204100603400, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4
@@ -5380,6 +5484,10 @@ PrefabInstance:
     - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_Name
       value: BlockEarth (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7427184204100603400, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5448,6 +5556,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockWater (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 3993195620918315950, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7595617859123812155, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
       propertyPath: m_LocalPosition.x
       value: 21
@@ -5509,6 +5621,10 @@ PrefabInstance:
     - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_Name
       value: BlockEarth (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7427184204100603400, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5821,6 +5937,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockWater (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 3993195620918315950, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7595617859123812155, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
       propertyPath: m_LocalPosition.x
       value: 20
@@ -5930,6 +6050,10 @@ PrefabInstance:
     - target: {fileID: 3993195620918315950, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
       propertyPath: m_Name
       value: BlockWater (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3993195620918315950, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7595617859123812155, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6193,6 +6317,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockEarth (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7427184204100603400, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 25
@@ -6254,6 +6382,10 @@ PrefabInstance:
     - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_Name
       value: BlockEarth (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7427184204100603400, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6444,6 +6576,10 @@ PrefabInstance:
     - target: {fileID: 2510445240578813036, guid: 37bfd90892e4c1d48af0a7c12bc1a3e4, type: 3}
       propertyPath: m_Name
       value: BlockPlatform (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2510445240578813036, guid: 37bfd90892e4c1d48af0a7c12bc1a3e4, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9040006139629664515, guid: 37bfd90892e4c1d48af0a7c12bc1a3e4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6795,6 +6931,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlockEarth (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7427184204100603400, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3
@@ -6856,6 +6996,10 @@ PrefabInstance:
     - target: {fileID: 2510445240578813036, guid: 37bfd90892e4c1d48af0a7c12bc1a3e4, type: 3}
       propertyPath: m_Name
       value: BlockPlatform (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2510445240578813036, guid: 37bfd90892e4c1d48af0a7c12bc1a3e4, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9040006139629664515, guid: 37bfd90892e4c1d48af0a7c12bc1a3e4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7150,6 +7294,10 @@ PrefabInstance:
     - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_Name
       value: BlockEarth
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837398194001098555, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7427184204100603400, guid: edf9e0da79c4ed14cba9278a7aa58ea4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7530,6 +7678,10 @@ PrefabInstance:
       propertyPath: spawnPositions.y
       value: -4
       objectReference: {fileID: 0}
+    - target: {fileID: 3060976652112572619, guid: b694a0366e5c0f84198fd9441b7a187b, type: 3}
+      propertyPath: groundMask.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4569200854278726770, guid: b694a0366e5c0f84198fd9441b7a187b, type: 3}
       propertyPath: m_Name
       value: Character
@@ -7647,6 +7799,10 @@ PrefabInstance:
     - target: {fileID: 3993195620918315950, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
       propertyPath: m_Name
       value: BlockWater
+      objectReference: {fileID: 0}
+    - target: {fileID: 3993195620918315950, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7595617859123812155, guid: 9a0a9aaf455c00146b1ae22dfbf046af, type: 3}
       propertyPath: m_LocalPosition.x
