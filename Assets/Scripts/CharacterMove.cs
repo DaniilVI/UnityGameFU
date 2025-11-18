@@ -185,6 +185,10 @@ public class CharacterMove : MonoBehaviour
 
     private void Jump()
     {
+        Vector3 v = rb.velocity;
+        v.y = 0f;
+        rb.velocity = v;
+        
         rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
 
