@@ -5,7 +5,19 @@ public class PlayerAbilities : MonoBehaviour
     public enum Ability { Dash = 0, Shrink = 1, Attack = 2 }
 
     [Header("State")]
-    public bool hasKey = false;
+    private bool hasKey = false;
+
+    private int money = 0;
+
+    public bool Key
+    {
+        get { return hasKey; }
+    }
+
+    public int Money
+    { 
+        get { return money; }
+    }
 
     // Используем массив булевых флагов для лёгкого индексирования по типу сферы
     private bool[] abilities = new bool[3];

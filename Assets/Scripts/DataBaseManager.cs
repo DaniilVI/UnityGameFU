@@ -669,6 +669,7 @@ public static class DataBaseManager
     /// </summary>
     /// <param name="number">Номер уровня.</param>
     /// <param name="status">Статус уровня (булевский).</param>
+    /// <param name="title">Название сцены уровня.</param>
     /// <param name="position">Двумерный кортеж 32-разрядных числовых типов данных с плавающей точкой: первый элемент — координата Ox; второй элемент — координата Oy.</param>
     /// <param name="health">Здоровье в диапазоне от 0 до 3 включительно.</param>
     /// <param name="data">Словарь, где ключом является название объекта из перечисления: gate, glass, falling_object, extra_health, а значением — список булевских состояний объектов в строго упорядоченном виде.</param>

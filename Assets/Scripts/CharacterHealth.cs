@@ -10,6 +10,10 @@ public class CharacterHealth : MonoBehaviour
     private int health = 3;
     private Vector3 lastCheckpoint;
 
+    public int Health {
+        get { return health; } 
+    }
+
     void Start()
     {
         lastCheckpoint = spawnPositions;
