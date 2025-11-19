@@ -10,16 +10,29 @@ public class PlatformMove : MonoBehaviour
     private float elapsedTime = 0f;
     private bool movingToFinish = true;
     private float waitTimer = 0f;
+    private Rigidbody2D rb;
+    private Rigidbody2D playerRb;
+    private Vector3 prevPos;
 
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         transform.position = startPoint;
+        prevPos = startPoint;
     }
 
     void FixedUpdate()
     {
         Move();
+
+        if (playerRb != null)
+        {
+            Vector3 delta = transform.position - prevPos;
+            playerRb.position += new Vector2(delta.x, 0f);
+        }
+
+        prevPos = transform.position;
     }
 
     private void Move()
@@ -35,11 +48,11 @@ public class PlatformMove : MonoBehaviour
 
         if (movingToFinish)
         {
-            transform.position = Vector3.Lerp(startPoint, finishPoint, t);
+            rb.MovePosition(Vector3.Lerp(startPoint, finishPoint, t));
         }
         else
         {
-            transform.position = Vector3.Lerp(finishPoint, startPoint, t);
+            rb.MovePosition(Vector3.Lerp(finishPoint, startPoint, t));
         }
 
         if (elapsedTime >= transitTime)
@@ -52,17 +65,17 @@ public class PlatformMove : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && gameObject.activeInHierarchy)
+        if (collision.gameObject.CompareTag("Player"))
         {
-            collision.transform.parent = transform;
+            playerRb = collision.gameObject.GetComponent<Rigidbody2D>();
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && gameObject.activeInHierarchy)
+        if (collision.gameObject.CompareTag("Player"))
         {
-            collision.transform.parent = null;
+            playerRb = null;
         }
     }
 }
