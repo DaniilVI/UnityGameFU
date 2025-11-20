@@ -10,6 +10,8 @@ public class PlatformMove : MonoBehaviour
     private float elapsedTime = 0f;
     private bool movingToFinish = true;
     private float waitTimer = 0f;
+    private bool justStopped = false;
+
     private Rigidbody2D rb;
     private Rigidbody2D playerRb;
     private Vector3 prevPos;
@@ -28,8 +30,18 @@ public class PlatformMove : MonoBehaviour
 
         if (playerRb != null)
         {
-            Vector3 delta = transform.position - prevPos;
-            playerRb.position += new Vector2(delta.x, 0f);
+            if (justStopped)
+            {
+                Vector3 v = playerRb.velocity;
+                v.y = 0f;
+                playerRb.velocity = v;
+                justStopped = false;
+            }
+            else
+            {
+                Vector3 delta = transform.position - prevPos;
+                playerRb.position += new Vector2(delta.x, 0f);
+            }
         }
 
         prevPos = transform.position;
@@ -39,12 +51,12 @@ public class PlatformMove : MonoBehaviour
     {
         if (waitTimer > 0)
         {
-            waitTimer -= Time.deltaTime;
+            waitTimer -= Time.fixedDeltaTime;;
             return;
         }
 
-        elapsedTime += Time.deltaTime;
-        float t = elapsedTime / transitTime;
+        elapsedTime += Time.fixedDeltaTime;;
+        float t = Mathf.Clamp01(elapsedTime / transitTime);
 
         if (movingToFinish)
         {
@@ -55,11 +67,12 @@ public class PlatformMove : MonoBehaviour
             rb.MovePosition(Vector3.Lerp(finishPoint, startPoint, t));
         }
 
-        if (elapsedTime >= transitTime)
+        if (t >= 1f)
         {
             waitTimer = waitingTime;
             elapsedTime = 0f;
             movingToFinish = !movingToFinish;
+            justStopped = true;
         }
     }
 
@@ -67,7 +80,14 @@ public class PlatformMove : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            playerRb = collision.gameObject.GetComponent<Rigidbody2D>();
+            foreach (ContactPoint2D contact in collision.contacts)
+            {
+                if (Vector2.Dot(contact.normal, Vector2.down) > 0.5f)
+                {
+                    playerRb = collision.gameObject.GetComponent<Rigidbody2D>();
+                    break;
+                }
+            }
         }
     }
 
