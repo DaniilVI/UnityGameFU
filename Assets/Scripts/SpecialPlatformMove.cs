@@ -34,15 +34,17 @@ public class SpecialPlatformMove : MonoBehaviour
 
         if (playerRb != null)
         {
-            Vector3 delta = transform.position - prevPos;
-            playerRb.position += new Vector2(delta.x, 0f);
-
             if (justStopped)
             {
                 Vector3 v = playerRb.velocity;
                 v.y = 0f;
                 playerRb.velocity = v;
                 justStopped = false;
+            }
+            else
+            {
+                Vector3 delta = transform.position - prevPos;
+                playerRb.position += new Vector2(delta.x, 0f);
             }
         }
 
@@ -69,8 +71,15 @@ public class SpecialPlatformMove : MonoBehaviour
     {
         if (col.gameObject.CompareTag(playerTag))
         {
-            playerRb = col.gameObject.GetComponent<Rigidbody2D>();
-            moving = true;
+            foreach (ContactPoint2D contact in col.contacts)
+            {
+                if (Vector2.Dot(contact.normal, Vector2.down) > 0.5f)
+                {
+                    playerRb = col.gameObject.GetComponent<Rigidbody2D>();
+                    moving = true;
+                    break;
+                }
+            }
         }
     }
 
