@@ -20,8 +20,6 @@ public class SaveDataCollector : MonoBehaviour
 
     public static void SaveProgress()
     {
-        string sceneName = "";
-        int levelNumber = 1;
         int health = 3;
         Vector3 position = new Vector3(0, 0, 0);
         List<float> floodHeight = new List<float>();
@@ -31,16 +29,13 @@ public class SaveDataCollector : MonoBehaviour
         Scene scene = SceneManager.GetActiveScene();
         GameObject[] rootObjects = scene.GetRootGameObjects();
 
+        string sceneName = scene.name;
+        string numberPart = scene.name.Replace("Level", "");
+        int levelNumber = int.Parse(numberPart);
+
         foreach (GameObject obj in rootObjects)
         {
-            if (obj.name == "Door")
-            {
-                Door door = obj.GetComponent<Door>();
-                sceneName = door.SceneName;
-                string numberPart = sceneName.Replace("Level", "");
-                levelNumber = int.Parse(numberPart);
-            } 
-            else if (obj.name == "Character")
+            if (obj.name == "Character")
             {
                 position = obj.transform.position;
 
@@ -60,14 +55,9 @@ public class SaveDataCollector : MonoBehaviour
             {
                 List<bool> values = new List<bool>();
 
-                GameObject parentObject = obj;
-                int childCount = parentObject.transform.childCount;
-
-                for (int i = 0; i < childCount; i++)
+                foreach (Transform child in obj.transform)
                 {
-                    Transform child = parentObject.transform.GetChild(i);
-                    GameObject childGameObject = child.gameObject;
-                    GateMove gateMove = childGameObject.GetComponent<GateMove>();
+                    GateMove gateMove = child.gameObject.GetComponent<GateMove>();
                     values.Add(gateMove.Status);
                 }
 
@@ -75,17 +65,12 @@ public class SaveDataCollector : MonoBehaviour
             }
             else if (obj.name == "ExtraHealth")
             {
-                List<bool> values = new List<bool>();
-
-                GameObject parentObject = obj;
-                int childCount = parentObject.transform.childCount;
-
-                for (int i = 0; i < childCount; i++)
+                List<bool> values = new List<bool>
                 {
-                    Transform child = parentObject.transform.GetChild(i);
-                    GameObject childGameObject = child.gameObject;
-                    values.Add(false);
-                }
+                    false
+                };
+
+                //values.Add(obj.transform.gameObject.activeSelf);
 
                 data.Add("extra_health", values);
             }
@@ -93,13 +78,9 @@ public class SaveDataCollector : MonoBehaviour
             {
                 List<bool> values = new List<bool>();
 
-                GameObject parentObject = obj;
-                int childCount = parentObject.transform.childCount;
-
-                for (int i = 0; i < childCount; i++)
+                foreach (Transform child in obj.transform)
                 {
-                    Transform child = parentObject.transform.GetChild(i);
-                    GameObject childGameObject = child.gameObject;
+                    //values.Add(child.gameObject.activeSelf);
                     values.Add(false);
                 }
 
@@ -109,14 +90,9 @@ public class SaveDataCollector : MonoBehaviour
             {
                 List<bool> values = new List<bool>();
 
-                GameObject parentObject = obj;
-                int childCount = parentObject.transform.childCount;
-
-                for (int i = 0; i < childCount; i++)
+                foreach (Transform child in obj.transform)
                 {
-                    Transform child = parentObject.transform.GetChild(i);
-                    GameObject childGameObject = child.gameObject;
-                    values.Add(childGameObject.activeSelf);
+                    values.Add(child.gameObject.activeSelf);
                 }
 
                 data.Add("glass", values);
