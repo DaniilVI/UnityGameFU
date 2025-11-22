@@ -17,6 +17,11 @@ public class GateMove : MonoBehaviour
     private bool movingToFinish = true;
     private Coroutine moveRoutine;
 
+    public bool Status
+    {
+        get { return movingToFinish; }
+    }
+
     public void Move()
     {
         if (moveRoutine != null)

@@ -7,6 +7,12 @@ public class Door : MonoBehaviour
     [SerializeField] private string playerTag = "Player";
     [SerializeField] private string sceneName = "LevelTest";
     [SerializeField] private AudioClip openSound;
+
+    public string SceneName
+    {
+        get { return sceneName; }
+    }
+
     private void Awake()
     {
         GetComponent<Collider2D>().isTrigger = true;
@@ -19,7 +25,7 @@ public class Door : MonoBehaviour
         PlayerAbilities pa = other.GetComponent<PlayerAbilities>();
         if (pa == null) return;
 
-        if (pa.hasKey)
+        if (pa.Key)
         {
             Scene scene = SceneManager.GetSceneByName(sceneName);
             if (openSound) AudioSource.PlayClipAtPoint(openSound, transform.position);
