@@ -25,7 +25,7 @@ public class LevelSelectMenu : MonoBehaviour
             return;
         }
 
-        backButton.onClick.AddListener(() => SceneManager.LoadScene("MainMenu"));
+        backButton.onClick.AddListener(() => SceneManager.LoadScene("SaveSelect"));
 
         Button[] levelButtons = gridLevels.GetComponentsInChildren<Button>();
 
@@ -40,6 +40,9 @@ public class LevelSelectMenu : MonoBehaviour
     {
         string sceneName = "Level" + levelIndex;
         Debug.Log($"Загрузка уровня: {sceneName}");
-        SceneManager.LoadScene("LevelTest");
+        if (levelIndex == 0)
+            SceneManager.LoadScene("LevelTest");
+        else 
+            SceneManager.LoadScene("LevelTest"); // поменять LevelTest на sceneName чтобы загружать другие уровни
     }
 }

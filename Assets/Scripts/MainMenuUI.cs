@@ -5,8 +5,6 @@ using UnityEngine.UI;
 public class MainMenuUI : MonoBehaviour
 {
     [Header("Основные панели")]
-    [SerializeField] private GameObject panelMainMenu;
-    [SerializeField] private GameObject panelSettings;
     [SerializeField] private GameObject panelExitConfirm;
 
     private void Start()
@@ -16,12 +14,12 @@ public class MainMenuUI : MonoBehaviour
 
     public void OnPlayButton()
     {
-        SceneManager.LoadScene("LevelSelect");
+        SceneManager.LoadScene("SaveSelect");
     }
 
     public void OnSettingsButton()
     {
-        ShowSettings();
+        SceneManager.LoadScene("Settings");
     }
 
     public void OnExitButton()
@@ -47,22 +45,11 @@ public class MainMenuUI : MonoBehaviour
 
     private void ShowMainMenu()
     {
-        panelMainMenu.SetActive(true);
-        panelSettings.SetActive(false);
-        panelExitConfirm.SetActive(false);
-    }
-
-    private void ShowSettings()
-    {
-        panelMainMenu.SetActive(false);
-        panelSettings.SetActive(true);
         panelExitConfirm.SetActive(false);
     }
 
     private void ShowExitConfirm()
     {
-        panelMainMenu.SetActive(false);
-        panelSettings.SetActive(false);
         panelExitConfirm.SetActive(true);
     }
 }
