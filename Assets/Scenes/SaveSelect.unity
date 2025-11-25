@@ -1933,7 +1933,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "\u043F\u0443\u0441\u0442\u043E\u0439 \u0441\u043B\u043E\u0442"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1402df7c16108764fa97bb16b699b4ec, type: 2}
   m_sharedMaterial: {fileID: 712430311970835316, guid: 1402df7c16108764fa97bb16b699b4ec, type: 2}
@@ -1942,8 +1942,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2251,7 +2251,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "\u043F\u0443\u0441\u0442\u043E\u0439 \u0441\u043B\u043E\u0442"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1402df7c16108764fa97bb16b699b4ec, type: 2}
   m_sharedMaterial: {fileID: 712430311970835316, guid: 1402df7c16108764fa97bb16b699b4ec, type: 2}
@@ -2260,8 +2260,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2449,7 +2449,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "\u043F\u0443\u0441\u0442\u043E\u0439 \u0441\u043B\u043E\u0442"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1402df7c16108764fa97bb16b699b4ec, type: 2}
   m_sharedMaterial: {fileID: 712430311970835316, guid: 1402df7c16108764fa97bb16b699b4ec, type: 2}
@@ -2458,8 +2458,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2845,7 +2845,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "\u043F\u0443\u0441\u0442\u043E\u0439 \u0441\u043B\u043E\u0442"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1402df7c16108764fa97bb16b699b4ec, type: 2}
   m_sharedMaterial: {fileID: 712430311970835316, guid: 1402df7c16108764fa97bb16b699b4ec, type: 2}
@@ -2854,8 +2854,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

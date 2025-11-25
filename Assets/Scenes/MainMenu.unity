@@ -1561,7 +1561,7 @@ MonoBehaviour:
   backgrounds:
   - {fileID: 21300000, guid: fec3ea8cd7b803a4aa7ff060fba5c227, type: 3}
   - {fileID: 21300000, guid: f41b22e7d8acc9c4589df3497412d3d6, type: 3}
-  - {fileID: 21300000, guid: a011cf30a1f4257429eb58e96bcc9180, type: 3}
+  - {fileID: 21300000, guid: b4b853b938af47640817698a1cd262a3, type: 3}
 --- !u!1 &1957024087
 GameObject:
   m_ObjectHideFlags: 0
@@ -1619,7 +1619,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0432\u044B\u0439\u0442\u0438"
+  m_text: "\u0432\u044B\u0445\u043E\u0434"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1402df7c16108764fa97bb16b699b4ec, type: 2}
   m_sharedMaterial: {fileID: 712430311970835316, guid: 1402df7c16108764fa97bb16b699b4ec, type: 2}
