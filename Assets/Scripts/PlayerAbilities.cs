@@ -7,16 +7,18 @@ public class PlayerAbilities : MonoBehaviour
     [Header("State")]
     private bool hasKey = false;
 
-    private int money = 0;
+    private bool hasMoney = false;
 
     public bool Key
     {
         get { return hasKey; }
+        set { hasKey = value; }
     }
 
-    public int Money
+    public bool Money
     { 
-        get { return money; }
+        get { return hasMoney; }
+        set { hasMoney = value; }
     }
 
     // Используем массив булевых флагов для лёгкого индексирования по типу сферы

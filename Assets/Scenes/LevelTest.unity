@@ -4044,7 +4044,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1068913548}
   m_Layer: 0
-  m_Name: SphereSize
+  m_Name: SphereShrink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
