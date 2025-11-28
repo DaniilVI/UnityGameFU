@@ -27,11 +27,6 @@ public class MainMenuUI : MonoBehaviour
         ShowExitConfirm();
     }
 
-    public void OnBackFromSettings()
-    {
-        ShowMainMenu();
-    }
-
     public void OnConfirmExitYes()
     {
         Debug.Log("Выход из игры...");
