@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
+using UnityEngine.UI;
 
 public class CharacterHealth : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class CharacterHealth : MonoBehaviour
     public int Health {
         get { return health; } 
     }
+
+    [Header("UI")]
+    public Image healthImage;
+    public Sprite[] healthSprites;
 
     void Start()
     {
@@ -31,6 +36,7 @@ public class CharacterHealth : MonoBehaviour
             }
 
             health--;
+            UpdateUI();
 
             if (health > 0)
             {
@@ -62,5 +68,13 @@ public class CharacterHealth : MonoBehaviour
     public void SetCheckpoint(Vector3 checkpoint)
     {
         lastCheckpoint = checkpoint;
+    }
+
+    private void UpdateUI()
+    {
+        if (healthImage == null || healthSprites.Length == 0) return;
+
+        int index = Mathf.Clamp(health, 0, healthSprites.Length - 1);
+        healthImage.sprite = healthSprites[index];
     }
 }
