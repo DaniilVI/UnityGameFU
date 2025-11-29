@@ -14,16 +14,18 @@ public class PlayerAbilities : MonoBehaviour
     [SerializeField] private Sprite[] activeSprites;
     [SerializeField] private GameObject keyIcon;
 
-    private int money = 0;
+    private bool hasMoney = false;
 
     public bool Key
     {
         get { return hasKey; }
+        set { hasKey = value; }
     }
 
-    public int Money
+    public bool Money
     { 
-        get { return money; }
+        get { return hasMoney; }
+        set { hasMoney = value; }
     }
 
     // Используем массив булевых флагов для лёгкого индексирования по типу сферы

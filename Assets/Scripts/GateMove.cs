@@ -20,6 +20,7 @@ public class GateMove : MonoBehaviour
     public bool Status
     {
         get { return movingToFinish; }
+        set { movingToFinish = value; }
     }
 
     public void Move()
