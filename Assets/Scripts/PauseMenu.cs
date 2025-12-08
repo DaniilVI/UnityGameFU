@@ -12,6 +12,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private Button exitButton;
     [SerializeField] private Button yesButton;
     [SerializeField] private Button noButton;
+    [SerializeField] private string sceneName = "LevelTest";
     private CharacterMove playerMove;
 
     private bool isPaused = false;
@@ -54,7 +55,14 @@ public class PauseMenu : MonoBehaviour
     public void Retry()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("LevelTest");
+        try
+        {
+            SceneManager.LoadScene(sceneName);
+        }
+        catch
+        {
+            Debug.Log("Scene not found.");
+        }
     }
 
     public void Pause()

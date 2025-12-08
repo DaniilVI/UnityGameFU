@@ -27,13 +27,14 @@ public class Door : MonoBehaviour
 
         if (pa.Key)
         {
-            Scene scene = SceneManager.GetSceneByName(sceneName);
             if (openSound) AudioSource.PlayClipAtPoint(openSound, transform.position);
-            if (scene.IsValid())
+            
+            Debug.Log($"Загрузка уровня: {sceneName}");
+            try
             {
                 SceneManager.LoadScene(sceneName);
             }
-            else
+            catch
             {
                 Debug.Log("Scene not found.");
             }

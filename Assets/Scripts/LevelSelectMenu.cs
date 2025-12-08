@@ -31,7 +31,7 @@ public class LevelSelectMenu : MonoBehaviour
 
         for (int i = 0; i < levelButtons.Length; i++)
         {
-            int levelIndex = i + 1;
+            int levelIndex = i;
             levelButtons[i].onClick.AddListener(() => LoadLevel(levelIndex));
         }
     }
@@ -41,8 +41,18 @@ public class LevelSelectMenu : MonoBehaviour
         string sceneName = "Level" + levelIndex;
         Debug.Log($"Загрузка уровня: {sceneName}");
         if (levelIndex == 0)
+        {
             SceneManager.LoadScene("LevelTest");
-        else 
-            SceneManager.LoadScene("LevelTest"); // поменять LevelTest на sceneName чтобы загружать другие уровни
+        }
+        else{
+            try
+            {
+                SceneManager.LoadScene(sceneName);
+            }
+            catch
+            {
+                Debug.Log("Scene not found.");
+            }
+        }
     }
 }
