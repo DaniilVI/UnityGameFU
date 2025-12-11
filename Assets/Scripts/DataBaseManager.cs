@@ -393,7 +393,7 @@ public static class DataBaseManager
     /// <param name="table">Таблица в БД.</param>
     /// <param name="item">Столбец из указанной таблицы в БД.</param>
     /// <returns>
-    /// Упорядоченный булевский список состояний объектов.
+    /// Список булевых состояний объектов.
     /// </returns>
     private static List<bool> IRead(string table, string column)
     {
@@ -433,7 +433,7 @@ public static class DataBaseManager
     /// Чтение таблицы ворот.
     /// </summary>
     /// <returns>
-    /// Булевский список состояний врат.
+    /// Список булевых состояний врат.
     /// </returns>
     public static List<bool> ReadGates()
     {
@@ -444,7 +444,7 @@ public static class DataBaseManager
     /// Чтение таблицы стёкол.
     /// </summary>
     /// <returns>
-    /// Булевский список состояний стёкол.
+    /// Список булевых состояний стёкол.
     /// </returns>
     public static List<bool> ReadGlass()
     {
@@ -495,7 +495,7 @@ public static class DataBaseManager
     /// Чтение таблицы падающих объектов.
     /// </summary>
     /// <returns>
-    /// Булевский список состояний падающих объектов.
+    /// Список булевых состояний падающих объектов.
     /// </returns>
     public static List<bool> ReadFallingObjects()
     {
@@ -506,7 +506,7 @@ public static class DataBaseManager
     /// Чтение таблицы дополнительной жизни.
     /// </summary>
     /// <returns>
-    /// Булевский список состояний дополнительных жизней.
+    /// Список булевых состояний дополнительных жизней.
     /// </returns>
     public static List<bool> ReadExtraHealth()
     {
@@ -516,12 +516,14 @@ public static class DataBaseManager
     /// <summary>
     /// Шаблон метода записи в однотипные таблицы для текущего игрока/персонажа.
     /// </summary>
-    /// <param name="values">Список булевских состояний в строго упорядоченном виде.</param>
+    /// <param name="values">Список булевых состояний в строго упорядоченном виде.</param>
     /// <param name="table">Таблица в БД.</param>
     /// <param name="item">Столбец из указанной таблицы в БД.</param>
     private static void IWrite(List<bool> values, string table, string column)
     {
         int id = selectedCharacterId * 1000;
+
+        IDelete(table);
 
         using (var conn = new SqliteConnection(connectionString))
         {
@@ -529,8 +531,6 @@ public static class DataBaseManager
 
             using (var sqlite_cmd = conn.CreateCommand())
             {
-                IDelete(table);
-
                 try
                 {
                     foreach (var value in values)
@@ -555,7 +555,7 @@ public static class DataBaseManager
     /// <summary>
     /// Запись в таблицу врат.
     /// </summary>
-    /// <param name="values">Список булевский состояний в строго упорядоченном виде.</param>
+    /// <param name="values">Список булевых состояний в строго упорядоченном виде.</param>
     private static void WriteGates(List<bool> values)
     {
         IWrite(values, "GATES", "raised");
@@ -564,7 +564,7 @@ public static class DataBaseManager
     /// <summary>
     /// Запись в таблицу стёкол.
     /// </summary>
-    /// <param name="values">Список булевский состояний в строго упорядоченном виде.</param>
+    /// <param name="values">Список булевых состояний в строго упорядоченном виде.</param>
     private static void WriteGlass(List<bool> values)
     {
         IWrite(values, "GLASS", "broken");
@@ -578,15 +578,14 @@ public static class DataBaseManager
     {
         int id = selectedCharacterId * 1000;
 
+        IDelete("FLOOD");
+
         using (var conn = new SqliteConnection(connectionString))
         {
             conn.Open();
 
             using (var sqlite_cmd = conn.CreateCommand())
-            {
-                IDelete("FLOOD");
-
-                try
+            {try
                 {
                     foreach (var value in values)
                     {
@@ -610,7 +609,7 @@ public static class DataBaseManager
     /// <summary>
     /// Запись в таблицу падающих объектов.
     /// </summary>
-    /// <param name="values">Список булевский состояний в строго упорядоченном виде.</param>
+    /// <param name="values">Список булевых состояний в строго упорядоченном виде.</param>
     private static void WriteFallingObjects(List<bool> values)
     {
         IWrite(values, "FALLING_OBJECT", "fell");
@@ -619,7 +618,7 @@ public static class DataBaseManager
     /// <summary>
     /// Запись в таблицу дополнительной жизни.
     /// </summary>
-    /// <param name="values">Список булевский состояний в строго упорядоченном виде.</param>
+    /// <param name="values">Список булевых состояний в строго упорядоченном виде.</param>
     private static void WriteExtraHealth(List<bool> values)
     {
         IWrite(values, "EXTRA_HEALTH", "used");
@@ -761,11 +760,11 @@ public static class DataBaseManager
     /// Сохранить данные в БД.
     /// </summary>
     /// <param name="number">Номер уровня.</param>
-    /// <param name="status">Статус уровня (булевский).</param>
+    /// <param name="status">Статус уровня (булев).</param>
     /// <param name="title">Название сцены уровня.</param>
     /// <param name="position">Двумерный кортеж 32-разрядных числовых типов данных с плавающей точкой: первый элемент — координата Ox; второй элемент — координата Oy.</param>
     /// <param name="health">Здоровье в диапазоне от 0 до 3 включительно.</param>
-    /// <param name="data">Словарь, где ключом является название объекта из перечисления: gate, glass, falling_object, extra_health, а значением — список булевских состояний объектов в строго упорядоченном виде.</param>
+    /// <param name="data">Словарь, где ключом является название объекта из перечисления: gate, glass, falling_object, extra_health, а значением — список булевых состояний объектов в строго упорядоченном виде.</param>
     /// <param name="flood">Список высот затоплений в строго упорядоченном виде.</param>
     /// <param name="inventory">Словарь, где ключом является название предмета в инвентаре, а значением — количество данного предмета в инвентаре.</param>
     public static void SaveData(int number, bool status, string title, (float, float) position, int health, Dictionary<string, List<bool>> data = null, List<float> flood = null, Dictionary<string, int> inventory = null)

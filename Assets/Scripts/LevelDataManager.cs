@@ -185,7 +185,6 @@ public class LevelDataManager : MonoBehaviour
                 case "Gates":
                     {
                         List<bool> values = DataBaseManager.ReadGates();
-                        Transform children = obj.transform;
                         int i = 0;
 
                         foreach (Transform child in obj.transform)
@@ -194,11 +193,11 @@ public class LevelDataManager : MonoBehaviour
 
                             if (i > values.Count - 1)
                             {
-                                Debug.LogError("Несовпадение фактического количества ворот на сцене и записи в БД!");
+                                Debug.LogError("РќРµСЃРѕРІРїР°РґРµРЅРёРµ С„Р°РєС‚РёС‡РµСЃРєРѕРіРѕ РєРѕР»РёС‡РµСЃС‚РІР° РІРѕСЂРѕС‚ РЅР° СЃС†РµРЅРµ Рё Р·Р°РїРёСЃРё РІ Р‘Р”!");
                             }
                             else
                             {
-                                gateMove.Status =values[i];
+                                gateMove.Status = values[i];
                             }
                             i++;
                         }
@@ -216,14 +215,13 @@ public class LevelDataManager : MonoBehaviour
                 case "Glass":
                     {
                         List<bool> values = DataBaseManager.ReadGlass();
-                        Transform children = obj.transform;
                         int i = 0;
 
                         foreach (Transform child in obj.transform)
                         {
                             if (i > values.Count - 1)
                             {
-                                Debug.LogError("Несовпадение фактического количества стёкол на сцене и записи в БД!");
+                                Debug.LogError("РќРµСЃРѕРІРїР°РґРµРЅРёРµ С„Р°РєС‚РёС‡РµСЃРєРѕРіРѕ РєРѕР»РёС‡РµСЃС‚РІР° СЃС‚С‘РєРѕР» РЅР° СЃС†РµРЅРµ Рё Р·Р°РїРёСЃРё РІ Р‘Р”!");
                             }
                             else
                             {
