@@ -23,6 +23,21 @@ public class GateMove : MonoBehaviour
         set { movingToFinish = value; }
     }
 
+    public Vector3 Position
+    {
+        set { transform.position = value; }
+    }
+
+    public Vector3 StartPoint
+    {
+        get { return startPoint; }
+    }
+    
+    public Vector3 FinishPoint
+    {
+        get { return finishPoint; }
+    }
+
     public void Move()
     {
         if (moveRoutine != null)

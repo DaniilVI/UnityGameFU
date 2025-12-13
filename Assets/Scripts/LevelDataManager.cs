@@ -198,6 +198,7 @@ public class LevelDataManager : MonoBehaviour
                             else
                             {
                                 gateMove.Status = values[i];
+                                gateMove.Position = values[i] ? gateMove.StartPoint : gateMove.FinishPoint;
                             }
                             i++;
                         }
