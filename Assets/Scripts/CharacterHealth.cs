@@ -12,7 +12,8 @@ public class CharacterHealth : MonoBehaviour
     private Vector3 lastCheckpoint;
 
     public int Health {
-        get { return health; } 
+        get { return health; }
+        set { health = value; }
     }
 
     [Header("UI")]

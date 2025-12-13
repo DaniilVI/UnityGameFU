@@ -20,6 +20,22 @@ public class GateMove : MonoBehaviour
     public bool Status
     {
         get { return movingToFinish; }
+        set { movingToFinish = value; }
+    }
+
+    public Vector3 Position
+    {
+        set { transform.position = value; }
+    }
+
+    public Vector3 StartPoint
+    {
+        get { return startPoint; }
+    }
+    
+    public Vector3 FinishPoint
+    {
+        get { return finishPoint; }
     }
 
     public void Move()

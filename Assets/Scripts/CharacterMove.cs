@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CharacterMove : MonoBehaviour
 {
@@ -42,6 +43,14 @@ public class CharacterMove : MonoBehaviour
     {
         get { return (States)anim.GetInteger("state"); }
         set { anim.SetInteger("state", (int)value); }
+    }
+
+    private Vector3 position;
+
+    public Vector3 Position
+    {
+        get { return rb.position; }
+        set { position = value; }
     }
 
     // Start is called before the first frame update
