@@ -129,7 +129,7 @@ MonoBehaviour:
   jumpForce: 13
   dashForce: 60
   dashDuration: 0.2
-  dashCooldown: 1
+  dashCooldown: 0.5
   boxGloveObject: {fileID: 7857138471089659265}
   attackDuration: 0.25
   attackCooldown: 0.5
