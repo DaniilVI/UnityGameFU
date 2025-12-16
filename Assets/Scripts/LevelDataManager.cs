@@ -23,6 +23,7 @@ public class LevelDataManager : MonoBehaviour
     public static void SaveProgress()
     {
         int health = 3;
+        bool small = false;
         Vector3 position = new Vector3(0, 0, 0);
         List<float> floodHeight = new List<float>();
         Dictionary<string, int> inventory = new Dictionary<string, int>();
@@ -42,6 +43,7 @@ public class LevelDataManager : MonoBehaviour
                 case "Character":
                     {
                         position = obj.GetComponent<CharacterMove>().Position;
+                        small = obj.GetComponent <CharacterMove>().Small;
                         health = obj.GetComponent<CharacterHealth>().Health;
 
                         PlayerAbilities playerAbilities = obj.GetComponent<PlayerAbilities>();
@@ -124,7 +126,7 @@ public class LevelDataManager : MonoBehaviour
             }
         }
 
-        DataBaseManager.SaveData(levelNumber, true, sceneName, (position.x, position.y), health, data, floodHeight, inventory);
+        DataBaseManager.SaveData(levelNumber, true, sceneName, (position.x, position.y), health, small, data, floodHeight, inventory);
     }
 
     public static void LoadProgress()
@@ -140,9 +142,12 @@ public class LevelDataManager : MonoBehaviour
             {
                 case "Character":
                     {
+                        var characterInfo = DataBaseManager.GetCharacterHealthAndSmall();
                         var position = DataBaseManager.GetCharacterPosition();
+
+                        obj.GetComponent<CharacterHealth>().Health = characterInfo.Item1;
                         obj.GetComponent<CharacterMove>().Position = new Vector3(position.Item1, position.Item2, 0);
-                        obj.GetComponent<CharacterHealth>().Health = DataBaseManager.GetCharacterHealth();
+                        obj.GetComponent<CharacterMove>().Small = characterInfo.Item2;
                         obj.GetComponent<PlayerAbilities>().Key = inventory["Key"] == 1 ? true : false;
                         obj.GetComponent<PlayerAbilities>().Money = inventory["Money"] == 1 ? true : false;
 
