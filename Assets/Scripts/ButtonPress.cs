@@ -7,6 +7,7 @@ public class ButtonPress : MonoBehaviour
     [SerializeField] private string playerTag = "Player";
     [SerializeField] private float releaseDelay = 0.1f; // задержка до "сброса"
     [SerializeField] private GameObject gates;
+    [SerializeField] private GameObject platform;
     [SerializeField] private AudioClip pressSound;
 
     private Transform buttonUp;
@@ -74,7 +75,11 @@ public class ButtonPress : MonoBehaviour
             if (script != null)
             {
                 script.Move();
-            }  
+            }
+        }
+        if (platform != null)
+        {
+            platform.SetActive(!platform.activeSelf);
         }
     }
 
