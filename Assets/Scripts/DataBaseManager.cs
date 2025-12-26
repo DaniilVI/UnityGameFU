@@ -198,14 +198,15 @@ public static class DataBaseManager
     }
 
     /// <summary>
-    /// Получить здоровье текущего персонажа.
+    /// Получить здоровье и размер текущего персонажа.
     /// </summary>
     /// <returns>
-    /// Целое число в диапазоне от 0 до 3 включительно.
+    /// Двумерный кортеж: первый элемент - здоровье, целое число в диапазоне от 0 до 3 включительно; второй элемент - булево значение, уменьшен ли персонаж.
     /// </returns>
-    public static int GetCharacterHealth()
+    public static (int, bool) GetCharacterHealthAndSmall()
     {
         int health = 3;
+        bool small = false;
 
         using (var conn = new SqliteConnection(connectionString))
         {
@@ -213,7 +214,7 @@ public static class DataBaseManager
 
             using (var sqlite_cmd = conn.CreateCommand())
             {
-                sqlite_cmd.CommandText = "SELECT health FROM CHARACTER WHERE id = @characterId";
+                sqlite_cmd.CommandText = "SELECT health, small FROM CHARACTER WHERE id = @characterId";
                 sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
 
                 try
@@ -223,6 +224,7 @@ public static class DataBaseManager
                         if (sqlite_datareader.Read())
                         {
                             health = sqlite_datareader.GetInt32("health");
+                            small = translator[sqlite_datareader.GetInt32("small")];
                         }
                     }
                 }
@@ -233,7 +235,7 @@ public static class DataBaseManager
             }
         }
 
-        return health;
+        return (health, small);
     }
 
     /// <summary>
@@ -764,10 +766,11 @@ public static class DataBaseManager
     /// <param name="title">Название сцены уровня.</param>
     /// <param name="position">Двумерный кортеж 32-разрядных числовых типов данных с плавающей точкой: первый элемент — координата Ox; второй элемент — координата Oy.</param>
     /// <param name="health">Здоровье в диапазоне от 0 до 3 включительно.</param>
+    /// <param name="small">Уменьшен ли персонаж.</param>
     /// <param name="data">Словарь, где ключом является название объекта из перечисления: gate, glass, falling_object, extra_health, а значением — список булевых состояний объектов в строго упорядоченном виде.</param>
     /// <param name="flood">Список высот затоплений в строго упорядоченном виде.</param>
     /// <param name="inventory">Словарь, где ключом является название предмета в инвентаре, а значением — количество данного предмета в инвентаре.</param>
-    public static void SaveData(int number, bool status, string title, (float, float) position, int health, Dictionary<string, List<bool>> data = null, List<float> flood = null, Dictionary<string, int> inventory = null)
+    public static void SaveData(int number, bool status, string title, (float, float) position, int health, bool small = false, Dictionary<string, List<bool>> data = null, List<float> flood = null, Dictionary<string, int> inventory = null)
     {
         using (var conn = new SqliteConnection(connectionString))
         {
@@ -780,10 +783,11 @@ public static class DataBaseManager
 
                 try
                 {
-                    sqlite_cmd.CommandText = $"UPDATE CHARACTER SET position_x = @positionX, position_y = @positionY, health = @health WHERE id = @characterId";
+                    sqlite_cmd.CommandText = $"UPDATE CHARACTER SET position_x = @positionX, position_y = @positionY, health = @health, small = @small WHERE id = @characterId";
                     sqlite_cmd.Parameters.AddWithValue("@positionX", position.Item1);
                     sqlite_cmd.Parameters.AddWithValue("@positionY", position.Item2);
                     sqlite_cmd.Parameters.AddWithValue("@health", health);
+                    sqlite_cmd.Parameters.AddWithValue("@small", small ? 1 : 0);
                     sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
                     sqlite_cmd.ExecuteNonQuery();
                     sqlite_cmd.Parameters.Clear();

@@ -53,6 +53,12 @@ public class CharacterMove : MonoBehaviour
         set { position = value; }
     }
 
+    public bool Small
+    {
+        get { return isSmall; }
+        set { isSmall = value; }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
