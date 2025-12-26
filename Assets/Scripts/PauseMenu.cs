@@ -46,8 +46,11 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
-        if (playerMove != null) playerMove.enabled = true;
+        if (!TutorialManager.Instance.IsPaused())
+        {
+            Time.timeScale = 1f;
+            if (playerMove != null) playerMove.enabled = true;
+        }
         isPaused = false;
         isSaved = false;
     }

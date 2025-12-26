@@ -10,6 +10,11 @@ public class MainMenuUI : MonoBehaviour
     private void Start()
     {
         ShowMainMenu();
+        if (TutorialManager.Instance != null)
+        {
+            TutorialManager.Instance.ResetTutorials();
+            Destroy(TutorialManager.Instance.gameObject);
+        }
     }
 
     public void OnPlayButton()
