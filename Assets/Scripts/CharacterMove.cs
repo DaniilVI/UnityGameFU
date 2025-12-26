@@ -27,7 +27,6 @@ public class CharacterMove : MonoBehaviour
     private bool isSmall = false;
     private bool isFrozen = false;
     private bool canGrow = true;
-    private bool direction;
 
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
@@ -81,7 +80,6 @@ public class CharacterMove : MonoBehaviour
         inputSprite = sprite.sprite;
         boxGloveSprite = boxGloveObject.GetComponentInChildren<SpriteRenderer>();
         boxGloveObject.SetActive(false);
-        direction = sprite.flipX;
         boxCollider.enabled = false;
         polyCollider.enabled = true;
 
@@ -171,13 +169,10 @@ public class CharacterMove : MonoBehaviour
         if (isMoving)
         {
             if (!isJump) State = States.run;
-            sprite.flipX = inputDirection.x < 0;
-            boxGloveSprite.flipX = inputDirection.x < 0;
 
             boxCollider.enabled = true;
             polyCollider.enabled = false;
-            FlipBoxCollider();
-            FlipPolygonCollider();
+            Flip(inputDirection.x < 0);
 
             Vector3 localPos = boxGloveObject.transform.localPosition;
             if (boxGloveSprite.flipX)
@@ -195,7 +190,6 @@ public class CharacterMove : MonoBehaviour
             boxCollider.enabled = false;
             polyCollider.enabled = true;
         }
-        direction = sprite.flipX;
     }
 
     private void Jump()
@@ -209,8 +203,63 @@ public class CharacterMove : MonoBehaviour
 
     private void CheckJump()
     {
-        Collider2D[] collider = Physics2D.OverlapCircleAll(transform.position, 0.1f).Where(c => !c.isTrigger).ToArray();
-        isJump = collider.Length <= 1;
+        if (boxCollider.enabled)
+        {
+            Vector3 scale = transform.localScale;
+            float absScaleX = Mathf.Abs(scale.x);
+            float absScaleY = Mathf.Abs(scale.y);
+            
+            Vector2 realSize = boxCollider.size * new Vector2(absScaleX, absScaleY);
+            Vector2 realOffset = boxCollider.offset * new Vector2(scale.x, scale.y);
+            
+            Vector2 bottomLeft = (Vector2)transform.position + realOffset + new Vector2(-realSize.x/2, -realSize.y/2);
+            Vector2 bottomRight = (Vector2)transform.position + realOffset + new Vector2(realSize.x/2, -realSize.y/2);
+            
+            int rayCount = 4;
+            isJump = true;
+            for (int i = 0; i <= rayCount; i++)
+            {
+                float t = (float)i / rayCount;
+                Vector2 rayOrigin = Vector2.Lerp(bottomLeft, bottomRight, t);
+                
+                RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, Vector2.down, 0.1f)
+                    .Where(h => !h.collider.isTrigger && h.collider.gameObject != gameObject).ToArray();
+                
+                if (hits.Length > 0) 
+                {
+                    isJump = false;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            Vector2[] points = polyCollider.points;
+            
+            Vector2 localPoint1 = points[3] + polyCollider.offset;;
+            Vector2 localPoint2 = points[4] + polyCollider.offset;;
+            
+            Vector2 worldPoint1 = (Vector2)transform.TransformPoint(localPoint1);
+            Vector2 worldPoint2 = (Vector2)transform.TransformPoint(localPoint2);
+            
+            int rayCount = 4;
+            isJump = true;
+            
+            for (int i = 0; i <= rayCount; i++)
+            {
+                float t = (float)i / rayCount;
+                Vector2 rayOrigin = Vector2.Lerp(worldPoint1, worldPoint2, t);
+                
+                RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, Vector2.down, 0.1f)
+                    .Where(h => !h.collider.isTrigger && h.collider.gameObject != gameObject).ToArray();
+                
+                if (hits.Length > 0)
+                {
+                    isJump = false;
+                    break;
+                }
+            }
+        }
 
         if (isJump && !isFrozen) State = States.jump;
     }
@@ -225,7 +274,7 @@ public class CharacterMove : MonoBehaviour
         float origGravity = rb.gravityScale;
         float origDrag = rb.drag;
 
-        float direction = sprite.flipX ? -1f : 1f;
+        float direction = (transform.localScale.x < 0) ? -1f : 1f;
 
         rb.gravityScale = 0f;
         rb.drag = 8f;
@@ -311,25 +360,26 @@ public class CharacterMove : MonoBehaviour
         canAttack = true;
     }
 
-    private void FlipPolygonCollider()
+    private void Flip(bool faceRight)
     {
-        if (direction != sprite.flipX)
+        Vector3 scale = transform.localScale;
+        if (faceRight)
         {
-            Vector2[] points = polyCollider.points;
-            for (int i = 0; i < points.Length; i++)
+            if (scale.x > 0)
             {
-                points[i] = new Vector2(-points[i].x, points[i].y);
+                scale.x*= -1f;
             }
-            polyCollider.points = points;
         }
+        else
+        {
+            if (scale.x < 0)
+            {
+                scale.x*= -1f;
+            }
+        }
+        transform.localScale = scale;
     }
 
-    private void FlipBoxCollider()
-    {
-        Vector2 offset = boxCollider.offset;
-        offset.x = sprite.flipX ? -Mathf.Abs(offset.x) : Mathf.Abs(offset.x);
-        boxCollider.offset = offset;
-    }
 }
 
 public enum States
