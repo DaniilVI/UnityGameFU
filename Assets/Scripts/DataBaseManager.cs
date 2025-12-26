@@ -6,8 +6,6 @@ using System.Data;
 using System.IO;
 using System.Reflection;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-using static UnityEditor.Progress;
 
 
 public static class DataBaseManager
