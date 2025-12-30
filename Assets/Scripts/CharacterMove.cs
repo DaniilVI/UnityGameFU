@@ -201,8 +201,8 @@ public class CharacterMove : MonoBehaviour
         }
         else
         {
-            boxCollider.enabled = false;
             polyCollider.enabled = true;
+            boxCollider.enabled = false;
         }
     }
 
@@ -237,7 +237,7 @@ public class CharacterMove : MonoBehaviour
                 Vector2 rayOrigin = Vector2.Lerp(bottomLeft, bottomRight, t);
                 
                 RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, Vector2.down, 0.1f)
-                    .Where(h => !h.collider.isTrigger && h.collider.gameObject != gameObject).ToArray();
+                    .Where(h => !h.collider.isTrigger && h.collider.gameObject != gameObject && !h.collider.CompareTag("Danger")).ToArray();
                 
                 if (hits.Length > 0) 
                 {
@@ -265,7 +265,7 @@ public class CharacterMove : MonoBehaviour
                 Vector2 rayOrigin = Vector2.Lerp(worldPoint1, worldPoint2, t);
                 
                 RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, Vector2.down, 0.1f)
-                    .Where(h => !h.collider.isTrigger && h.collider.gameObject != gameObject).ToArray();
+                    .Where(h => !h.collider.isTrigger && h.collider.gameObject != gameObject && !h.collider.CompareTag("Danger")).ToArray();
                 
                 if (hits.Length > 0)
                 {
@@ -299,8 +299,8 @@ public class CharacterMove : MonoBehaviour
 
         yield return new WaitForSeconds(dashDuration);
 
-        boxCollider.enabled = false;
         polyCollider.enabled = true;
+        boxCollider.enabled = false;
 
         rb.velocity = Vector3.zero;
 
@@ -363,8 +363,8 @@ public class CharacterMove : MonoBehaviour
 
         yield return new WaitForSeconds(attackDuration);
 
-        boxCollider.enabled = false;
         polyCollider.enabled = true;
+        boxCollider.enabled = false;
         boxGloveObject.SetActive(false);
 
         rb.isKinematic = false;
