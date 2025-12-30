@@ -14,6 +14,7 @@ public class PlatformMove : MonoBehaviour
 
     private Rigidbody2D rb;
     private Rigidbody2D playerRb;
+    private CharacterMove cm;
     private Vector3 prevPos;
 
     // Start is called before the first frame update
@@ -85,6 +86,8 @@ public class PlatformMove : MonoBehaviour
                 if (Vector2.Dot(contact.normal, Vector2.down) > 0.5f)
                 {
                     playerRb = collision.gameObject.GetComponent<Rigidbody2D>();
+                    cm = collision.gameObject.GetComponent<CharacterMove>();
+                    cm.isPlatform = true;
                     break;
                 }
             }
@@ -96,6 +99,11 @@ public class PlatformMove : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             playerRb = null;
+
+            if (cm)
+            {
+                cm.isPlatform = false;
+            }
         }
     }
 }

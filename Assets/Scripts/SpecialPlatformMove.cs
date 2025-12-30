@@ -10,6 +10,7 @@ public class SpecialPlatformMove : MonoBehaviour
 
     private Rigidbody2D rb;
     private Rigidbody2D playerRb;
+    private CharacterMove cm;
 
     private float elapsed = 0f;
     private bool moving = false;
@@ -76,6 +77,8 @@ public class SpecialPlatformMove : MonoBehaviour
                 if (Vector2.Dot(contact.normal, Vector2.down) > 0.5f)
                 {
                     playerRb = col.gameObject.GetComponent<Rigidbody2D>();
+                    cm = col.gameObject.GetComponent<CharacterMove>();
+                    cm.isPlatform = true;
                     moving = true;
                     break;
                 }
@@ -86,7 +89,14 @@ public class SpecialPlatformMove : MonoBehaviour
     private void OnCollisionExit2D(Collision2D col)
     {
         if (col.gameObject.CompareTag(playerTag))
+        {
             playerRb = null;
+
+            if (cm)
+            {
+                cm.isPlatform = false;
+            }
+        }    
     }
 
     [ContextMenu("Reset Platform")]

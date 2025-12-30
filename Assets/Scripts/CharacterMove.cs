@@ -45,6 +45,9 @@ public class CharacterMove : MonoBehaviour
     }
 
     private Vector3 position;
+    public bool isPlatform;
+    private float delayTime = 0.5f;
+    private float lastSaveTime;
 
     public Vector3 Position
     {
@@ -144,6 +147,17 @@ public class CharacterMove : MonoBehaviour
             {
                 anim.enabled = true;
             }
+        }
+
+        if (isPlatform)
+        {
+            lastSaveTime = Time.time;
+        }
+        else if (!isJump && !isPlatform && Time.time >= lastSaveTime + delayTime)
+        {
+            position = transform.position;
+            Debug.Log(position);
+            lastSaveTime = Time.time;
         }
     }
 
