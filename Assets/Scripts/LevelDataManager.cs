@@ -145,9 +145,13 @@ public class LevelDataManager : MonoBehaviour
 
                         obj.GetComponent<CharacterHealth>().Health = characterInfo.Item1;
                         obj.GetComponent<CharacterMove>().Position = new Vector3(position.Item1, position.Item2, 0);
-                        obj.GetComponent<CharacterMove>().Small = characterInfo.Item2;
                         obj.GetComponent<PlayerAbilities>().Key = inventory["Key"] == 1 ? true : false;
                         obj.GetComponent<PlayerAbilities>().Money = inventory["Money"] == 1 ? true : false;
+
+                        if (characterInfo.Item2)
+                        {
+                            obj.GetComponent<CharacterMove>().ToggleSize();
+                        }
 
                         if (inventory["SphereDash"] == 1)
                         {
