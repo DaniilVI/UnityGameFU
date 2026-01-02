@@ -54,15 +54,15 @@ public class TestScript
                 {
                     if (sqlite_datareader.Read())
                     {
-                        Assert.That(sqlite_datareader.GetInt32("id"), Is.EqualTo(0), "Значение id должно быть 0");
-                        Assert.That(sqlite_datareader.GetFloat("position_x"), Is.EqualTo(0f), "Значение для position_x должно быть 0f");
-                        Assert.That(sqlite_datareader.GetFloat("position_y"), Is.EqualTo(0f), "Значение для position_y должно быть 0f");
-                        Assert.That(sqlite_datareader.GetInt32("health"), Is.EqualTo(3), "Значение для здоровья должно быть 3");
-                        Assert.That(sqlite_datareader.GetInt32("small"), Is.EqualTo(0), "Значение для \"уменьшен ли персонаж\" должно быть false");
+                        Assert.That(sqlite_datareader.GetInt32("id"), Is.EqualTo(0), "Р—РЅР°С‡РµРЅРёРµ id РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 0");
+                        Assert.That(sqlite_datareader.GetFloat("position_x"), Is.EqualTo(0f), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ position_x РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 0f");
+                        Assert.That(sqlite_datareader.GetFloat("position_y"), Is.EqualTo(0f), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ position_y РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 0f");
+                        Assert.That(sqlite_datareader.GetInt32("health"), Is.EqualTo(3), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ Р·РґРѕСЂРѕРІСЊСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 3");
+                        Assert.That(sqlite_datareader.GetInt32("small"), Is.EqualTo(0), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ \"СѓРјРµРЅСЊС€РµРЅ Р»Рё РїРµСЂСЃРѕРЅР°Р¶\" РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ false");
                     }
                     else
                     {
-                        Assert.Fail("Игрок с id=0 не найден");
+                        Assert.Fail("РРіСЂРѕРє СЃ id=0 РЅРµ РЅР°Р№РґРµРЅ");
                     }
                 }
             }
@@ -77,15 +77,15 @@ public class TestScript
                 {
                     if (sqlite_datareader.Read())
                     {
-                        Assert.That(sqlite_datareader.GetInt32("id"), Is.EqualTo(0), "Значение id должно быть 0");
-                        Assert.That(sqlite_datareader.GetInt32("number"), Is.EqualTo(1), "Значение для номера уровня должно быть 1");
-                        Assert.That(sqlite_datareader.GetInt32("status"), Is.EqualTo(0), "Значение для статуса уровня должно быть 0");
-                        Assert.That(sqlite_datareader.GetString("title"), Is.EqualTo("Level1"), "Значение для названия уровня должно быть \"Level1\"");
-                        Assert.That(sqlite_datareader.GetInt32("CHARACTER_id"), Is.EqualTo(0), "Значение CHARACTER_id должно быть 0");
+                        Assert.That(sqlite_datareader.GetInt32("id"), Is.EqualTo(0), "Р—РЅР°С‡РµРЅРёРµ id РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 0");
+                        Assert.That(sqlite_datareader.GetInt32("number"), Is.EqualTo(1), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РЅРѕРјРµСЂР° СѓСЂРѕРІРЅСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 1");
+                        Assert.That(sqlite_datareader.GetInt32("status"), Is.EqualTo(0), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ СЃС‚Р°С‚СѓСЃР° СѓСЂРѕРІРЅСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 0");
+                        Assert.That(sqlite_datareader.GetString("title"), Is.EqualTo("Level1"), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РЅР°Р·РІР°РЅРёСЏ СѓСЂРѕРІРЅСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ \"Level1\"");
+                        Assert.That(sqlite_datareader.GetInt32("CHARACTER_id"), Is.EqualTo(0), "Р—РЅР°С‡РµРЅРёРµ CHARACTER_id РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 0");
                     }
                     else
                     {
-                        Assert.Fail("Первый уровень для игрока с id=0 не найден");
+                        Assert.Fail("РџРµСЂРІС‹Р№ СѓСЂРѕРІРµРЅСЊ РґР»СЏ РёРіСЂРѕРєР° СЃ id=0 РЅРµ РЅР°Р№РґРµРЅ");
                     }
                 }
             }
@@ -98,52 +98,52 @@ public class TestScript
     public void Test2()
     {
         var tmp = DataBaseManager.GetCharacterPosition();
-        Assert.IsInstanceOf<ValueTuple<float, float>>(tmp, "Возвращаемый тип должен быть ValueTuple<float, float>");
-        Assert.That(tmp.Item1, Is.EqualTo(0f), "Значение для первого элемента должно быть 0f");
-        Assert.That(tmp.Item2, Is.EqualTo(0f), "Значение для второго элемента должно быть 0f");
+        Assert.IsInstanceOf<ValueTuple<float, float>>(tmp, "Р’РѕР·РІСЂР°С‰Р°РµРјС‹Р№ С‚РёРї РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ ValueTuple<float, float>");
+        Assert.That(tmp.Item1, Is.EqualTo(0f), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РїРµСЂРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 0f");
+        Assert.That(tmp.Item2, Is.EqualTo(0f), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РІС‚РѕСЂРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 0f");
     }
 
     [Test, Order(3)]
     public void Test3()
     {
         var tmp = DataBaseManager.GetCharacterHealthAndSmall();
-        Assert.IsInstanceOf<ValueTuple<int, bool>>(tmp, "Возвращаемый тип должен быть ValueTuple<int, bool>");
-        Assert.That(tmp.Item1, Is.EqualTo(3), "Значение для первого элемента должно быть 3");
-        Assert.That(tmp.Item2, Is.EqualTo(false), "Значение для второго элемента должно быть false");
+        Assert.IsInstanceOf<ValueTuple<int, bool>>(tmp, "Р’РѕР·РІСЂР°С‰Р°РµРјС‹Р№ С‚РёРї РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ ValueTuple<int, bool>");
+        Assert.That(tmp.Item1, Is.EqualTo(3), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РїРµСЂРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 3");
+        Assert.That(tmp.Item2, Is.EqualTo(false), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РІС‚РѕСЂРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ false");
     }
 
     [Test, Order(4)]
     public void Test4()
     {
         var tmp = DataBaseManager.GetInfoLevel();
-        Assert.IsInstanceOf<ValueTuple<string, string>>(tmp, "Возвращаемый тип должен быть ValueTuple<string, string>");
-        Assert.That(tmp.Item1, Is.EqualTo("не пройден"), "Значение для первого элемента должно быть \"не пройден\"");
-        Assert.That(tmp.Item2, Is.EqualTo("Level1"), "Значение для второго элемента должно быть \"Level1\"");
+        Assert.IsInstanceOf<ValueTuple<string, string>>(tmp, "Р’РѕР·РІСЂР°С‰Р°РµРјС‹Р№ С‚РёРї РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ ValueTuple<string, string>");
+        Assert.That(tmp.Item1, Is.EqualTo("РЅРµ РїСЂРѕР№РґРµРЅ"), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РїРµСЂРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ \"РЅРµ РїСЂРѕР№РґРµРЅ\"");
+        Assert.That(tmp.Item2, Is.EqualTo("Level1"), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РІС‚РѕСЂРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ \"Level1\"");
     }
 
     [Test, Order(5)]
     public void Test5()
     {
         var tmp = DataBaseManager.GetStatusLevel();
-        Assert.IsInstanceOf<string>(tmp, "Возвращаемый тип должен быть <string>");
-        Assert.That(tmp, Is.EqualTo("не пройден"), "Значение для статуса уровня должно быть \"не пройден\"");
+        Assert.IsInstanceOf<string>(tmp, "Р’РѕР·РІСЂР°С‰Р°РµРјС‹Р№ С‚РёРї РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ <string>");
+        Assert.That(tmp, Is.EqualTo("РЅРµ РїСЂРѕР№РґРµРЅ"), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ СЃС‚Р°С‚СѓСЃР° СѓСЂРѕРІРЅСЏ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ \"РЅРµ РїСЂРѕР№РґРµРЅ\"");
     }
 
     [Test, Order(6)]
     public void Test6()
     {
         var tmp = DataBaseManager.GetNumberLevelForPlayers();
-        Assert.IsInstanceOf<Dictionary<int, int>>(tmp, "Возвращаемый тип должен быть Dictionary<int, int>");
-        Assert.That(tmp.ContainsKey(0), "Словарь должен содержать ключ 0");
-        Assert.That(tmp[0], Is.EqualTo(1), "Значение для ключа 0 должно быть 1");
+        Assert.IsInstanceOf<Dictionary<int, int>>(tmp, "Р’РѕР·РІСЂР°С‰Р°РµРјС‹Р№ С‚РёРї РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ Dictionary<int, int>");
+        Assert.That(tmp.ContainsKey(0), "РЎР»РѕРІР°СЂСЊ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ РєР»СЋС‡ 0");
+        Assert.That(tmp[0], Is.EqualTo(1), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РєР»СЋС‡Р° 0 РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 1");
     }
 
     [Test, Order(7)]
     public void Test7()
     {
         var tmp = DataBaseManager.GetInventory();
-        Assert.IsInstanceOf<Dictionary<string, int>>(tmp, "Возвращаемый тип должен быть Dictionary<string, int>");
-        Assert.That(tmp.Count, Is.EqualTo(0), "Словарь должен быть пустым");
+        Assert.IsInstanceOf<Dictionary<string, int>>(tmp, "Р’РѕР·РІСЂР°С‰Р°РµРјС‹Р№ С‚РёРї РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ Dictionary<string, int>");
+        Assert.That(tmp.Count, Is.EqualTo(0), "РЎР»РѕРІР°СЂСЊ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј");
     }
 
     [Test, Order(8)]
@@ -153,11 +153,11 @@ public class TestScript
         DataBaseManager.AddItemInventory("money", 1);
 
         var tmp = DataBaseManager.GetInventory();
-        Assert.That(tmp.Count, Is.EqualTo(2), "Словарь должен содержать ровно 2 записи");
-        Assert.That(tmp.ContainsKey("key"), "Словарь должен содержать ключ \"key\"");
-        Assert.That(tmp["key"], Is.EqualTo(1), "Значение для ключа \"key\" должно быть 1");
-        Assert.That(tmp.ContainsKey("money"), "Словарь должен содержать ключ \"money\"");
-        Assert.That(tmp["key"], Is.EqualTo(1), "Значение для ключа \"money\" должно быть 1");
+        Assert.That(tmp.Count, Is.EqualTo(2), "РЎР»РѕРІР°СЂСЊ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ СЂРѕРІРЅРѕ 2 Р·Р°РїРёСЃРё");
+        Assert.That(tmp.ContainsKey("key"), "РЎР»РѕРІР°СЂСЊ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ РєР»СЋС‡ \"key\"");
+        Assert.That(tmp["key"], Is.EqualTo(1), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РєР»СЋС‡Р° \"key\" РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 1");
+        Assert.That(tmp.ContainsKey("money"), "РЎР»РѕРІР°СЂСЊ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ РєР»СЋС‡ \"money\"");
+        Assert.That(tmp["key"], Is.EqualTo(1), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РєР»СЋС‡Р° \"money\" РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 1");
     }
 
     [Test, Order(9)]
@@ -166,11 +166,11 @@ public class TestScript
         DataBaseManager.RemoveItemInventory("keyt");
 
         var tmp = DataBaseManager.GetInventory();
-        Assert.That(tmp.Count, Is.EqualTo(2), "Словарь должен содержать ровно 2 записи");
-        Assert.That(tmp.ContainsKey("key"), "Словарь должен содержать ключ \"key\"");
-        Assert.That(tmp["key"], Is.EqualTo(1), "Значение для ключа \"key\" должно быть 1");
-        Assert.That(tmp.ContainsKey("money"), "Словарь должен содержать ключ \"money\"");
-        Assert.That(tmp["key"], Is.EqualTo(1), "Значение для ключа \"money\" должно быть 1");
+        Assert.That(tmp.Count, Is.EqualTo(2), "РЎР»РѕРІР°СЂСЊ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ СЂРѕРІРЅРѕ 2 Р·Р°РїРёСЃРё");
+        Assert.That(tmp.ContainsKey("key"), "РЎР»РѕРІР°СЂСЊ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ РєР»СЋС‡ \"key\"");
+        Assert.That(tmp["key"], Is.EqualTo(1), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РєР»СЋС‡Р° \"key\" РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 1");
+        Assert.That(tmp.ContainsKey("money"), "РЎР»РѕРІР°СЂСЊ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ РєР»СЋС‡ \"money\"");
+        Assert.That(tmp["key"], Is.EqualTo(1), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РєР»СЋС‡Р° \"money\" РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 1");
     }
 
     [Test, Order(10)]
@@ -179,33 +179,33 @@ public class TestScript
         DataBaseManager.RemoveItemInventory("key");
 
         var tmp = DataBaseManager.GetInventory();
-        Assert.That(tmp.Count, Is.EqualTo(1), "Словарь должен содержать ровно 1 запись");
-        Assert.That(tmp.ContainsKey("money"), "Словарь должен содержать ключ \"money\"");
-        Assert.That(tmp["money"], Is.EqualTo(1), "Значение для ключа \"money\" должно быть 1");
+        Assert.That(tmp.Count, Is.EqualTo(1), "РЎР»РѕРІР°СЂСЊ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ СЂРѕРІРЅРѕ 1 Р·Р°РїРёСЃСЊ");
+        Assert.That(tmp.ContainsKey("money"), "РЎР»РѕРІР°СЂСЊ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ РєР»СЋС‡ \"money\"");
+        Assert.That(tmp["money"], Is.EqualTo(1), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РєР»СЋС‡Р° \"money\" РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 1");
     }
 
     [Test, Order(11)]
     public void Test11()
     {
         var tmp = DataBaseManager.GetInventoryByItemName("key");
-        Assert.That(tmp, Is.EqualTo(0), "Метод должен возвращать 0 для ключа \"key\"");
+        Assert.That(tmp, Is.EqualTo(0), "РњРµС‚РѕРґ РґРѕР»Р¶РµРЅ РІРѕР·РІСЂР°С‰Р°С‚СЊ 0 РґР»СЏ РєР»СЋС‡Р° \"key\"");
     }
 
     [Test, Order(12)]
     public void Test12()
     {
         var tmp = DataBaseManager.GetInventoryByItemName("money");
-        Assert.That(tmp, Is.EqualTo(1), "Метод должен возвращать 1 для ключа \"money\"");
+        Assert.That(tmp, Is.EqualTo(1), "РњРµС‚РѕРґ РґРѕР»Р¶РµРЅ РІРѕР·РІСЂР°С‰Р°С‚СЊ 1 РґР»СЏ РєР»СЋС‡Р° \"money\"");
 
         DataBaseManager.AddItemInventory("money", 1);
 
         tmp = DataBaseManager.GetInventoryByItemName("money");
-        Assert.That(tmp, Is.EqualTo(2), "Метод должен возвращать 2 для ключа \"money\"");
+        Assert.That(tmp, Is.EqualTo(2), "РњРµС‚РѕРґ РґРѕР»Р¶РµРЅ РІРѕР·РІСЂР°С‰Р°С‚СЊ 2 РґР»СЏ РєР»СЋС‡Р° \"money\"");
 
         DataBaseManager.RemoveItemInventory("money");
 
         tmp = DataBaseManager.GetInventoryByItemName("money");
-        Assert.That(tmp, Is.EqualTo(0), "Метод должен возвращать 0 для ключа \"money\"");
+        Assert.That(tmp, Is.EqualTo(0), "РњРµС‚РѕРґ РґРѕР»Р¶РµРЅ РІРѕР·РІСЂР°С‰Р°С‚СЊ 0 РґР»СЏ РєР»СЋС‡Р° \"money\"");
     }
 
     [Test, Order(13)]
@@ -214,41 +214,41 @@ public class TestScript
         DataBaseManager.SaveData(8, false, "Level8", (1, 0), 2);
 
         var tmp = DataBaseManager.GetCharacterPosition();
-        Assert.That(tmp.Item1, Is.EqualTo(1f), "Значение для первого элемента должно быть 1f");
-        Assert.That(tmp.Item2, Is.EqualTo(0f), "Значение для второго элемента должно быть 0f");
+        Assert.That(tmp.Item1, Is.EqualTo(1f), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РїРµСЂРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 1f");
+        Assert.That(tmp.Item2, Is.EqualTo(0f), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РІС‚РѕСЂРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 0f");
 
         var tmp2 = DataBaseManager.GetCharacterHealthAndSmall();
-        Assert.That(tmp2.Item1, Is.EqualTo(2), "Значение для первого элемента должно быть 2");
-        Assert.That(tmp2.Item2, Is.EqualTo(false), "Значение для второго элемента должно быть false");
+        Assert.That(tmp2.Item1, Is.EqualTo(2), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РїРµСЂРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 2");
+        Assert.That(tmp2.Item2, Is.EqualTo(false), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РІС‚РѕСЂРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ false");
 
         var tmp3 = DataBaseManager.GetInfoLevel();
-        Assert.That(tmp3.Item1, Is.EqualTo("не пройден"), "Значение для первого элемента должно быть \"не пройден\"");
-        Assert.That(tmp3.Item2, Is.EqualTo("Level8"), "Значение для второго элемента должно быть \"Level8\"");
+        Assert.That(tmp3.Item1, Is.EqualTo("РЅРµ РїСЂРѕР№РґРµРЅ"), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РїРµСЂРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ \"РЅРµ РїСЂРѕР№РґРµРЅ\"");
+        Assert.That(tmp3.Item2, Is.EqualTo("Level8"), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РІС‚РѕСЂРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ \"Level8\"");
 
         var tmp4 = DataBaseManager.GetStatusLevel();
-        Assert.That(tmp4, Is.EqualTo("не пройден"), "Возвращаемое значение должно быть \"не пройден\"");
+        Assert.That(tmp4, Is.EqualTo("РЅРµ РїСЂРѕР№РґРµРЅ"), "Р’РѕР·РІСЂР°С‰Р°РµРјРѕРµ Р·РЅР°С‡РµРЅРёРµ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ \"РЅРµ РїСЂРѕР№РґРµРЅ\"");
 
         var tmp5 = DataBaseManager.GetNumberLevelForPlayers();
-        Assert.That(tmp5.ContainsKey(0), "Словарь должен содержать ключ 0");
-        Assert.That(tmp5[0], Is.EqualTo(8), "Значение для ключа 0 должно быть 8");
+        Assert.That(tmp5.ContainsKey(0), "РЎР»РѕРІР°СЂСЊ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ РєР»СЋС‡ 0");
+        Assert.That(tmp5[0], Is.EqualTo(8), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РєР»СЋС‡Р° 0 РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 8");
 
         var tmp6 = DataBaseManager.GetInventory();
-        Assert.That(tmp6.Count, Is.EqualTo(0), "Словарь должен быть пустым");
+        Assert.That(tmp6.Count, Is.EqualTo(0), "РЎР»РѕРІР°СЂСЊ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј");
 
         var tmp7 = DataBaseManager.ReadGates();
-        Assert.That(tmp7.Count, Is.EqualTo(0), "Список врат должен быть пустым");
+        Assert.That(tmp7.Count, Is.EqualTo(0), "РЎРїРёСЃРѕРє РІСЂР°С‚ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј");
 
         tmp7 = DataBaseManager.ReadGlass();
-        Assert.That(tmp7.Count, Is.EqualTo(0), "Список стёкол должен быть пустым");
+        Assert.That(tmp7.Count, Is.EqualTo(0), "РЎРїРёСЃРѕРє СЃС‚С‘РєРѕР» РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј");
 
         tmp7 = DataBaseManager.ReadFallingObjects();
-        Assert.That(tmp7.Count, Is.EqualTo(0), "Список падающих объектов должен быть пустым");
+        Assert.That(tmp7.Count, Is.EqualTo(0), "РЎРїРёСЃРѕРє РїР°РґР°СЋС‰РёС… РѕР±СЉРµРєС‚РѕРІ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј");
 
         tmp7 = DataBaseManager.ReadExtraHealth();
-        Assert.That(tmp7.Count, Is.EqualTo(0), "Список дополнительных жизней должен быть пустым");
+        Assert.That(tmp7.Count, Is.EqualTo(0), "РЎРїРёСЃРѕРє РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹С… Р¶РёР·РЅРµР№ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј");
 
         var tmp8 = DataBaseManager.ReadFloods();
-        Assert.That(tmp8.Count, Is.EqualTo(0), "Список затоплений должен быть пустым");
+        Assert.That(tmp8.Count, Is.EqualTo(0), "РЎРїРёСЃРѕРє Р·Р°С‚РѕРїР»РµРЅРёР№ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј");
     }
 
     private static IEnumerable<Dictionary<string, List<bool>>> GetDataComb()
@@ -315,75 +315,75 @@ public class TestScript
         DataBaseManager.SaveData(number, status, title, (position_x, position_y), health, small, data, flood, inventory);
 
         var tmp = DataBaseManager.GetCharacterPosition();
-        Assert.That(tmp.Item1, Is.EqualTo(position_x), $"Значение для первого элемента должно быть {position_x}");
-        Assert.That(tmp.Item2, Is.EqualTo(position_y), $"Значение для второго элемента должно быть {position_y}");
+        Assert.That(tmp.Item1, Is.EqualTo(position_x), $"Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РїРµСЂРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ {position_x}");
+        Assert.That(tmp.Item2, Is.EqualTo(position_y), $"Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РІС‚РѕСЂРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ {position_y}");
 
         var tmp2 = DataBaseManager.GetCharacterHealthAndSmall();
-        Assert.That(tmp2.Item1, Is.EqualTo(health), $"Значение для первого элемента должно быть {health}");
-        Assert.That(tmp2.Item2, Is.EqualTo(small), $"Значение для второго элемента должно быть {small}");
+        Assert.That(tmp2.Item1, Is.EqualTo(health), $"Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РїРµСЂРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ {health}");
+        Assert.That(tmp2.Item2, Is.EqualTo(small), $"Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РІС‚РѕСЂРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ {small}");
 
         var tmp3 = DataBaseManager.GetInfoLevel();
-        Assert.That(tmp3.Item1, Is.EqualTo(status ? "в процессе" : "не пройден"), $"Значение для первого элемента должно быть {(status ? "в процессе" : "не пройден")}");
-        Assert.That(tmp3.Item2, Is.EqualTo(title), $"Значение для второго элемента должно быть {title}");
+        Assert.That(tmp3.Item1, Is.EqualTo(status ? "РІ РїСЂРѕС†РµСЃСЃРµ" : "РЅРµ РїСЂРѕР№РґРµРЅ"), $"Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РїРµСЂРІРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ {(status ? "РІ РїСЂРѕС†РµСЃСЃРµ" : "РЅРµ РїСЂРѕР№РґРµРЅ")}");
+        Assert.That(tmp3.Item2, Is.EqualTo(title), $"Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РІС‚РѕСЂРѕРіРѕ СЌР»РµРјРµРЅС‚Р° РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ {title}");
 
         var tmp4 = DataBaseManager.GetStatusLevel();
         Assert.IsInstanceOf<string>(tmp4);
-        Assert.That(tmp4, Is.EqualTo(status ? "в процессе" : "не пройден"), $"Возвращаемое значение должно быть {(status ? "в процессе" : "не пройден")}");
+        Assert.That(tmp4, Is.EqualTo(status ? "РІ РїСЂРѕС†РµСЃСЃРµ" : "РЅРµ РїСЂРѕР№РґРµРЅ"), $"Р’РѕР·РІСЂР°С‰Р°РµРјРѕРµ Р·РЅР°С‡РµРЅРёРµ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ {(status ? "РІ РїСЂРѕС†РµСЃСЃРµ" : "РЅРµ РїСЂРѕР№РґРµРЅ")}");
 
         var tmp5 = DataBaseManager.GetNumberLevelForPlayers();
-        Assert.That(tmp5.ContainsKey(0), "Словарь должен содержать ключ 0");
-        Assert.That(tmp5[0], Is.EqualTo(number), "Значение для ключа 0 должно быть 3");
+        Assert.That(tmp5.ContainsKey(0), "РЎР»РѕРІР°СЂСЊ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ РєР»СЋС‡ 0");
+        Assert.That(tmp5[0], Is.EqualTo(number), "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РєР»СЋС‡Р° 0 РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ 3");
 
         var tmp6 = DataBaseManager.GetInventory();
-        Assert.That(tmp6.Count, Is.EqualTo(inventory != null ? inventory.Count : 0), $"Словарь инвентаря должен содержать {(inventory != null ? inventory.Count : 0)} записей");
+        Assert.That(tmp6.Count, Is.EqualTo(inventory != null ? inventory.Count : 0), $"РЎР»РѕРІР°СЂСЊ РёРЅРІРµРЅС‚Р°СЂСЏ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ {(inventory != null ? inventory.Count : 0)} Р·Р°РїРёСЃРµР№");
 
         if (inventory != null)
         {
             foreach (var item in inventory)
             {
-                Assert.That(tmp6.ContainsKey(item.Key), $"Ключ {item.Key} отсутствует в словаре инвентаря, полученного из БД");
-                Assert.That(tmp6[item.Key], Is.EqualTo(item.Value), $"Значение для ключа {item.Key} в словаре инвентаря не совпадает");
+                Assert.That(tmp6.ContainsKey(item.Key), $"РљР»СЋС‡ {item.Key} РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚ РІ СЃР»РѕРІР°СЂРµ РёРЅРІРµРЅС‚Р°СЂСЏ, РїРѕР»СѓС‡РµРЅРЅРѕРіРѕ РёР· Р‘Р”");
+                Assert.That(tmp6[item.Key], Is.EqualTo(item.Value), $"Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РєР»СЋС‡Р° {item.Key} РІ СЃР»РѕРІР°СЂРµ РёРЅРІРµРЅС‚Р°СЂСЏ РЅРµ СЃРѕРІРїР°РґР°РµС‚");
             }
         }
 
         var tmp7 = DataBaseManager.ReadGates();
-        Assert.That(tmp7.Count, Is.EqualTo(data != null ? data["gate"].Count : 0), $"Список врат должен содержать {(data != null ? data["gate"].Count : 0)} элементов");
+        Assert.That(tmp7.Count, Is.EqualTo(data != null ? data["gate"].Count : 0), $"РЎРїРёСЃРѕРє РІСЂР°С‚ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ {(data != null ? data["gate"].Count : 0)} СЌР»РµРјРµРЅС‚РѕРІ");
 
         for (int i = 0; i < tmp7.Count; i++)
         {
-            Assert.That(tmp7[i], Is.EqualTo(data["gate"][i]), $"Элемент {i} в списке врат не совпадает: ожидалось {data["gate"][i]}, получено {tmp7[i]}");
+            Assert.That(tmp7[i], Is.EqualTo(data["gate"][i]), $"Р­Р»РµРјРµРЅС‚ {i} РІ СЃРїРёСЃРєРµ РІСЂР°С‚ РЅРµ СЃРѕРІРїР°РґР°РµС‚: РѕР¶РёРґР°Р»РѕСЃСЊ {data["gate"][i]}, РїРѕР»СѓС‡РµРЅРѕ {tmp7[i]}");
         }
 
         tmp7 = DataBaseManager.ReadGlass();
-        Assert.That(tmp7.Count, Is.EqualTo(data != null ? data["glass"].Count : 0), $"Список стёкол должен содержать {(data != null ? data["glass"].Count : 0)} элементов");
+        Assert.That(tmp7.Count, Is.EqualTo(data != null ? data["glass"].Count : 0), $"РЎРїРёСЃРѕРє СЃС‚С‘РєРѕР» РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ {(data != null ? data["glass"].Count : 0)} СЌР»РµРјРµРЅС‚РѕРІ");
 
         for (int i = 0; i < tmp7.Count; i++)
         {
-            Assert.That(tmp7[i], Is.EqualTo(data["glass"][i]), $"Элемент {i} в списке стёкол не совпадает: ожидалось {data["glass"][i]}, получено {tmp7[i]}");
+            Assert.That(tmp7[i], Is.EqualTo(data["glass"][i]), $"Р­Р»РµРјРµРЅС‚ {i} РІ СЃРїРёСЃРєРµ СЃС‚С‘РєРѕР» РЅРµ СЃРѕРІРїР°РґР°РµС‚: РѕР¶РёРґР°Р»РѕСЃСЊ {data["glass"][i]}, РїРѕР»СѓС‡РµРЅРѕ {tmp7[i]}");
         }
 
         tmp7 = DataBaseManager.ReadFallingObjects();
-        Assert.That(tmp7.Count, Is.EqualTo(data != null ? data["falling_object"].Count : 0), $"Список падающих объектов должен содержать {(data != null ? data["falling_object"].Count : 0)} элементов");
+        Assert.That(tmp7.Count, Is.EqualTo(data != null ? data["falling_object"].Count : 0), $"РЎРїРёСЃРѕРє РїР°РґР°СЋС‰РёС… РѕР±СЉРµРєС‚РѕРІ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ {(data != null ? data["falling_object"].Count : 0)} СЌР»РµРјРµРЅС‚РѕРІ");
 
         for (int i = 0; i < tmp7.Count; i++)
         {
-            Assert.That(tmp7[i], Is.EqualTo(data["falling_object"][i]), $"Элемент {i} в списке падающих объектов не совпадает: ожидалось {data["falling_object"][i]}, получено {tmp7[i]}");
+            Assert.That(tmp7[i], Is.EqualTo(data["falling_object"][i]), $"Р­Р»РµРјРµРЅС‚ {i} РІ СЃРїРёСЃРєРµ РїР°РґР°СЋС‰РёС… РѕР±СЉРµРєС‚РѕРІ РЅРµ СЃРѕРІРїР°РґР°РµС‚: РѕР¶РёРґР°Р»РѕСЃСЊ {data["falling_object"][i]}, РїРѕР»СѓС‡РµРЅРѕ {tmp7[i]}");
         }
 
         tmp7 = DataBaseManager.ReadExtraHealth();
-        Assert.That(tmp7.Count, Is.EqualTo(data != null ? data["extra_health"].Count : 0), $"Список дополнительных жизней должен содержать {(data != null ? data["extra_health"].Count : 0)} элементов");
+        Assert.That(tmp7.Count, Is.EqualTo(data != null ? data["extra_health"].Count : 0), $"РЎРїРёСЃРѕРє РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹С… Р¶РёР·РЅРµР№ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ {(data != null ? data["extra_health"].Count : 0)} СЌР»РµРјРµРЅС‚РѕРІ");
 
         for (int i = 0; i < tmp7.Count; i++)
         {
-            Assert.That(tmp7[i], Is.EqualTo(data["extra_health"][i]), $"Элемент {i} в списке дополнительных жизней не совпадает: ожидалось {data["extra_health"][i]}, получено {tmp7[i]}");
+            Assert.That(tmp7[i], Is.EqualTo(data["extra_health"][i]), $"Р­Р»РµРјРµРЅС‚ {i} РІ СЃРїРёСЃРєРµ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹С… Р¶РёР·РЅРµР№ РЅРµ СЃРѕРІРїР°РґР°РµС‚: РѕР¶РёРґР°Р»РѕСЃСЊ {data["extra_health"][i]}, РїРѕР»СѓС‡РµРЅРѕ {tmp7[i]}");
         }
 
         var tmp8 = DataBaseManager.ReadFloods();
-        Assert.That(tmp8.Count, Is.EqualTo(flood != null ? flood.Count : 0), $"Список затоплений должен содержать {(flood != null ? flood.Count : 0)} элементов");
+        Assert.That(tmp8.Count, Is.EqualTo(flood != null ? flood.Count : 0), $"РЎРїРёСЃРѕРє Р·Р°С‚РѕРїР»РµРЅРёР№ РґРѕР»Р¶РµРЅ СЃРѕРґРµСЂР¶Р°С‚СЊ {(flood != null ? flood.Count : 0)} СЌР»РµРјРµРЅС‚РѕРІ");
 
         for (int i = 0; i < tmp8.Count; i++)
         {
-            Assert.That(tmp8[i], Is.EqualTo(flood[i]), $"Элемент {i} в списке затоплений не совпадает: ожидалось {flood[i]}, получено {tmp8[i]}");
+            Assert.That(tmp8[i], Is.EqualTo(flood[i]), $"Р­Р»РµРјРµРЅС‚ {i} РІ СЃРїРёСЃРєРµ Р·Р°С‚РѕРїР»РµРЅРёР№ РЅРµ СЃРѕРІРїР°РґР°РµС‚: РѕР¶РёРґР°Р»РѕСЃСЊ {flood[i]}, РїРѕР»СѓС‡РµРЅРѕ {tmp8[i]}");
         }
     }
 
@@ -393,24 +393,24 @@ public class TestScript
         DataBaseManager.DeleteCharacter();
         
         var tmp = DataBaseManager.GetNumberLevelForPlayers();
-        Assert.That(tmp.ContainsKey(0), Is.False, "Значение для ключа 0 не должно быть в словаре");
+        Assert.That(tmp.ContainsKey(0), Is.False, "Р—РЅР°С‡РµРЅРёРµ РґР»СЏ РєР»СЋС‡Р° 0 РЅРµ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РІ СЃР»РѕРІР°СЂРµ");
 
         var tmp2 = DataBaseManager.GetInventory();
-        Assert.That(tmp2.Count, Is.EqualTo(0), "Словарь инвентаря должен быть пустым");
+        Assert.That(tmp2.Count, Is.EqualTo(0), "РЎР»РѕРІР°СЂСЊ РёРЅРІРµРЅС‚Р°СЂСЏ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј");
 
         var tmp3 = DataBaseManager.ReadGates();
-        Assert.That(tmp3.Count, Is.EqualTo(0), "Список врат должен быть пустым");
+        Assert.That(tmp3.Count, Is.EqualTo(0), "РЎРїРёСЃРѕРє РІСЂР°С‚ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј");
 
         tmp3 = DataBaseManager.ReadGlass();
-        Assert.That(tmp3.Count, Is.EqualTo(0), "Список стёкол должен быть пустым");
+        Assert.That(tmp3.Count, Is.EqualTo(0), "РЎРїРёСЃРѕРє СЃС‚С‘РєРѕР» РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј");
 
         tmp3 = DataBaseManager.ReadFallingObjects();
-        Assert.That(tmp3.Count, Is.EqualTo(0), "Список падающих объектов должен быть пустым");
+        Assert.That(tmp3.Count, Is.EqualTo(0), "РЎРїРёСЃРѕРє РїР°РґР°СЋС‰РёС… РѕР±СЉРµРєС‚РѕРІ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј");
 
         tmp3 = DataBaseManager.ReadExtraHealth();
-        Assert.That(tmp3.Count, Is.EqualTo(0), "Список дополнительных жизней должен быть пустым");
+        Assert.That(tmp3.Count, Is.EqualTo(0), "РЎРїРёСЃРѕРє РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹С… Р¶РёР·РЅРµР№ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј");
 
         var tmp4 = DataBaseManager.ReadFloods();
-        Assert.That(tmp4.Count, Is.EqualTo(0), "Список затоплений должен быть пустым");
+        Assert.That(tmp4.Count, Is.EqualTo(0), "РЎРїРёСЃРѕРє Р·Р°С‚РѕРїР»РµРЅРёР№ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј");
     }
 }
