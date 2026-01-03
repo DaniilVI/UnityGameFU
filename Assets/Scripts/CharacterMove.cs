@@ -313,7 +313,7 @@ public class CharacterMove : MonoBehaviour
         canDash = true;
     }
 
-    private void ToggleSize()
+    public void ToggleSize()
     {
         if (isSmall)
         {

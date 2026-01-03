@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Reflection;
+using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
 
@@ -307,12 +308,23 @@ public static class DataBaseManager
 
                     sqlite_cmd.Parameters.Clear();
 
-                    sqlite_cmd.CommandText = "INSERT INTO INVENTORY (id, object_name, count, CHARACTER_id) VALUES(@id, @objectName, @count, @characterId)";
-                    sqlite_cmd.Parameters.AddWithValue("@id", lastId);
+                    sqlite_cmd.CommandText = "UPDATE INVENTORY SET count = count + @count WHERE object_name = @objectName AND CHARACTER_id = @characterId";
                     sqlite_cmd.Parameters.AddWithValue("@objectName", item);
                     sqlite_cmd.Parameters.AddWithValue("@count", count);
                     sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
-                    sqlite_cmd.ExecuteNonQuery();
+                    var result = sqlite_cmd.ExecuteNonQuery();
+
+                    if (result == 0)
+                    {
+                        sqlite_cmd.Parameters.Clear();
+
+                        sqlite_cmd.CommandText = "INSERT INTO INVENTORY (id, object_name, count, CHARACTER_id) VALUES(@id, @objectName, @count, @characterId)";
+                        sqlite_cmd.Parameters.AddWithValue("@id", lastId);
+                        sqlite_cmd.Parameters.AddWithValue("@objectName", item);
+                        sqlite_cmd.Parameters.AddWithValue("@count", count);
+                        sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
+                        sqlite_cmd.ExecuteNonQuery();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -523,8 +535,6 @@ public static class DataBaseManager
     {
         int id = selectedCharacterId * 1000;
 
-        IDelete(table);
-
         using (var conn = new SqliteConnection(connectionString))
         {
             conn.Open();
@@ -577,8 +587,6 @@ public static class DataBaseManager
     private static void WriteFloods(List<float> values)
     {
         int id = selectedCharacterId * 1000;
-
-        IDelete("FLOOD");
 
         using (var conn = new SqliteConnection(connectionString))
         {
@@ -711,6 +719,9 @@ public static class DataBaseManager
             {
                 try
                 {
+                    sqlite_cmd.CommandText = "PRAGMA foreign_keys = ON;";
+                    sqlite_cmd.ExecuteNonQuery();
+
                     sqlite_cmd.CommandText = "DELETE FROM CHARACTER WHERE id = @characterId";
                     sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
                     sqlite_cmd.ExecuteNonQuery();
@@ -737,7 +748,7 @@ public static class DataBaseManager
             {
                 try
                 {
-                    sqlite_cmd.CommandText = "INSERT INTO CHARACTER (id, position_x, position_y, health) VALUES(@characterId, 0, 0, 3)";
+                    sqlite_cmd.CommandText = "INSERT INTO CHARACTER (id, position_x, position_y, health, small) VALUES(@characterId, 0, 0, 3, 0)";
                     sqlite_cmd.Parameters.AddWithValue("@characterId", characterId);
                     sqlite_cmd.ExecuteNonQuery();
                     sqlite_cmd.Parameters.Clear();
@@ -774,11 +785,8 @@ public static class DataBaseManager
         {
             conn.Open();
 
-            using (var sqlite_transaction = conn.BeginTransaction())
             using (var sqlite_cmd = conn.CreateCommand())
             {
-                sqlite_cmd.Transaction = sqlite_transaction;
-
                 try
                 {
                     sqlite_cmd.CommandText = $"UPDATE CHARACTER SET position_x = @positionX, position_y = @positionY, health = @health, small = @small WHERE id = @characterId";
@@ -796,47 +804,41 @@ public static class DataBaseManager
                     sqlite_cmd.Parameters.AddWithValue("@title", title);
                     sqlite_cmd.Parameters.AddWithValue("@characterId", selectedCharacterId);
                     sqlite_cmd.ExecuteNonQuery();
-
-                    ClearInventory();
-
-                    if (status)
-                    {
-                        if (data != null)
-                        {
-                            WriteGates(data["gate"]);
-                            WriteGlass(data["glass"]);
-                            WriteFallingObjects(data["falling_object"]);
-                            WriteExtraHealth(data["extra_health"]);
-                        }
-
-                        if (flood != null)
-                        {
-                            WriteFloods(flood);
-                        }
-
-                        if (inventory != null)
-                        {
-                            foreach (var item in inventory)
-                            {
-                                AddItemInventory(item.Key, item.Value);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        ClearGates();
-                        ClearGlass();
-                        ClearFloods();
-                        ClearFallingObjects();
-                        ClearExtraHealth();
-                    }
-
-                    sqlite_transaction.Commit();
                 }
                 catch (Exception ex)
                 {
-                    sqlite_transaction.Rollback();
                     Debug.Log(ex.Message);
+                }
+            }
+        }
+
+        ClearInventory();
+        ClearGates();
+        ClearGlass();
+        ClearFloods();
+        ClearFallingObjects();
+        ClearExtraHealth();
+
+        if (status)
+        {
+            if (data != null)
+            {
+                WriteGates(data["gate"]);
+                WriteGlass(data["glass"]);
+                WriteFallingObjects(data["falling_object"]);
+                WriteExtraHealth(data["extra_health"]);
+            }
+
+            if (flood != null)
+            {
+                WriteFloods(flood);
+            }
+
+            if (inventory != null)
+            {
+                foreach (var item in inventory)
+                {
+                    AddItemInventory(item.Key, item.Value);
                 }
             }
         }
