@@ -37,7 +37,7 @@ public class TestScript
     }
 
     [Test, Order(1)]
-    public void Test1()
+    public void CreateNewCharacterTest()
     {
         DataBaseManager.CreateCharacter(0);
 
@@ -95,7 +95,7 @@ public class TestScript
     }
 
     [Test, Order(2)]
-    public void Test2()
+    public void NewCharacterPositionTest()
     {
         var tmp = DataBaseManager.GetCharacterPosition();
         Assert.IsInstanceOf<ValueTuple<float, float>>(tmp, "Возвращаемый тип должен быть ValueTuple<float, float>");
@@ -104,7 +104,7 @@ public class TestScript
     }
 
     [Test, Order(3)]
-    public void Test3()
+    public void NewCharacterHealthAndSmallTest()
     {
         var tmp = DataBaseManager.GetCharacterHealthAndSmall();
         Assert.IsInstanceOf<ValueTuple<int, bool>>(tmp, "Возвращаемый тип должен быть ValueTuple<int, bool>");
@@ -113,7 +113,7 @@ public class TestScript
     }
 
     [Test, Order(4)]
-    public void Test4()
+    public void NewCharacterInfoAboutLevelTest()
     {
         var tmp = DataBaseManager.GetInfoLevel();
         Assert.IsInstanceOf<ValueTuple<string, string>>(tmp, "Возвращаемый тип должен быть ValueTuple<string, string>");
@@ -122,7 +122,7 @@ public class TestScript
     }
 
     [Test, Order(5)]
-    public void Test5()
+    public void NewCharacterStatusOfLevelTest()
     {
         var tmp = DataBaseManager.GetStatusLevel();
         Assert.IsInstanceOf<string>(tmp, "Возвращаемый тип должен быть <string>");
@@ -130,16 +130,19 @@ public class TestScript
     }
 
     [Test, Order(6)]
-    public void Test6()
+    public void NumberOfLevelForNewCharacterTest()
     {
+        DataBaseManager.CreateCharacter(9);
         var tmp = DataBaseManager.GetNumberLevelForPlayers();
         Assert.IsInstanceOf<Dictionary<int, int>>(tmp, "Возвращаемый тип должен быть Dictionary<int, int>");
         Assert.That(tmp.ContainsKey(0), "Словарь должен содержать ключ 0");
+        Assert.That(tmp.ContainsKey(9), "Словарь должен содержать ключ 9");
         Assert.That(tmp[0], Is.EqualTo(1), "Значение для ключа 0 должно быть 1");
+        Assert.That(tmp[9], Is.EqualTo(1), "Значение для ключа 9 должно быть 1");
     }
 
     [Test, Order(7)]
-    public void Test7()
+    public void NewCharacterInventoryTest()
     {
         var tmp = DataBaseManager.GetInventory();
         Assert.IsInstanceOf<Dictionary<string, int>>(tmp, "Возвращаемый тип должен быть Dictionary<string, int>");
@@ -147,7 +150,7 @@ public class TestScript
     }
 
     [Test, Order(8)]
-    public void Test8()
+    public void AddItemInInventoryTest()
     {
         DataBaseManager.AddItemInventory("key", 1);
         DataBaseManager.AddItemInventory("money", 1);
@@ -161,7 +164,7 @@ public class TestScript
     }
 
     [Test, Order(9)]
-    public void Test9()
+    public void RemoveNotExistInventoryItemTest()
     {
         DataBaseManager.RemoveItemInventory("keyt");
 
@@ -174,7 +177,7 @@ public class TestScript
     }
 
     [Test, Order(10)]
-    public void Test10()
+    public void RemoveExistInventoryItemTest()
     {
         DataBaseManager.RemoveItemInventory("key");
 
@@ -185,14 +188,14 @@ public class TestScript
     }
 
     [Test, Order(11)]
-    public void Test11()
+    public void CountNoExistInventoryItemTest()
     {
         var tmp = DataBaseManager.GetInventoryByItemName("key");
         Assert.That(tmp, Is.EqualTo(0), "Метод должен возвращать 0 для ключа \"key\"");
     }
 
     [Test, Order(12)]
-    public void Test12()
+    public void CountExistInventoryItemTest()
     {
         var tmp = DataBaseManager.GetInventoryByItemName("money");
         Assert.That(tmp, Is.EqualTo(1), "Метод должен возвращать 1 для ключа \"money\"");
@@ -209,7 +212,7 @@ public class TestScript
     }
 
     [Test, Order(13)]
-    public void Test13()
+    public void SaveBetweenLevelsTest()
     {
         DataBaseManager.SaveData(8, false, "Level8", (1, 0), 2);
 
@@ -230,7 +233,9 @@ public class TestScript
 
         var tmp5 = DataBaseManager.GetNumberLevelForPlayers();
         Assert.That(tmp5.ContainsKey(0), "Словарь должен содержать ключ 0");
+        Assert.That(tmp5.ContainsKey(9), "Словарь должен содержать ключ 9");
         Assert.That(tmp5[0], Is.EqualTo(8), "Значение для ключа 0 должно быть 8");
+        Assert.That(tmp5[9], Is.EqualTo(1), "Значение для ключа 9 должно быть 1");
 
         var tmp6 = DataBaseManager.GetInventory();
         Assert.That(tmp6.Count, Is.EqualTo(0), "Словарь должен быть пустым");
@@ -300,7 +305,7 @@ public class TestScript
     }
 
     [Test, Combinatorial, Order(14)]
-    public void Test14(
+    public void SaveFromLevelTest(
         [Values(3)] int number,
         [Values(true)] bool status,
         [Values("Level3")] string title,
@@ -332,7 +337,9 @@ public class TestScript
 
         var tmp5 = DataBaseManager.GetNumberLevelForPlayers();
         Assert.That(tmp5.ContainsKey(0), "Словарь должен содержать ключ 0");
+        Assert.That(tmp5.ContainsKey(9), "Словарь должен содержать ключ 9");
         Assert.That(tmp5[0], Is.EqualTo(number), "Значение для ключа 0 должно быть 3");
+        Assert.That(tmp5[9], Is.EqualTo(1), "Значение для ключа 9 должно быть 1");
 
         var tmp6 = DataBaseManager.GetInventory();
         Assert.That(tmp6.Count, Is.EqualTo(inventory != null ? inventory.Count : 0), $"Словарь инвентаря должен содержать {(inventory != null ? inventory.Count : 0)} записей");
@@ -388,12 +395,14 @@ public class TestScript
     }
 
     [Test, Order(15)]
-    public void Test15()
+    public void DeleteCharacterTest()
     {
         DataBaseManager.DeleteCharacter();
         
         var tmp = DataBaseManager.GetNumberLevelForPlayers();
         Assert.That(tmp.ContainsKey(0), Is.False, "Значение для ключа 0 не должно быть в словаре");
+        Assert.That(tmp.ContainsKey(9), "Словарь должен содержать ключ 9");
+        Assert.That(tmp[9], Is.EqualTo(1), "Значение для ключа 9 должно быть 1");
 
         var tmp2 = DataBaseManager.GetInventory();
         Assert.That(tmp2.Count, Is.EqualTo(0), "Словарь инвентаря должен быть пустым");
