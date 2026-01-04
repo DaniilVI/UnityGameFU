@@ -61,6 +61,7 @@ public class CharacterHealth : MonoBehaviour
             else
             {
                 Debug.Log("KILL");
+                LoadLevel.isLoad = false;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }
@@ -71,7 +72,7 @@ public class CharacterHealth : MonoBehaviour
         lastCheckpoint = checkpoint;
     }
 
-    private void UpdateUI()
+    public void UpdateUI()
     {
         if (healthImage == null || healthSprites.Length == 0) return;
 

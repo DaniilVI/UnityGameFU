@@ -7,6 +7,12 @@ public class GateMove : MonoBehaviour
     [SerializeField] private Vector3 startPoint;
     [SerializeField] private Vector3 finishPoint;
     [SerializeField] private float transitTime;
+    private bool movingToFinish;
+
+    void Awake()
+    {
+        movingToFinish = true;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -14,7 +20,6 @@ public class GateMove : MonoBehaviour
         transform.position = startPoint;
     }
 
-    private bool movingToFinish = true;
     private Coroutine moveRoutine;
 
     public bool Status

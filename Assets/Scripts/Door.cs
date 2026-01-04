@@ -28,7 +28,10 @@ public class Door : MonoBehaviour
         if (pa.Key)
         {
             if (openSound) AudioSource.PlayClipAtPoint(openSound, transform.position);
-            
+
+            LoadLevel.isLoad = false;
+            LevelDataManager.SaveLevel();
+
             Debug.Log($"Загрузка уровня: {sceneName}");
             try
             {

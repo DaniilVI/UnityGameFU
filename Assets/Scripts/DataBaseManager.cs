@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Reflection;
-using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
 
@@ -823,10 +822,22 @@ public static class DataBaseManager
         {
             if (data != null)
             {
-                WriteGates(data["gate"]);
-                WriteGlass(data["glass"]);
-                WriteFallingObjects(data["falling_object"]);
-                WriteExtraHealth(data["extra_health"]);
+                if (data.ContainsKey("gate"))
+                {
+                    WriteGates(data["gate"]);
+                }
+                if (data.ContainsKey("glass"))
+                {
+                    WriteGlass(data["glass"]);
+                }
+                if (data.ContainsKey("falling_object"))
+                {
+                    WriteFallingObjects(data["falling_object"]);
+                }
+                if (data.ContainsKey("extra_health"))
+                {
+                    WriteExtraHealth(data["extra_health"]);
+                }
             }
 
             if (flood != null)

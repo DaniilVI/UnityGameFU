@@ -51,8 +51,11 @@ public class CharacterMove : MonoBehaviour
 
     public Vector3 Position
     {
-        get { return rb.position; }
-        set { position = value; }
+        get { return position; }
+        set { 
+            position = value;
+            transform.position = position;
+        }
     }
 
     public bool Small
@@ -90,6 +93,11 @@ public class CharacterMove : MonoBehaviour
         if (playerAbilities == null)
         {
             Debug.LogWarning("PlayerAbilities component not found. All abilities will be disabled.");
+        }
+
+        if (LoadLevel.isLoad && DataBaseManager.GetStatusLevel().Equals("в процессе"))
+        {
+            LevelDataManager.LoadProgress();
         }
     }
 
@@ -156,7 +164,7 @@ public class CharacterMove : MonoBehaviour
         else if (!isJump && !isPlatform && Time.time >= lastSaveTime + delayTime)
         {
             position = transform.position;
-            Debug.Log(position);
+            //Debug.Log(position);
             lastSaveTime = Time.time;
         }
     }
@@ -393,7 +401,6 @@ public class CharacterMove : MonoBehaviour
         }
         transform.localScale = scale;
     }
-
 }
 
 public enum States

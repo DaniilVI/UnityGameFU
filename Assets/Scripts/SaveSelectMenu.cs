@@ -1,11 +1,14 @@
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SavelSelectMenu : MonoBehaviour
 {
     private Button backButton;
+    private Button testLevelsButton;
     private Transform saves;
 
     [Header("Delete Confirmation Window")]
@@ -14,21 +17,26 @@ public class SavelSelectMenu : MonoBehaviour
     public Button yesButton;
     public Button noButton;
     private int selectedSlotIndex = -1;
+    private Dictionary<int, int> data;
 
     private void Start()
     {
         Transform background = transform.Find("Background");
 
         backButton = background.Find("Back")?.GetComponent<Button>();
+        testLevelsButton = background.Find("TESTLEVELS")?.GetComponent<Button>();
         saves = background.Find("Saves");
 
         backButton.onClick.AddListener(() => SceneManager.LoadScene("MainMenu"));
+        testLevelsButton.onClick.AddListener(() => SceneManager.LoadScene("LevelSelect"));
         confirmWindow.SetActive(false);
         SetupButtons();
     }
 
     private void SetupButtons()
     {
+        data = DataBaseManager.GetNumberLevelForPlayers();
+
         for (int i = 0; i < saves.childCount; i++)
         {
             int index = i + 1;
@@ -40,7 +48,13 @@ public class SavelSelectMenu : MonoBehaviour
             if (slot != null)
             {
                 string saveName = save.name;
-                slot.onClick.AddListener(() => LoadSave(saveName));
+                slot.onClick.AddListener(() => LoadSave(index));
+
+                if (data.ContainsKey(index))
+                {
+                    Transform child = slot.transform.GetChild(0);
+                    child.GetComponent<TMP_Text>().text = $"{data[index]} уровень";
+                }
             }
 
             if (delete != null)
@@ -53,6 +67,7 @@ public class SavelSelectMenu : MonoBehaviour
     private void ShowConfirmWindow(int slot)
     {
         selectedSlotIndex = slot;
+        DataBaseManager.setCharacterId(selectedSlotIndex);
 
         confirmText.text = $"{slot}";
         confirmWindow.SetActive(true);
@@ -68,7 +83,17 @@ public class SavelSelectMenu : MonoBehaviour
     {
         confirmWindow.SetActive(false);
 
-        Debug.Log($"Слот {selectedSlotIndex} очищен (пока только лог)");
+        Transform save = saves.GetChild(selectedSlotIndex - 1);
+        Button slot = save.Find("Slot")?.GetComponent<Button>();
+
+        if (slot != null)
+        {
+            Transform child = slot.transform.GetChild(0);
+            child.GetComponent<TMP_Text>().text = "пустой слот";
+        }
+
+        DataBaseManager.DeleteCharacter();
+        Debug.Log($"Слот {selectedSlotIndex} очищен");
     }
 
     private void OnConfirmNo()
@@ -76,10 +101,21 @@ public class SavelSelectMenu : MonoBehaviour
         confirmWindow.SetActive(false);
     }
 
-    private void LoadSave(string saveName)
+    private void LoadSave(int index)
     {
-        Debug.Log("Загрузка сохранения: " + saveName);
-        SceneManager.LoadScene("LevelSelect");
+        data = DataBaseManager.GetNumberLevelForPlayers();
+
+        if (!data.ContainsKey(index))
+        {
+            DataBaseManager.CreateCharacter(index);
+        }
+
+        DataBaseManager.setCharacterId(index);
+        LoadLevel.isLoad = true;
+
+        string sceneName = "Level" + (data.ContainsKey(index) ? data[index] : 1);
+        Debug.Log("Загрузка сохранения: " + sceneName);
+        SceneManager.LoadScene(sceneName);
     }
 
     private void DeleteSave(string saveName)

@@ -44,7 +44,8 @@ public class LevelSelectMenu : MonoBehaviour
         {
             SceneManager.LoadScene("LevelTest");
         }
-        else{
+        else
+        {
             try
             {
                 SceneManager.LoadScene(sceneName);
