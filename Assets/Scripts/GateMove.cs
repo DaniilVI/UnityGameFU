@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GateMove;
 
 public class GateMove : MonoBehaviour
 {
@@ -12,12 +13,13 @@ public class GateMove : MonoBehaviour
     void Awake()
     {
         movingToFinish = true;
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = startPoint;
+        //transform.position = startPoint;
     }
 
     private Coroutine moveRoutine;
