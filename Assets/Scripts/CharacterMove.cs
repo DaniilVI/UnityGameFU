@@ -126,7 +126,7 @@ public class CharacterMove : MonoBehaviour
             ToggleSize();
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && isMoving && HasAbility(PlayerAbilities.Ability.Attack))
+        if (Input.GetKeyDown(KeyCode.E) && isMoving && !isPlatform && HasAbility(PlayerAbilities.Ability.Attack))
         {
             StartCoroutine(Attack());
         }
