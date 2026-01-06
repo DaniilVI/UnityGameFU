@@ -20,6 +20,8 @@ public class KeyPickup : MonoBehaviour
         if (pa != null)
         {
             pa.GiveKey();
+            CharacterMove cm = other.GetComponent<CharacterMove>();
+            cm.Position = cm.transform.position;
             if (pickupSound) AudioSource.PlayClipAtPoint(pickupSound, transform.position);
             gameObject.SetActive(false); // убираем ключ из сцены
         }

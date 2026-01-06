@@ -37,9 +37,14 @@ public class PauseMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)
+            {
                 Resume();
+            }
             else
+            {
+                exitConfirm.SetActive(false);
                 Pause();
+            }
         }
     }
 
