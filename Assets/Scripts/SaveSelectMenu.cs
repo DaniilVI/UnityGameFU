@@ -47,7 +47,6 @@ public class SavelSelectMenu : MonoBehaviour
 
             if (slot != null)
             {
-                string saveName = save.name;
                 slot.onClick.AddListener(() => LoadSave(index));
 
                 if (data.ContainsKey(index))
@@ -116,10 +115,5 @@ public class SavelSelectMenu : MonoBehaviour
         string sceneName = "Level" + (data.ContainsKey(index) ? data[index] : 1);
         Debug.Log("Загрузка сохранения: " + sceneName);
         SceneManager.LoadScene(sceneName);
-    }
-
-    private void DeleteSave(string saveName)
-    {
-        Debug.Log("Удаление сохранения: " + saveName);
     }
 }

@@ -7,10 +7,7 @@ public class LevelDataManager : MonoBehaviour
 {
     public static void SaveLevel()
     {
-        Scene scene = SceneManager.GetActiveScene();
-        GameObject[] rootObjects = scene.GetRootGameObjects();
-
-        Door door = GameObject.FindObjectOfType<Door>();
+        Door door = FindObjectOfType<Door>();
         string sceneName = door.SceneName;
         string numberPart = sceneName.Replace("Level", "");
         int levelNumber = int.Parse(numberPart);
