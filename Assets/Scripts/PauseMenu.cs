@@ -55,6 +55,7 @@ public class PauseMenu : MonoBehaviour
     public void Retry()
     {
         Time.timeScale = 1f;
+        LoadLevel.isLoad = false;
         try
         {
             SceneManager.LoadScene(sceneName);
@@ -76,7 +77,8 @@ public class PauseMenu : MonoBehaviour
     public void SaveGame()
     {
         isSaved = true;
-        Debug.Log("Сохранение прогресса (реализуется позже)");
+        LevelDataManager.SaveProgress();
+        Debug.Log("Сохранение прогресса");
     }
 
     public void ExitToMainMenu()
@@ -84,6 +86,7 @@ public class PauseMenu : MonoBehaviour
         if (isSaved)
         {
             Time.timeScale = 1f;
+            LoadLevel.isLoad = true;
             SceneManager.LoadScene("MainMenu");
         }
         else
@@ -95,6 +98,7 @@ public class PauseMenu : MonoBehaviour
     private void OnConfirmYes()
     {
         Time.timeScale = 1f;
+        LoadLevel.isLoad = true;
         SceneManager.LoadScene("MainMenu");
     }
 

@@ -7,10 +7,7 @@ public class LevelDataManager : MonoBehaviour
 {
     public static void SaveLevel()
     {
-        Scene scene = SceneManager.GetActiveScene();
-        GameObject[] rootObjects = scene.GetRootGameObjects();
-
-        Door door = GameObject.FindObjectOfType<Door>();
+        Door door = FindObjectOfType<Door>();
         string sceneName = door.SceneName;
         string numberPart = sceneName.Replace("Level", "");
         int levelNumber = int.Parse(numberPart);
@@ -46,23 +43,38 @@ public class LevelDataManager : MonoBehaviour
 
                         PlayerAbilities playerAbilities = obj.GetComponent<PlayerAbilities>();
 
-                        inventory.Add("Key", playerAbilities.Key ? 1 : 0);
-                        inventory.Add("Money", playerAbilities.Money ? 1 : 0);
+                        if (playerAbilities.Key)
+                        {
+                            inventory.Add("Key", 1);
+                        }
+                        if (playerAbilities.Money)
+                        {
+                            inventory.Add("Money", 1);
+                        }
                         break;
                     }
                 case "SphereDash":
                     {
-                        inventory.Add("SphereDash", obj.activeSelf ? 1 : 0);
+                        if (!obj.activeSelf)
+                        {
+                            inventory.Add("SphereDash", 1);
+                        }
                         break;
                     }
                 case "SphereShrink":
                     {
-                        inventory.Add("SphereShrink", obj.activeSelf ? 1 : 0);
+                        if (!obj.activeSelf)
+                        {
+                            inventory.Add("SphereShrink", 1);
+                        }
                         break;
                     }
                 case "SphereAttack":
                     {
-                        inventory.Add("SphereAttack", obj.activeSelf ? 1 : 0);
+                        if (!obj.activeSelf)
+                        {
+                            inventory.Add("SphereAttack", 1);
+                        }
                         break;
                     }
                 case "Flood":
@@ -144,45 +156,54 @@ public class LevelDataManager : MonoBehaviour
                         var position = DataBaseManager.GetCharacterPosition();
 
                         obj.GetComponent<CharacterHealth>().Health = characterInfo.Item1;
+                        obj.GetComponent<CharacterHealth>().UpdateUI();
                         obj.GetComponent<CharacterMove>().Position = new Vector3(position.Item1, position.Item2, 0);
-                        obj.GetComponent<PlayerAbilities>().Key = inventory["Key"] == 1 ? true : false;
-                        obj.GetComponent<PlayerAbilities>().Money = inventory["Money"] == 1 ? true : false;
+                        if (inventory.ContainsKey("Key") && inventory["Key"] == 1)
+                        {
+                            obj.GetComponent<PlayerAbilities>().GiveKey();
+                        }
+                        obj.GetComponent<PlayerAbilities>().Money = (inventory.ContainsKey("Money") && inventory["Money"] == 1) ? true : false;
 
                         if (characterInfo.Item2)
                         {
                             obj.GetComponent<CharacterMove>().ToggleSize();
                         }
 
-                        if (inventory["SphereDash"] == 1)
+                        if (inventory.ContainsKey("SphereDash") && inventory["SphereDash"] == 1)
                         {
                             obj.GetComponent<PlayerAbilities>().GrantAbility(0);
                         }
 
-                        if (inventory["SphereShrink"] == 1)
+                        if (inventory.ContainsKey("SphereShrink") && inventory["SphereShrink"] == 1)
                         {
                             obj.GetComponent<PlayerAbilities>().GrantAbility(1);
                         }
 
-                        if (inventory["SphereAttack"] == 1)
+                        if (inventory.ContainsKey("SphereAttack") && inventory["SphereAttack"] == 1)
                         {
                             obj.GetComponent<PlayerAbilities>().GrantAbility(2);
                         }
 
                         break;
                     }
+                case "Key":
+                    {
+                        obj.SetActive(inventory.ContainsKey("Key") && inventory["Key"] == 1 ? false : true);
+                        break;
+                    }
                 case "SphereDash":
                     {
-                        obj.SetActive(inventory["SphereDash"] == 1 ? true : false);
+                        obj.SetActive(inventory.ContainsKey("SphereDash") && inventory["SphereDash"] == 1 ? false : true);
                         break;
                     }
                 case "SphereShrink":
                     {
-                        obj.SetActive(inventory["SphereShrink"] == 1 ? true : false);
+                        obj.SetActive(inventory.ContainsKey("SphereShrink") && inventory["SphereShrink"] == 1 ? false : true);
                         break;
                     }
                 case "SphereAttack":
                     {
-                        obj.SetActive(inventory["SphereAttack"] == 1 ? true : false);
+                        obj.SetActive(inventory.ContainsKey("SphereAttack") && inventory["SphereAttack"] == 1 ? false : true);
                         break;
                     }
                 case "Flood":

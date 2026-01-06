@@ -19,7 +19,6 @@ public class PlayerAbilities : MonoBehaviour
     public bool Key
     {
         get { return hasKey; }
-        set { hasKey = value; }
     }
 
     public bool Money
