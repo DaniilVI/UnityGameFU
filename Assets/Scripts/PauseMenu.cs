@@ -21,7 +21,7 @@ public class PauseMenu : MonoBehaviour
         get { return isPaused; }
     }
     
-    private bool isTutorial = true;
+    private bool isTutorial = false;
     public bool IsTutorial
     {
         set
@@ -83,7 +83,6 @@ public class PauseMenu : MonoBehaviour
     public void Retry()
     {
         Time.timeScale = 1f;
-        TutorialWindow.enableTutorial = true;
         LoadLevel.isLoad = false;
         try
         {
@@ -114,7 +113,6 @@ public class PauseMenu : MonoBehaviour
         if (isSaved)
         {
             Time.timeScale = 1f;
-            TutorialWindow.enableTutorial = true;
             LoadLevel.isLoad = true;
             SceneManager.LoadScene("MainMenu");
         }
@@ -127,7 +125,6 @@ public class PauseMenu : MonoBehaviour
     private void OnConfirmYes()
     {
         Time.timeScale = 1f;
-        TutorialWindow.enableTutorial = true;
         LoadLevel.isLoad = true;
         SceneManager.LoadScene("MainMenu");
     }

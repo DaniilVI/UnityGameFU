@@ -65,7 +65,6 @@ public class CharacterHealth : MonoBehaviour
             else
             {
                 Debug.Log("KILL");
-                TutorialWindow.enableTutorial = false;
                 LoadLevel.isLoad = false;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }

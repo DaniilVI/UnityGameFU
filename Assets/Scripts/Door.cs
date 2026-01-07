@@ -29,7 +29,6 @@ public class Door : MonoBehaviour
         {
             if (openSound) AudioSource.PlayClipAtPoint(openSound, transform.position);
 
-            TutorialWindow.enableTutorial = true;
             LoadLevel.isLoad = false;
             if (!sceneName.Equals("EndVideo"))
                 LevelDataManager.SaveLevel();

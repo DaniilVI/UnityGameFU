@@ -14,7 +14,6 @@ public class TutorialWindow : MonoBehaviour
     [SerializeField] private Button rightArrow;
     [SerializeField] private TMP_Text closeHint;
 
-    public static bool enableTutorial = true;
     private PauseMenu pauseMenu = null;
     private int page = 0;
 
@@ -34,10 +33,6 @@ public class TutorialWindow : MonoBehaviour
 
     public void Open()
     {
-        if (!enableTutorial) return;
-
-        enableTutorial = false;
-        
         pauseMenu = GameObject.Find("PauseManager").GetComponent<PauseMenu>();
         if (pauseMenu == null)
         {

@@ -97,10 +97,8 @@ public class CharacterMove : MonoBehaviour
 
         Position = GetComponent<CharacterHealth>().SpawnPositions;
 
-        string statusLevel = DataBaseManager.GetStatusLevel();
-        if (LoadLevel.isLoad && statusLevel.Equals("в процессе"))
+        if (LoadLevel.isLoad && DataBaseManager.GetStatusLevel().Equals("в процессе"))
         {
-            TutorialWindow.enableTutorial = false;
             LevelDataManager.LoadProgress();
         }
     }
