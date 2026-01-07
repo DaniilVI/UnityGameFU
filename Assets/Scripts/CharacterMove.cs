@@ -95,6 +95,8 @@ public class CharacterMove : MonoBehaviour
             Debug.LogWarning("PlayerAbilities component not found. All abilities will be disabled.");
         }
 
+        Position = GetComponent<CharacterHealth>().SpawnPositions;
+
         if (LoadLevel.isLoad && DataBaseManager.GetStatusLevel().Equals("в процессе"))
         {
             LevelDataManager.LoadProgress();
