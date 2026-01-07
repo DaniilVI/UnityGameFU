@@ -112,10 +112,6 @@ public class SavelSelectMenu : MonoBehaviour
         DataBaseManager.setCharacterId(index);
         LoadLevel.isLoad = true;
 
-        // string sceneName = "Level" + (data.ContainsKey(index) ? data[index] : 1);
-        // Debug.Log("Загрузка сохранения: " + sceneName);
-        // SceneManager.LoadScene(sceneName);
-
         if (data.ContainsKey(index))
         {
             string sceneName = "Level" + data[index];

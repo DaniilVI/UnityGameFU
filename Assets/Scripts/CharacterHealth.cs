@@ -16,6 +16,10 @@ public class CharacterHealth : MonoBehaviour
         set { health = value; }
     }
 
+    public Vector3 SpawnPositions{
+        get { return spawnPositions; }
+    }
+
     [Header("UI")]
     public Image healthImage;
     public Sprite[] healthSprites;
@@ -61,6 +65,7 @@ public class CharacterHealth : MonoBehaviour
             else
             {
                 Debug.Log("KILL");
+                TutorialWindow.enableTutorial = false;
                 LoadLevel.isLoad = false;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }

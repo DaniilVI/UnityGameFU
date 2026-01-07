@@ -16,6 +16,27 @@ public class PauseMenu : MonoBehaviour
     private CharacterMove playerMove;
 
     private bool isPaused = false;
+    public bool IsPaused
+    {
+        get { return isPaused; }
+    }
+    
+    private bool isTutorial = true;
+    public bool IsTutorial
+    {
+        set
+        { 
+            isTutorial = value;
+            if (isTutorial)
+            {
+                StopTime();
+            }
+            else
+            {
+                if (!isPaused) ResumeTime();
+            }
+        }
+    }
     private bool isSaved = false;
 
     void Start()
@@ -51,15 +72,18 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
-        if (playerMove != null) playerMove.enabled = true;
         isPaused = false;
+        if (!isTutorial)
+        {
+            ResumeTime();
+        }
         isSaved = false;
     }
 
     public void Retry()
     {
         Time.timeScale = 1f;
+        TutorialWindow.enableTutorial = true;
         LoadLevel.isLoad = false;
         try
         {
@@ -74,9 +98,8 @@ public class PauseMenu : MonoBehaviour
     public void Pause()
     {
         pauseMenuUI.SetActive(true);
-        Time.timeScale = 0f;
-        if (playerMove != null) playerMove.enabled = false;
         isPaused = true;
+        StopTime();
     }
 
     public void SaveGame()
@@ -91,6 +114,7 @@ public class PauseMenu : MonoBehaviour
         if (isSaved)
         {
             Time.timeScale = 1f;
+            TutorialWindow.enableTutorial = true;
             LoadLevel.isLoad = true;
             SceneManager.LoadScene("MainMenu");
         }
@@ -103,6 +127,7 @@ public class PauseMenu : MonoBehaviour
     private void OnConfirmYes()
     {
         Time.timeScale = 1f;
+        TutorialWindow.enableTutorial = true;
         LoadLevel.isLoad = true;
         SceneManager.LoadScene("MainMenu");
     }
@@ -110,5 +135,17 @@ public class PauseMenu : MonoBehaviour
     private void OnConfirmNo()
     {
         exitConfirm.SetActive(false);
+    }
+
+    private void StopTime()
+    {
+        Time.timeScale = 0f;
+        if (playerMove != null) playerMove.enabled = false;
+    }
+
+    private void ResumeTime()
+    {
+        Time.timeScale = 1f;
+        if (playerMove != null) playerMove.enabled = true;
     }
 }
