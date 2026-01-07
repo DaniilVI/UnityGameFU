@@ -47,4 +47,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level9.unity
     guid: d6e55db9ff6b8e143a3cc1b72087f1e8
+  - enabled: 1
+    path: Assets/Scenes/IntroVideo.unity
+    guid: f2d9269ced3e389459b2d500882adfd6
+  - enabled: 1
+    path: Assets/Scenes/EndVideo.unity
+    guid: e2ff5cb8aad83b24a98076607242dd2c
   m_configObjects: {}

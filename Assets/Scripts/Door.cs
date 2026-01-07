@@ -30,7 +30,8 @@ public class Door : MonoBehaviour
             if (openSound) AudioSource.PlayClipAtPoint(openSound, transform.position);
 
             LoadLevel.isLoad = false;
-            LevelDataManager.SaveLevel();
+            if (!sceneName.Equals("EndVideo"))
+                LevelDataManager.SaveLevel();
 
             Debug.Log($"Загрузка уровня: {sceneName}");
             try
