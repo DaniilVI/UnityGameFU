@@ -112,8 +112,20 @@ public class SavelSelectMenu : MonoBehaviour
         DataBaseManager.setCharacterId(index);
         LoadLevel.isLoad = true;
 
-        string sceneName = "Level" + (data.ContainsKey(index) ? data[index] : 1);
-        Debug.Log("Загрузка сохранения: " + sceneName);
-        SceneManager.LoadScene(sceneName);
+        // string sceneName = "Level" + (data.ContainsKey(index) ? data[index] : 1);
+        // Debug.Log("Загрузка сохранения: " + sceneName);
+        // SceneManager.LoadScene(sceneName);
+
+        if (data.ContainsKey(index))
+        {
+            string sceneName = "Level" + data[index];
+            Debug.Log("Загрузка сцены: " + sceneName);
+            SceneManager.LoadScene(sceneName);
+        }
+        else
+        {
+            Debug.Log("Загрузка сцены: IntroVideo");
+            SceneManager.LoadScene("IntroVideo");
+        }
     }
 }
