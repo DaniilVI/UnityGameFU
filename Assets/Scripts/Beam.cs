@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(Collider2D))]
 public class Beam : MonoBehaviour
@@ -10,16 +11,21 @@ public class Beam : MonoBehaviour
     [Tooltip("Ссылка на ту самую SpherePickup, которую нужно вернуть при потере способности")]
     [SerializeField] private SpherePickup targetSphereToRespawn;
 
-    [SerializeField] private AudioClip deactivateSound;
+    private AudioSource audioSource;
+    private Coroutine BeamRoutine = null;
 
     private void Awake()
     {
         GetComponent<Collider2D>().isTrigger = true;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag(playerTag)) return;
+
+        if (BeamRoutine != null) return;
+
         PlayerAbilities pa = other.GetComponent<PlayerAbilities>();
         if (pa == null) return;
         if (!pa.HasAbility(abilityType)) return;
@@ -30,12 +36,20 @@ public class Beam : MonoBehaviour
         // Снимаем способность
         pa.RevokeAbility(abilityType);
         if (abilityType == 1) cm.GrowToNormal();
-        if (deactivateSound) AudioSource.PlayClipAtPoint(deactivateSound, transform.position);
 
         // Возрождаем сферу (если назначена)
         if (targetSphereToRespawn != null)
         {
             targetSphereToRespawn.Respawn();
         }
+
+        BeamRoutine = StartCoroutine(UnsetSphere());
+    }
+
+    private IEnumerator UnsetSphere()
+    {
+        audioSource.Play();
+        yield return new WaitWhile(() => audioSource.isPlaying);
+        BeamRoutine = null;
     }
 }

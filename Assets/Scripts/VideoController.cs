@@ -34,6 +34,14 @@ public class IntroVideoController : MonoBehaviour
         isEnding = true;
 
         videoPlayer.loopPointReached -= OnVideoFinished;
+
+        if (videoPlayer.targetTexture != null)
+        {
+            RenderTexture.active = videoPlayer.targetTexture;
+            GL.Clear(true, true, Color.black);
+            RenderTexture.active = null;
+        }
+        
         videoPlayer.Stop();
 
         Debug.Log("Загрузка сцены: " + nextSceneName);
