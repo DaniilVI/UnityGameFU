@@ -449,6 +449,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelExitConfirm: {fileID: 415453290}
+  audioMixer: {fileID: 24100000, guid: e312ff6f0a853f048bb80b5a768b6c17, type: 2}
 --- !u!1 &723936560
 GameObject:
   m_ObjectHideFlags: 0
