@@ -22259,14 +22259,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 80
-  m_fontSizeBase: 80
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -39091,14 +39091,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 80
-  m_fontSizeBase: 80
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -43581,11 +43581,15 @@ MonoBehaviour:
   contentImage: {fileID: 902822292}
   contentText: {fileID: 1470396565}
   images:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: db702534dc81e244b93c29eb5c7785e9, type: 3}
   texts:
-  - "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435 7.2"
-  - "\u043B\u0443\u0447"
+  - "\u041E\u0439! \u0421\u0444\u0435\u0440\u0430 \u043F\u043E\u0442\u0435\u0440\u044F\u043D\u0430.
+    \u041F\u0440\u0438 \u043F\u0440\u043E\u0445\u043E\u0436\u0434\u0435\u043D\u0438\u0438
+    \u0447\u0435\u0440\u0435\u0437 \u043F\u0443\u043B\u044C\u0438\u0440\u0443\u044E\u0449\u0438\u0439
+    \u043B\u0443\u0447, \u0432\u044B \u0442\u0435\u0440\u044F\u0435\u0442\u0435 \u0441\u0444\u0435\u0440\u0443
+    \u0446\u0432\u0435\u0442\u0430, \u0441\u043E\u0432\u043F\u0430\u0434\u0430\u044E\u0449\u0435\u0433\u043E
+    \u0441 \u0446\u0432\u0435\u0442\u043E\u043C \u043B\u0443\u0447\u0430. \u041D\u0435\u0442\u0443
+    \u0441\u0444\u0435\u0440\u044B - \u043D\u0435\u0442 \u0441\u043F\u043E\u0441\u043E\u0431\u043D\u043E\u0441\u0442\u0438."
   leftArrow: {fileID: 638867417}
   rightArrow: {fileID: 1109568283}
   closeHint: {fileID: 937081446}
@@ -51666,11 +51670,16 @@ MonoBehaviour:
   contentImage: {fileID: 135965686}
   contentText: {fileID: 821574029}
   images:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 87680d9d151d0204893ad6f6c434b6f9, type: 3}
   texts:
-  - "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435 7.1"
-  - "\u0441\u0444\u0435\u0440\u0430 \u0443\u043C\u0435\u043D\u044C\u0448\u0435\u043D\u0438\u044F"
+  - "\u0417\u0435\u043B\u0451\u043D\u0430\u044F \u0441\u0444\u0435\u0440\u0430 -
+    \u0441\u0444\u0435\u0440\u0430 \u0443\u043C\u0435\u043D\u044C\u0448\u0435\u043D\u0438\u044F.
+    \u041A\u043E\u0433\u0434\u0430 \u043E\u043D\u0430 \u0443 \u0432\u0430\u0441,
+    \u0432\u044B \u043C\u043E\u0436\u0435\u0442\u0435 \u043C\u0435\u043D\u044F\u0442\u044C
+    \u0441\u0432\u043E\u0439 \u0440\u0430\u0437\u043C\u0435\u0440 \u043D\u0430 \u043A\u043B\u0430\u0432\u0438\u0448\u0443
+    Q. \u041E\u0434\u043D\u0430\u043A\u043E \u0435\u0441\u0442\u044C \u043D\u0438\u0437\u043A\u0438\u0435
+    \u043C\u0435\u0441\u0442\u0430, \u0433\u0434\u0435 \u0443\u0432\u0435\u043B\u0438\u0447\u0438\u0442\u044C\u0441\u044F
+    \u043D\u0430\u0437\u0430\u0434 \u043D\u0435\u043B\u044C\u0437\u044F."
   leftArrow: {fileID: 2003635092}
   rightArrow: {fileID: 1289475387}
   closeHint: {fileID: 1621823017}
